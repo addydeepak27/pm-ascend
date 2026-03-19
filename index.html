@@ -964,6 +964,122 @@
       .video-grid { grid-template-columns:1fr; }
       .orb { display:none; }
     }
+
+    /* ── PRACTICE MODAL ─────────────────────────────────── */
+    .prob-overlay {
+      position:fixed;inset:0;z-index:9000;
+      background:rgba(0,0,0,.6);
+      backdrop-filter:blur(4px);
+      display:flex;align-items:center;justify-content:center;
+      padding:1.5rem;
+    }
+    .prob-modal {
+      background:var(--card);
+      border:1.5px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      width:100%;max-width:680px;
+      max-height:90vh;overflow-y:auto;
+      padding:2rem;
+      position:relative;
+    }
+    .prob-close {
+      position:absolute;top:1.25rem;right:1.25rem;
+      background:var(--bg2);border:1.5px solid var(--border);
+      border-radius:50%;width:2rem;height:2rem;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1rem;color:var(--text2);
+      cursor:pointer;transition:background .2s;
+    }
+    .prob-close:hover { background:var(--bg3); }
+    .prob-cat-badge {
+      display:inline-flex;align-items:center;gap:.4rem;
+      background:var(--grad-soft);color:var(--accent);
+      border:1px solid rgba(37,99,235,.15);border-radius:100px;
+      padding:.28rem .85rem;font-size:.75rem;font-weight:700;
+      margin-bottom:1rem;
+    }
+    .prob-title { font-size:1.3rem;font-weight:800;margin-bottom:.75rem; }
+    .prob-statement {
+      background:var(--bg2);border:1.5px solid var(--border);
+      border-radius:var(--radius-sm);padding:1.25rem;
+      font-size:.95rem;line-height:1.75;color:var(--text);
+      margin-bottom:1.25rem;
+    }
+    .prob-hints {
+      margin-bottom:1.25rem;
+    }
+    .prob-hints-title {
+      font-size:.8rem;font-weight:700;color:var(--text2);
+      text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;
+    }
+    .prob-hints ul {
+      list-style:none;display:flex;flex-direction:column;gap:.35rem;
+    }
+    .prob-hints li {
+      font-size:.86rem;color:var(--text2);
+      padding-left:1.2rem;position:relative;
+    }
+    .prob-hints li::before { content:'→';position:absolute;left:0;color:var(--accent); }
+    .prob-textarea {
+      width:100%;min-height:160px;resize:vertical;
+      font-family:inherit;font-size:.93rem;line-height:1.7;
+      background:var(--bg);border:1.5px solid var(--border);
+      color:var(--text);border-radius:var(--radius-sm);
+      padding:1rem 1.1rem;transition:border-color .2s,box-shadow .2s;
+      margin-bottom:1rem;
+    }
+    .prob-textarea:focus { outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1); }
+    .prob-word-count { font-size:.78rem;color:var(--muted);margin-top:-.6rem;margin-bottom:1rem;text-align:right; }
+
+    /* feedback */
+    .prob-feedback { margin-top:1.5rem; }
+    .prob-score-row {
+      display:flex;align-items:center;gap:1rem;
+      background:var(--bg2);border:1.5px solid var(--border);
+      border-radius:var(--radius-sm);padding:1.1rem 1.25rem;
+      margin-bottom:1.25rem;
+    }
+    .prob-score-num {
+      font-size:2.8rem;font-weight:900;line-height:1;
+      background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+      min-width:4rem;text-align:center;
+    }
+    .prob-verdict { font-size:1.1rem;font-weight:800; }
+    .prob-headline { font-size:.88rem;color:var(--text2);margin-top:.2rem; }
+    .prob-section-title {
+      font-size:.78rem;font-weight:800;color:var(--text2);
+      text-transform:uppercase;letter-spacing:.08em;
+      margin-bottom:.6rem;margin-top:1.1rem;
+    }
+    .prob-strengths { display:flex;flex-direction:column;gap:.5rem; }
+    .prob-strength-item {
+      display:flex;align-items:flex-start;gap:.6rem;
+      font-size:.88rem;color:var(--text);
+    }
+    .prob-strength-item::before { content:'✓';color:#10b981;font-weight:900;flex-shrink:0; }
+    .prob-improvements { display:flex;flex-direction:column;gap:.75rem; }
+    .prob-improve-item {
+      background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);
+      border-radius:10px;padding:.75rem 1rem;font-size:.86rem;
+    }
+    .prob-improve-issue { font-weight:700;color:var(--text);margin-bottom:.2rem; }
+    .prob-improve-tip { color:var(--text2); }
+    .prob-frameworks { display:flex;flex-wrap:wrap;gap:.5rem; }
+    .prob-hint-box {
+      background:rgba(37,99,235,.06);border:1px solid rgba(37,99,235,.18);
+      border-radius:10px;padding:.85rem 1rem;
+      font-size:.87rem;color:var(--text);line-height:1.6;margin-top:.4rem;
+    }
+    .prob-nextstep {
+      background:var(--grad-soft);border:1.5px solid rgba(37,99,235,.2);
+      border-radius:10px;padding:.85rem 1rem;
+      font-size:.88rem;color:var(--text);margin-top:.4rem;
+      font-weight:600;
+    }
+    .prob-try-again {
+      margin-top:1.25rem;display:flex;gap:.75rem;flex-wrap:wrap;
+    }
   </style>
 </head>
 <body>
@@ -1790,37 +1906,58 @@
 
       <!-- PRACTICE PANEL -->
       <div class="dash-panel" id="panel-practice">
-        <h2 style="font-weight:800;font-size:1.3rem;margin-bottom:.5rem">Practice Problems</h2>
-        <p style="color:var(--text2);font-size:.9rem;margin-bottom:1.5rem">Sharpen your PM skills with real problems from AI PM interviews.</p>
+        <h2 style="font-weight:800;font-size:1.3rem;margin-bottom:.25rem">Practice Problems</h2>
+        <p style="color:var(--text2);font-size:.9rem;margin-bottom:1.5rem">Beginner-friendly problems covering the core PM skills. Write your answer and get instant AI feedback.</p>
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem">
+
           <div class="benefit-card">
-            <div class="benefit-icon" style="background:rgba(79,70,229,.1)">🤔</div>
-            <div class="benefit-title">Product Strategy</div>
-            <div class="benefit-desc">How would you improve Google Search using AI? Design a feature roadmap for an AI assistant.</div>
+            <div class="benefit-icon" style="background:rgba(79,70,229,.1)">🔢</div>
+            <div class="benefit-title">Prioritization</div>
+            <div class="benefit-desc">You're a new PM at an AI startup. Your CEO has handed you a list of 5 features requested by customers. How do you decide what to build first?</div>
             <div class="benefit-tags"><span class="tag">Beginner</span><span class="tag">Strategy</span></div>
-            <button class="btn btn-outline" style="margin-top:1rem;width:100%">Start Problem</button>
+            <button class="btn btn-outline" style="margin-top:1rem;width:100%" onclick="openProblem(0)">Start Problem →</button>
           </div>
+
           <div class="benefit-card">
-            <div class="benefit-icon" style="background:rgba(16,185,129,.1)">📏</div>
-            <div class="benefit-title">Metrics &amp; Success</div>
-            <div class="benefit-desc">Define success metrics for an AI-powered code review tool. How do you measure model quality in production?</div>
-            <div class="benefit-tags"><span class="tag">Intermediate</span><span class="tag">Analytics</span></div>
-            <button class="btn btn-outline" style="margin-top:1rem;width:100%">Start Problem</button>
+            <div class="benefit-icon" style="background:rgba(16,185,129,.1)">📊</div>
+            <div class="benefit-title">Defining Success</div>
+            <div class="benefit-desc">You just launched a free AI writing assistant app. How would you define and measure whether it is successful in its first 3 months?</div>
+            <div class="benefit-tags"><span class="tag">Beginner</span><span class="tag">Metrics</span></div>
+            <button class="btn btn-outline" style="margin-top:1rem;width:100%" onclick="openProblem(1)">Start Problem →</button>
           </div>
+
           <div class="benefit-card">
-            <div class="benefit-icon" style="background:rgba(245,158,11,.1)">⚖️</div>
-            <div class="benefit-title">AI Ethics &amp; Tradeoffs</div>
-            <div class="benefit-desc">Your AI model has 95% accuracy but fails disproportionately for one demographic. How do you handle launch?</div>
-            <div class="benefit-tags"><span class="tag">Advanced</span><span class="tag">Ethics</span></div>
-            <button class="btn btn-outline" style="margin-top:1rem;width:100%">Start Problem</button>
+            <div class="benefit-icon" style="background:rgba(245,158,11,.1)">🔍</div>
+            <div class="benefit-title">Finding User Pain</div>
+            <div class="benefit-desc">Millions of people use Google Maps every day. How would you go about identifying the single biggest user problem to solve next?</div>
+            <div class="benefit-tags"><span class="tag">Beginner</span><span class="tag">Discovery</span></div>
+            <button class="btn btn-outline" style="margin-top:1rem;width:100%" onclick="openProblem(2)">Start Problem →</button>
           </div>
+
           <div class="benefit-card">
-            <div class="benefit-icon" style="background:rgba(239,68,68,.1)">🚢</div>
-            <div class="benefit-title">Launch &amp; GTM</div>
-            <div class="benefit-desc">How would you launch an AI writing assistant to enterprise customers? Define your GTM motion.</div>
-            <div class="benefit-tags"><span class="tag">Intermediate</span><span class="tag">GTM</span></div>
-            <button class="btn btn-outline" style="margin-top:1rem;width:100%">Start Problem</button>
+            <div class="benefit-icon" style="background:rgba(239,68,68,.1)">⚖️</div>
+            <div class="benefit-title">Making a Tradeoff</div>
+            <div class="benefit-desc">Your team wants to add real-time AI suggestions to your product, but the engineering lead says it will make the page load 2 seconds slower. What do you do?</div>
+            <div class="benefit-tags"><span class="tag">Beginner</span><span class="tag">Tradeoffs</span></div>
+            <button class="btn btn-outline" style="margin-top:1rem;width:100%" onclick="openProblem(3)">Start Problem →</button>
           </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon" style="background:rgba(124,58,237,.1)">🤝</div>
+            <div class="benefit-title">Stakeholder Conflict</div>
+            <div class="benefit-desc">Your engineering team says a new feature will take 3 months to build. Your CEO already promised it to a key customer in 1 month. How do you handle this?</div>
+            <div class="benefit-tags"><span class="tag">Beginner</span><span class="tag">Communication</span></div>
+            <button class="btn btn-outline" style="margin-top:1rem;width:100%" onclick="openProblem(4)">Start Problem →</button>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon" style="background:rgba(239,68,68,.08)">🤖</div>
+            <div class="benefit-title">AI Going Wrong</div>
+            <div class="benefit-desc">Your AI feature just went live. Users are posting on social media that it gives wrong answers about 20% of the time. What is your plan as the PM?</div>
+            <div class="benefit-tags"><span class="tag">Beginner</span><span class="tag">AI Quality</span></div>
+            <button class="btn btn-outline" style="margin-top:1rem;width:100%" onclick="openProblem(5)">Start Problem →</button>
+          </div>
+
         </div>
       </div>
 
@@ -2390,6 +2527,310 @@ const statsObserver = new IntersectionObserver((entries) => {
 
 const statsBar = document.querySelector('.stats-bar');
 if (statsBar) statsObserver.observe(statsBar);
+
+/* ══════════════════════════════════════════
+   PRACTICE PROBLEMS
+══════════════════════════════════════════ */
+const PROBLEMS = [
+  {
+    id: 0,
+    icon: '🔢',
+    title: 'Prioritization: Which Feature Do You Build First?',
+    category: 'Strategy',
+    difficulty: 'Beginner',
+    statement: `You are a new PM at an AI-powered customer service startup. After talking to users last month, your team has collected the following 5 feature requests:
+
+1. A "undo send" button for messages sent to customers by mistake
+2. An AI that auto-drafts replies based on past conversations
+3. A dashboard showing average response time per agent
+4. Integration with Slack so agents get notified there instead of by email
+5. A way for customers to rate the quality of each support interaction
+
+Your CEO says you have engineering capacity for ONE feature this quarter. How do you decide which one to build? Walk me through your thinking.`,
+    hints: [
+      'Think about which feature solves the biggest pain for the most users',
+      'Consider business impact — which one helps the company grow or retain customers?',
+      'Are any of these "must haves" vs "nice to haves"?',
+      'You don\'t have to pick one of the 5 — you can also explain why you\'d gather more data first'
+    ]
+  },
+  {
+    id: 1,
+    icon: '📊',
+    title: 'Defining Success: Did Your AI Feature Work?',
+    category: 'Metrics',
+    difficulty: 'Beginner',
+    statement: `You are the PM for a free AI writing assistant app that helps people write better emails. You just launched it 3 days ago and your CEO asks you: "How will we know in 3 months if this is actually working?"
+
+You need to define what success looks like. The app is free for now and you have about 500 sign-ups so far. There is no revenue yet — the goal is to prove that people love using it.
+
+What metrics would you track, and how would you know at the 3-month mark whether the product is succeeding or failing?`,
+    hints: [
+      'Think about both "are people showing up?" AND "do they keep coming back?"',
+      'What does a user doing when they love the product? What does it look like when they don\'t?',
+      'Consider what the CEO probably cares about most at this early stage',
+      'Pick 2–3 core metrics rather than listing every possible number'
+    ]
+  },
+  {
+    id: 2,
+    icon: '🔍',
+    title: 'Finding User Pain: What Should Google Maps Fix Next?',
+    category: 'Discovery',
+    difficulty: 'Beginner',
+    statement: `You just joined Google as a PM on the Maps team. Your manager asks you on Day 1: "We have millions of users. What's the most important user problem we should solve next?"
+
+You don't have any data yet. You don't know the team. But your manager wants to hear how you would go about finding the answer.
+
+Describe your process for identifying the biggest user pain point in Google Maps. How would you figure out what to work on?`,
+    hints: [
+      'You\'re not expected to know the answer — explain how you\'d find it',
+      'Who would you talk to? What would you ask them?',
+      'Are there signals beyond user interviews? (reviews, support tickets, usage data...)',
+      'How would you decide which pain point is most important once you\'ve found several?'
+    ]
+  },
+  {
+    id: 3,
+    icon: '⚖️',
+    title: 'Making a Tradeoff: Speed vs. Smart',
+    category: 'Tradeoffs',
+    difficulty: 'Beginner',
+    statement: `Your product team wants to add AI-powered smart suggestions — as a user types in the search bar, the product shows 3 personalized suggestions using AI in real time.
+
+The engineering lead tells you: "We can build it, but it'll make the page load 2 seconds slower on average."
+
+Research says users abandon pages that take more than 3 seconds to load. Your current page loads in 1.5 seconds.
+
+The feature has been highly requested, and the marketing team believes it will help with conversion. What do you do?`,
+    hints: [
+      'You don\'t have to pick a binary yes/no — consider if there\'s a middle path',
+      'Think about what additional information you\'d want before deciding',
+      'Who are the right people to involve in this decision?',
+      'What would a bad outcome look like, and how would you know if you\'re heading there?'
+    ]
+  },
+  {
+    id: 4,
+    icon: '🤝',
+    title: 'Stakeholder Conflict: Engineering vs. the CEO',
+    category: 'Communication',
+    difficulty: 'Beginner',
+    statement: `It's Monday morning. You find out that your CEO had a call with your biggest customer (who pays $200K/year) over the weekend. The CEO promised them a new "bulk export" feature would be live in 4 weeks.
+
+You talk to your engineering lead right after. She says: "That feature will take at least 3 months. We have 2 engineers, and one is on vacation for 2 of those weeks."
+
+Both the CEO and the engineering lead are right. The CEO made the commitment. The timeline is not realistic.
+
+What do you do?`,
+    hints: [
+      'Start by making sure you fully understand both sides before taking any action',
+      'Think about who you talk to first, and what you say',
+      'Is there any way to partially fulfill the commitment in 4 weeks?',
+      'What\'s the worst outcome you\'re trying to avoid here?'
+    ]
+  },
+  {
+    id: 5,
+    icon: '🤖',
+    title: 'AI Going Wrong: Your Model is Wrong 20% of the Time',
+    category: 'AI Quality',
+    difficulty: 'Beginner',
+    statement: `You are the PM for an AI feature that helps users automatically categorize their expenses (e.g., "groceries," "travel," "dining"). You launched it 2 weeks ago.
+
+Now users are posting on Twitter and leaving app store reviews saying the AI gets the category wrong about 1 in 5 times. Some are annoyed. A few have already switched to a competitor.
+
+You pull the data and confirm it's true — roughly 20% error rate on certain types of transactions.
+
+What is your plan? Walk through what you do in the next 24 hours, the next week, and the next month.`,
+    hints: [
+      'Think about your immediate priority — what\'s on fire that you need to put out first?',
+      'Who needs to know about this, and how do you tell them?',
+      'Is the right move to pull the feature, fix it quietly, or something else?',
+      'How do you prevent this from happening at launch next time?'
+    ]
+  }
+];
+
+// Modal state
+let activeProblemId = null;
+
+function openProblem(id) {
+  const p = PROBLEMS[id];
+  activeProblemId = id;
+
+  document.getElementById('prob-cat').textContent = p.category + ' · ' + p.difficulty;
+  document.getElementById('prob-title').textContent = p.title;
+  document.getElementById('prob-statement').textContent = p.statement;
+
+  const hintsList = document.getElementById('prob-hints-list');
+  hintsList.innerHTML = p.hints.map(h => `<li>${h}</li>`).join('');
+
+  const ta = document.getElementById('prob-answer');
+  ta.value = '';
+  updateWordCount();
+
+  document.getElementById('prob-feedback-wrap').classList.add('hidden');
+  document.getElementById('prob-submit-row').classList.remove('hidden');
+  document.getElementById('prob-overlay').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => ta.focus(), 100);
+}
+
+function closeProblem() {
+  document.getElementById('prob-overlay').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function updateWordCount() {
+  const ta = document.getElementById('prob-answer');
+  const words = ta.value.trim() === '' ? 0 : ta.value.trim().split(/\s+/).length;
+  document.getElementById('prob-word-count').textContent = `${words} word${words === 1 ? '' : 's'}`;
+}
+
+async function submitProblem() {
+  const answer = document.getElementById('prob-answer').value.trim();
+  if (answer.split(/\s+/).filter(Boolean).length < 15) {
+    alert('Please write at least a few sentences before submitting.');
+    return;
+  }
+
+  const p = PROBLEMS[activeProblemId];
+  const btn = document.getElementById('prob-submit-btn');
+  const originalText = btn.textContent;
+  btn.textContent = 'Evaluating… ⏳';
+  btn.disabled = true;
+
+  try {
+    const resp = await fetch('/evaluate-answer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        problemTitle: p.title,
+        problemStatement: p.statement,
+        category: p.category,
+        difficulty: p.difficulty,
+        answer
+      })
+    });
+    const data = await resp.json();
+    if (!resp.ok || !data.success) throw new Error(data.error || 'Evaluation failed');
+    renderFeedback(data.feedback);
+  } catch (err) {
+    alert('Evaluation failed: ' + err.message);
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
+}
+
+function verdictColor(v) {
+  return { Excellent: '#10b981', Good: '#2563eb', Developing: '#f59e0b', 'Needs Work': '#ef4444' }[v] || '#2563eb';
+}
+
+function renderFeedback(fb) {
+  document.getElementById('prob-score-num').textContent = fb.score;
+  const vEl = document.getElementById('prob-verdict');
+  vEl.textContent = fb.verdict;
+  vEl.style.color = verdictColor(fb.verdict);
+  document.getElementById('prob-headline').textContent = fb.headline;
+
+  document.getElementById('prob-strengths-list').innerHTML =
+    (fb.strengths || []).map(s => `<div class="prob-strength-item">${s}</div>`).join('');
+
+  document.getElementById('prob-improvements-list').innerHTML =
+    (fb.improvements || []).map(i =>
+      `<div class="prob-improve-item"><div class="prob-improve-issue">${i.issue}</div><div class="prob-improve-tip">${i.tip}</div></div>`
+    ).join('');
+
+  document.getElementById('prob-frameworks-list').innerHTML =
+    (fb.keyFrameworks || []).map(f => `<span class="tag">${f}</span>`).join('');
+
+  document.getElementById('prob-model-hint').textContent = fb.modelAnswerHint || '';
+  document.getElementById('prob-nextstep').textContent = fb.nextStep || '';
+
+  document.getElementById('prob-submit-row').classList.add('hidden');
+  document.getElementById('prob-feedback-wrap').classList.remove('hidden');
+
+  // Scroll feedback into view
+  document.querySelector('.prob-modal').scrollTop = 0;
+}
+
+function retryProblem() {
+  document.getElementById('prob-feedback-wrap').classList.add('hidden');
+  document.getElementById('prob-submit-row').classList.remove('hidden');
+  const btn = document.getElementById('prob-submit-btn');
+  btn.textContent = 'Submit for Feedback';
+  btn.disabled = false;
+  document.getElementById('prob-answer').value = '';
+  updateWordCount();
+  document.querySelector('.prob-modal').scrollTop = 0;
+}
+
+// Close on overlay click
+document.getElementById('prob-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeProblem();
+});
+
 </script>
+
+<!-- PRACTICE PROBLEM MODAL -->
+<div class="prob-overlay hidden" id="prob-overlay">
+  <div class="prob-modal">
+    <button class="prob-close" onclick="closeProblem()" title="Close">✕</button>
+
+    <div class="prob-cat-badge" id="prob-cat"></div>
+    <div class="prob-title" id="prob-title"></div>
+
+    <div class="prob-statement" id="prob-statement"></div>
+
+    <div class="prob-hints">
+      <div class="prob-hints-title">Things to think about</div>
+      <ul id="prob-hints-list"></ul>
+    </div>
+
+    <textarea
+      class="prob-textarea"
+      id="prob-answer"
+      placeholder="Write your answer here. There's no single right answer — think out loud, show your reasoning…"
+      oninput="updateWordCount()"
+    ></textarea>
+    <div class="prob-word-count" id="prob-word-count">0 words</div>
+
+    <div id="prob-submit-row">
+      <button class="btn btn-primary" id="prob-submit-btn" style="width:100%" onclick="submitProblem()">Submit for Feedback</button>
+    </div>
+
+    <div class="prob-feedback hidden" id="prob-feedback-wrap">
+      <div class="prob-score-row">
+        <div class="prob-score-num" id="prob-score-num">—</div>
+        <div>
+          <div class="prob-verdict" id="prob-verdict"></div>
+          <div class="prob-headline" id="prob-headline"></div>
+        </div>
+      </div>
+
+      <div class="prob-section-title">What you did well</div>
+      <div class="prob-strengths" id="prob-strengths-list"></div>
+
+      <div class="prob-section-title">Where to improve</div>
+      <div class="prob-improvements" id="prob-improvements-list"></div>
+
+      <div class="prob-section-title">Frameworks to know for this type of problem</div>
+      <div class="prob-frameworks" id="prob-frameworks-list"></div>
+
+      <div class="prob-section-title">What a strong answer covers</div>
+      <div class="prob-hint-box" id="prob-model-hint"></div>
+
+      <div class="prob-section-title">Your #1 next step</div>
+      <div class="prob-nextstep" id="prob-nextstep"></div>
+
+      <div class="prob-try-again">
+        <button class="btn btn-outline" onclick="retryProblem()">Try Again</button>
+        <button class="btn btn-ghost" onclick="closeProblem()">Back to Problems</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

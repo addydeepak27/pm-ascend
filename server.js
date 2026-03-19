@@ -155,6 +155,74 @@ app.post('/analyze-resume', upload.single('resume'), async (req, res) => {
   }
 });
 
+// Evaluate a practice problem answer with Claude
+async function evaluateAnswer({ problemTitle, problemStatement, category, difficulty, answer }) {
+  const prompt = `You are an experienced AI PM hiring manager and coach evaluating a practice answer from someone aspiring to become a Product Manager.
+
+Problem: ${problemTitle}
+Category: ${category}
+Difficulty: ${difficulty}
+
+Problem Statement:
+${problemStatement}
+
+Candidate's Answer:
+${answer}
+
+Evaluate this answer honestly and constructively. Respond ONLY with valid JSON (no markdown):
+{
+  "score": <integer 0-100>,
+  "verdict": "<Excellent|Good|Developing|Needs Work>",
+  "headline": "<one sentence summary of overall quality>",
+  "strengths": [
+    "<specific thing they did well>",
+    "<specific thing they did well>"
+  ],
+  "improvements": [
+    {"issue": "<specific gap or weakness>", "tip": "<concrete actionable fix>"},
+    {"issue": "<specific gap or weakness>", "tip": "<concrete actionable fix>"}
+  ],
+  "keyFrameworks": ["<framework name>", "<framework name>"],
+  "modelAnswerHint": "<2-3 sentences on what a strong answer covers — don't write it for them, just guide>",
+  "nextStep": "<single most important thing to practice or study based on this answer>"
+}`;
+
+  const response = await anthropic.messages.create({
+    model: 'claude-opus-4-6',
+    max_tokens: 1000,
+    messages: [{ role: 'user', content: prompt }],
+  });
+
+  const text = response.content[0].type === 'text' ? response.content[0].text : '';
+  const cleaned = text.replace(/^```json?\s*/i, '').replace(/\s*```$/i, '').trim();
+  return JSON.parse(cleaned);
+}
+
+// POST /evaluate-answer
+app.post('/evaluate-answer', express.json(), async (req, res) => {
+  try {
+    const { problemTitle, problemStatement, category, difficulty, answer } = req.body;
+
+    if (!answer || answer.trim().length < 30) {
+      return res.status(400).json({ error: 'Please write a more complete answer before submitting.' });
+    }
+
+    if (!process.env.ANTHROPIC_API_KEY) {
+      return res.status(500).json({ error: 'Server not configured with API key.' });
+    }
+
+    const feedback = await evaluateAnswer({ problemTitle, problemStatement, category, difficulty, answer });
+    res.json({ success: true, feedback });
+  } catch (err) {
+    console.error('Evaluation error:', err);
+    if (err.message && err.message.includes('JSON')) {
+      res.status(500).json({ error: 'Failed to parse AI response. Please try again.' });
+    } else {
+      res.status(500).json({ error: err.message || 'Evaluation failed. Please try again.' });
+    }
+  }
+});
+
 // Serve index.html for all other routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
