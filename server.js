@@ -113,7 +113,17 @@ Respond ONLY with a valid JSON object in this exact format (no markdown, no extr
   "topAdvice": "<The single most important thing they should do in the next 30 days>"
 }
 
-Be specific to their background. Be honest — if they have a long road ahead, say so clearly. Focus on AI PM roles specifically (not generic PM roles).`;
+Be specific to their background. Be honest — if they have a long road ahead, say so clearly. Focus on AI PM roles specifically (not generic PM roles).
+
+IMPORTANT — Roadmap rule for candidates with no PM experience:
+If the resume or profile indicates no PM experience (e.g. "No PM experience at all", no mention of roadmaps, specs, user research, or product ownership), then every roadmap phase MUST be grounded in a concrete, hands-on problem to solve — not abstract study tasks. Each milestone should be a real artifact or real action, for example:
+- Pick one app or AI product they use daily and write a 1-page teardown: what works, what's broken, what you'd change and why
+- Find a real user (friend, colleague, online community) who has a problem, interview them for 20 minutes, and write up what you learned
+- Identify one real AI product announcement this week and write a 200-word critique of the product decision
+- Build a 3-feature product spec for an AI tool that would solve a problem in their own industry
+- Take one feature of an existing AI product and mock up an improved version using Figma or even a paper sketch, then explain your reasoning
+- Post a product teardown publicly (LinkedIn or a blog) and get at least one comment or piece of feedback
+Avoid generic advice like "take a PM course", "read a PM book", or "learn about PRDs" as standalone milestones. If courses or reading are mentioned, they must be paired with a specific output the person produces as a result. The goal is to build a portfolio of real work, not a reading list.`;
 
   const response = await anthropic.messages.create({
     model: 'claude-opus-4-6',

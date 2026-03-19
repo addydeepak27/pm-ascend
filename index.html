@@ -1738,63 +1738,192 @@
         <!-- Quick Questions Form -->
         <div id="quick-form-wrap" style="background:var(--card);border:1px solid var(--border);border-radius:1.25rem;padding:1.5rem">
           <div style="font-weight:700;font-size:1rem;margin-bottom:.25rem">Tell us about yourself</div>
-          <div style="font-size:.85rem;color:var(--text2);margin-bottom:1.5rem">Get the same AI-powered analysis without uploading a resume.</div>
+          <div style="font-size:.85rem;color:var(--text2);margin-bottom:1.5rem">Answer 10 quick questions — no resume needed. The more you share, the more specific your analysis will be.</div>
 
-          <div style="display:grid;gap:1rem">
+          <!-- Section: Your Background -->
+          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--primary);opacity:.8;margin-bottom:.75rem">Your Background</div>
+          <div style="display:grid;gap:1rem;margin-bottom:1.5rem">
 
             <div>
-              <label style="display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:.4rem">What is your current role?</label>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What is your current job title or role?</label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Pick the closest match — this helps us understand what skills you're starting from.</div>
               <select id="q-role" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
                 <option value="">Select your role…</option>
-                <option value="Software Engineer / Developer">Software Engineer / Developer</option>
-                <option value="Data Scientist / Analyst">Data Scientist / Analyst</option>
-                <option value="Product Manager (non-AI)">Product Manager (non-AI)</option>
-                <option value="UX Designer / Researcher">UX Designer / Researcher</option>
-                <option value="Business Analyst / Consultant">Business Analyst / Consultant</option>
-                <option value="Marketing / Growth">Marketing / Growth</option>
-                <option value="Finance / Banking">Finance / Banking</option>
-                <option value="Student / Recent Graduate">Student / Recent Graduate</option>
+                <option value="Software Engineer / Developer">Software Engineer / Developer — I write code professionally</option>
+                <option value="Data Scientist / Analyst">Data Scientist / Analyst — I work with data, models, or reports</option>
+                <option value="Product Manager (non-AI)">Product Manager (non-AI) — I already manage products, just not AI ones</option>
+                <option value="UX Designer / Researcher">UX Designer / Researcher — I design or research user experiences</option>
+                <option value="Business Analyst / Consultant">Business Analyst / Consultant — I analyze problems and advise on solutions</option>
+                <option value="Marketing / Growth">Marketing / Growth — I work on acquiring or retaining users/customers</option>
+                <option value="Finance / Banking">Finance / Banking — I work in financial services or operations</option>
+                <option value="Student / Recent Graduate">Student / Recent Graduate — I'm in school or recently finished</option>
+                <option value="Other">Other — my role doesn't fit the options above</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">How many years of total work experience do you have?</label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Count all full-time jobs, not just tech. Internships and freelance work count too.</div>
+              <select id="q-exp" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
+                <option value="">Select experience…</option>
+                <option value="Less than 1 year">Less than 1 year — just starting out</option>
+                <option value="1–2 years">1–2 years — early in my career</option>
+                <option value="3–5 years">3–5 years — a few years in</option>
+                <option value="6–10 years">6–10 years — mid-career</option>
+                <option value="10+ years">10+ years — senior / experienced</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What industry do you currently work in?</label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">The sector your current or most recent employer operates in.</div>
+              <select id="q-industry" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
+                <option value="">Select industry…</option>
+                <option value="Technology / Software">Technology / Software — e.g. SaaS, apps, platforms</option>
+                <option value="Healthcare / Biotech">Healthcare / Biotech — e.g. hospitals, pharma, medical devices</option>
+                <option value="Finance / Fintech">Finance / Fintech — e.g. banking, insurance, payments</option>
+                <option value="E-commerce / Retail">E-commerce / Retail — e.g. online shopping, consumer goods</option>
+                <option value="Consulting / Professional Services">Consulting / Professional Services — e.g. strategy, IT consulting</option>
+                <option value="Education">Education — e.g. schools, edtech, training</option>
+                <option value="Government / Non-profit">Government / Non-profit — e.g. public sector, NGOs</option>
                 <option value="Other">Other</option>
               </select>
             </div>
 
             <div>
-              <label style="display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:.4rem">Years of work experience</label>
-              <select id="q-exp" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
-                <option value="">Select experience…</option>
-                <option value="Less than 1 year">Less than 1 year</option>
-                <option value="1–2 years">1–2 years</option>
-                <option value="3–5 years">3–5 years</option>
-                <option value="6–10 years">6–10 years</option>
-                <option value="10+ years">10+ years</option>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What is your educational background?</label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Your highest degree or how you primarily learned your skills — no degree required for AI PM.</div>
+              <select id="q-edu" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
+                <option value="">Select background…</option>
+                <option value="Computer Science / Engineering">Computer Science / Engineering degree</option>
+                <option value="Business / MBA">Business degree or MBA</option>
+                <option value="Data Science / Statistics">Data Science, Statistics, or Math degree</option>
+                <option value="Science / Research">Science or Research degree (biology, physics, etc.)</option>
+                <option value="Humanities / Social Sciences">Humanities, Social Sciences, or Liberal Arts</option>
+                <option value="Self-taught / Bootcamp">Self-taught, bootcamp, or online certifications</option>
+                <option value="Other">Other</option>
               </select>
             </div>
 
+          </div>
+
+          <!-- Section: Your Technical Experience -->
+          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--primary);opacity:.8;margin-bottom:.75rem">Your Technical Experience</div>
+          <div style="display:grid;gap:1rem;margin-bottom:1.5rem">
+
             <div>
-              <label style="display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:.4rem">How familiar are you with AI / ML?</label>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">How much do you know about AI and machine learning?</label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">AI = systems that can learn and make decisions. ML = the technique behind most modern AI. Be honest — there's no wrong answer.</div>
               <select id="q-ai" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
                 <option value="">Select level…</option>
-                <option value="No experience — I am a complete beginner">No experience — complete beginner</option>
-                <option value="Basic awareness — I know what LLMs and AI tools are">Basic awareness of LLMs and AI tools</option>
-                <option value="Intermediate — I have used AI APIs or built ML models">Intermediate — used AI APIs or built ML models</option>
-                <option value="Advanced — I work with AI/ML systems professionally">Advanced — work with AI/ML professionally</option>
+                <option value="No experience — I am a complete beginner">Just starting — I haven't used AI tools for work yet</option>
+                <option value="Basic awareness — I know what LLMs and AI tools are">I use AI tools — I regularly use ChatGPT, Copilot, or similar for work</option>
+                <option value="Intermediate — I have used AI APIs or built ML models">I've built with AI — I've connected to AI APIs or worked hands-on with data models</option>
+                <option value="Advanced — I work with AI/ML systems professionally">I work in AI — I build or manage AI/ML systems as part of my job</option>
               </select>
             </div>
 
             <div>
-              <label style="display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:.4rem">Have you done any PM-related work?</label>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">Which of these AI tools or technologies have you actually used?</label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Only check things you've genuinely worked with — not just heard of. It's fine to check none.</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem .75rem;margin-top:.25rem">
+                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
+                  <input type="checkbox" id="q-tool-llm" value="ChatGPT / Claude APIs (prompt engineering)" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
+                  <span><strong>ChatGPT / Claude APIs</strong><br><span style="font-size:.75rem;opacity:.7">Using AI chat tools via API or for automation</span></span>
+                </label>
+                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
+                  <input type="checkbox" id="q-tool-python" value="Python for data/ML" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
+                  <span><strong>Python for data / ML</strong><br><span style="font-size:.75rem;opacity:.7">Writing Python scripts for analysis or modeling</span></span>
+                </label>
+                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
+                  <input type="checkbox" id="q-tool-ml" value="ML frameworks (TensorFlow, PyTorch, scikit-learn)" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
+                  <span><strong>ML frameworks</strong><br><span style="font-size:.75rem;opacity:.7">TensorFlow, PyTorch, or scikit-learn — training AI models</span></span>
+                </label>
+                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
+                  <input type="checkbox" id="q-tool-rag" value="LangChain / LlamaIndex / RAG systems" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
+                  <span><strong>LangChain / RAG systems</strong><br><span style="font-size:.75rem;opacity:.7">Building AI apps that search and reason over documents</span></span>
+                </label>
+                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
+                  <input type="checkbox" id="q-tool-sql" value="SQL & data analysis tools" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
+                  <span><strong>SQL &amp; data analysis</strong><br><span style="font-size:.75rem;opacity:.7">Querying databases or using tools like Excel, Tableau, Looker</span></span>
+                </label>
+                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
+                  <input type="checkbox" id="q-tool-cloud" value="Cloud AI services (AWS SageMaker, GCP Vertex, Azure AI)" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
+                  <span><strong>Cloud AI services</strong><br><span style="font-size:.75rem;opacity:.7">AWS, Google Cloud, or Azure AI platforms</span></span>
+                </label>
+                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
+                  <input type="checkbox" id="q-tool-none" value="None yet" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
+                  <span><strong>None of the above</strong><br><span style="font-size:.75rem;opacity:.7">That's totally fine — you can still become an AI PM</span></span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Section: Your PM Goals -->
+          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--primary);opacity:.8;margin-bottom:.75rem">Your Product Management Goals</div>
+          <div style="display:grid;gap:1rem">
+
+            <div>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">Have you done any product management work before?</label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">A Product Manager (PM) decides what a product should do and why. They work between engineering, design, and business teams.</div>
               <select id="q-pm" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
                 <option value="">Select option…</option>
-                <option value="No PM experience at all">No PM experience at all</option>
-                <option value="Informally — I have done some product thinking or side projects">Informally — product thinking or side projects</option>
-                <option value="Some PM tasks in my current role (e.g. roadmaps, specs, user research)">Some PM tasks in current role</option>
-                <option value="Full PM experience in a non-AI product">Full PM experience (non-AI product)</option>
+                <option value="No PM experience at all">No — I haven't done any product management work</option>
+                <option value="Informally — I have done some product thinking or side projects">A little — I've done product thinking, side projects, or case studies informally</option>
+                <option value="Some PM tasks in my current role (e.g. roadmaps, specs, user research)">Some — I write specs, run user research, or help shape roadmaps in my current job</option>
+                <option value="Full PM experience in a non-AI product">Yes — I'm already a PM, just not on an AI product</option>
               </select>
             </div>
 
             <div>
-              <label style="display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:.4rem">What is your biggest challenge right now? <span style="font-weight:400;opacity:.7">(optional)</span></label>
-              <textarea id="q-challenge" rows="2" placeholder="e.g. I don't know where to start, I lack technical skills, I can't get interviews…" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none;resize:vertical;font-family:inherit;box-sizing:border-box"></textarea>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What kind of AI PM role do you want?</label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">AI PM roles vary a lot — from consumer apps to back-end infrastructure. Pick the one that excites you most.</div>
+              <select id="q-target" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
+                <option value="">Select target role…</option>
+                <option value="Consumer AI products (apps, assistants)">Consumer AI products — e.g. ChatGPT, Google Photos, Spotify recommendations</option>
+                <option value="Enterprise / B2B AI software">Business AI software — e.g. Salesforce AI, enterprise copilots, workflow tools</option>
+                <option value="AI infrastructure & developer tools">AI infrastructure &amp; developer tools — e.g. model APIs, MLOps platforms, SDKs</option>
+                <option value="Internal AI tooling / automation">Internal AI / automation — building AI tools for your own company's teams</option>
+                <option value="Not sure yet — any AI PM role">Not sure yet — I'm open to any AI PM opportunity</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What are you already doing to prepare for an AI PM role?</label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Check everything that applies — this helps us see what's working and what gaps to fill.</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem .75rem;margin-top:.25rem">
+                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
+                  <input type="checkbox" id="q-prep-courses" value="Taking online courses (Coursera, fast.ai, etc.)" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
+                  <span><strong>Online courses</strong><br><span style="font-size:.75rem;opacity:.7">Coursera, fast.ai, Udemy, YouTube, etc.</span></span>
+                </label>
+                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
+                  <input type="checkbox" id="q-prep-projects" value="Building AI side projects" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
+                  <span><strong>Building AI side projects</strong><br><span style="font-size:.75rem;opacity:.7">Making something with AI, even a small prototype</span></span>
+                </label>
+                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
+                  <input type="checkbox" id="q-prep-network" value="Networking & informational interviews" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
+                  <span><strong>Networking &amp; coffee chats</strong><br><span style="font-size:.75rem;opacity:.7">Talking to current AI PMs or attending events</span></span>
+                </label>
+                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
+                  <input type="checkbox" id="q-prep-reading" value="Reading PM books / newsletters" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
+                  <span><strong>Reading books / newsletters</strong><br><span style="font-size:.75rem;opacity:.7">Lenny's Newsletter, PM books, AI news, etc.</span></span>
+                </label>
+                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
+                  <input type="checkbox" id="q-prep-oss" value="Contributing to open-source / writing" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
+                  <span><strong>Writing or public projects</strong><br><span style="font-size:.75rem;opacity:.7">Blog posts, LinkedIn articles, open-source contributions</span></span>
+                </label>
+                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
+                  <input type="checkbox" id="q-prep-none" value="Nothing structured yet" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
+                  <span><strong>Nothing structured yet</strong><br><span style="font-size:.75rem;opacity:.7">I'm just getting started — that's okay</span></span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What's your biggest challenge right now? <span style="font-weight:400;opacity:.7">(optional)</span></label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Be specific — the more you share, the more targeted your roadmap will be.</div>
+              <textarea id="q-challenge" rows="2" placeholder="e.g. I don't know where to start, I struggle to explain AI concepts to non-technical people, I can't get past resume screening…" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none;resize:vertical;font-family:inherit;box-sizing:border-box"></textarea>
             </div>
 
           </div>
@@ -2095,21 +2224,36 @@ function runDemoAnalysis(e) {
 async function runQuickAnalysis() {
   const role = document.getElementById('q-role').value;
   const exp = document.getElementById('q-exp').value;
+  const industry = document.getElementById('q-industry').value;
+  const edu = document.getElementById('q-edu').value;
   const ai = document.getElementById('q-ai').value;
   const pm = document.getElementById('q-pm').value;
+  const target = document.getElementById('q-target').value;
   const challenge = document.getElementById('q-challenge').value.trim();
 
-  if (!role || !exp || !ai || !pm) {
+  if (!role || !exp || !industry || !edu || !ai || !pm || !target) {
     alert('Please answer all required questions before continuing.');
     return;
   }
 
-  // Build a text summary to send as the "resume"
+  // Collect multi-select checkboxes
+  const toolIds = ['q-tool-llm','q-tool-python','q-tool-ml','q-tool-rag','q-tool-sql','q-tool-cloud','q-tool-none'];
+  const toolsUsed = toolIds.map(id => document.getElementById(id)).filter(el => el.checked).map(el => el.value).join(', ') || 'None selected';
+
+  const prepIds = ['q-prep-courses','q-prep-projects','q-prep-network','q-prep-reading','q-prep-oss','q-prep-none'];
+  const prepActivities = prepIds.map(id => document.getElementById(id)).filter(el => el.checked).map(el => el.value).join(', ') || 'Nothing selected';
+
+  // Build a rich text summary to send as the "resume"
   const summaryText = `Current Role: ${role}
 Years of Experience: ${exp}
+Industry: ${industry}
+Education: ${edu}
 AI/ML Familiarity: ${ai}
+AI Tools Used: ${toolsUsed}
 PM Experience: ${pm}
-${challenge ? 'Biggest Challenge: ' + challenge : ''}`;
+Target AI PM Role: ${target}
+Current Learning: ${prepActivities}
+${challenge ? 'Biggest Challenge: ' + challenge : ''}`.trim();
 
   const blob = new Blob([summaryText], { type: 'text/plain' });
   const file = new File([blob], 'quick_profile.txt', { type: 'text/plain' });
