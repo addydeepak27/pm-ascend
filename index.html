@@ -1612,6 +1612,80 @@
           </div>
         </div>
 
+        <!-- OR divider -->
+        <div style="display:flex;align-items:center;gap:1rem;margin:1.5rem 0">
+          <div style="flex:1;height:1px;background:var(--border)"></div>
+          <span style="font-size:.85rem;color:var(--text2);font-weight:600">OR answer a few questions instead</span>
+          <div style="flex:1;height:1px;background:var(--border)"></div>
+        </div>
+
+        <!-- Quick Questions Form -->
+        <div id="quick-form-wrap" style="background:var(--card);border:1px solid var(--border);border-radius:1.25rem;padding:1.5rem">
+          <div style="font-weight:700;font-size:1rem;margin-bottom:.25rem">Tell us about yourself</div>
+          <div style="font-size:.85rem;color:var(--text2);margin-bottom:1.5rem">Get the same AI-powered analysis without uploading a resume.</div>
+
+          <div style="display:grid;gap:1rem">
+
+            <div>
+              <label style="display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:.4rem">What is your current role?</label>
+              <select id="q-role" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
+                <option value="">Select your role…</option>
+                <option value="Software Engineer / Developer">Software Engineer / Developer</option>
+                <option value="Data Scientist / Analyst">Data Scientist / Analyst</option>
+                <option value="Product Manager (non-AI)">Product Manager (non-AI)</option>
+                <option value="UX Designer / Researcher">UX Designer / Researcher</option>
+                <option value="Business Analyst / Consultant">Business Analyst / Consultant</option>
+                <option value="Marketing / Growth">Marketing / Growth</option>
+                <option value="Finance / Banking">Finance / Banking</option>
+                <option value="Student / Recent Graduate">Student / Recent Graduate</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:.4rem">Years of work experience</label>
+              <select id="q-exp" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
+                <option value="">Select experience…</option>
+                <option value="Less than 1 year">Less than 1 year</option>
+                <option value="1–2 years">1–2 years</option>
+                <option value="3–5 years">3–5 years</option>
+                <option value="6–10 years">6–10 years</option>
+                <option value="10+ years">10+ years</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:.4rem">How familiar are you with AI / ML?</label>
+              <select id="q-ai" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
+                <option value="">Select level…</option>
+                <option value="No experience — I am a complete beginner">No experience — complete beginner</option>
+                <option value="Basic awareness — I know what LLMs and AI tools are">Basic awareness of LLMs and AI tools</option>
+                <option value="Intermediate — I have used AI APIs or built ML models">Intermediate — used AI APIs or built ML models</option>
+                <option value="Advanced — I work with AI/ML systems professionally">Advanced — work with AI/ML professionally</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:.4rem">Have you done any PM-related work?</label>
+              <select id="q-pm" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
+                <option value="">Select option…</option>
+                <option value="No PM experience at all">No PM experience at all</option>
+                <option value="Informally — I have done some product thinking or side projects">Informally — product thinking or side projects</option>
+                <option value="Some PM tasks in my current role (e.g. roadmaps, specs, user research)">Some PM tasks in current role</option>
+                <option value="Full PM experience in a non-AI product">Full PM experience (non-AI product)</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="display:block;font-size:.82rem;font-weight:600;color:var(--text2);margin-bottom:.4rem">What is your biggest challenge right now? <span style="font-weight:400;opacity:.7">(optional)</span></label>
+              <textarea id="q-challenge" rows="2" placeholder="e.g. I don't know where to start, I lack technical skills, I can't get interviews…" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none;resize:vertical;font-family:inherit;box-sizing:border-box"></textarea>
+            </div>
+
+          </div>
+
+          <button class="btn btn-primary" style="margin-top:1.25rem;width:100%" onclick="runQuickAnalysis()">Analyse My Profile →</button>
+        </div>
+
         <!-- Loading State -->
         <div class="loading-wrap hidden" id="analysis-loading">
           <div class="spinner"></div>
@@ -1881,6 +1955,33 @@ function runDemoAnalysis(e) {
   uploadAndAnalyze(demoFile);
 }
 
+async function runQuickAnalysis() {
+  const role = document.getElementById('q-role').value;
+  const exp = document.getElementById('q-exp').value;
+  const ai = document.getElementById('q-ai').value;
+  const pm = document.getElementById('q-pm').value;
+  const challenge = document.getElementById('q-challenge').value.trim();
+
+  if (!role || !exp || !ai || !pm) {
+    alert('Please answer all required questions before continuing.');
+    return;
+  }
+
+  // Build a text summary to send as the "resume"
+  const summaryText = `Current Role: ${role}
+Years of Experience: ${exp}
+AI/ML Familiarity: ${ai}
+PM Experience: ${pm}
+${challenge ? 'Biggest Challenge: ' + challenge : ''}`;
+
+  const blob = new Blob([summaryText], { type: 'text/plain' });
+  const file = new File([blob], 'quick_profile.txt', { type: 'text/plain' });
+
+  // Hide the form and upload zone
+  document.getElementById('quick-form-wrap').classList.add('hidden');
+  uploadAndAnalyze(file);
+}
+
 async function uploadAndAnalyze(file) {
   // Show loading
   document.getElementById('upload-zone-wrap').classList.add('hidden');
@@ -1915,7 +2016,8 @@ async function uploadAndAnalyze(file) {
     clearInterval(stepInterval);
     document.getElementById('analysis-loading').classList.add('hidden');
     document.getElementById('upload-zone-wrap').classList.remove('hidden');
-    alert('Resume analysis failed: ' + err.message + '\n\nMake sure the server is running (npm start) and ANTHROPIC_API_KEY is set.');
+    document.getElementById('quick-form-wrap').classList.remove('hidden');
+    alert('Analysis failed: ' + err.message + '\n\nMake sure the server is running (npm start) and ANTHROPIC_API_KEY is set.');
   }
 }
 
@@ -2076,19 +2178,25 @@ const DEFAULT_PROFILE = {
   ],
 };
 
-function renderResults(analysis) {
+function renderResults(rawAnalysis) {
+  // Defensive: ensure analysis is always a safe object
+  const analysis = rawAnalysis && typeof rawAnalysis === 'object' ? rawAnalysis : {};
+
   // Map importance/severity to colors
   const impColor = { critical: '#ef4444', high: '#f59e0b', medium: '#10b981', low: '#6b7280' };
   const sevColor = { high: '#ef4444', medium: '#f59e0b', low: '#10b981' };
   const icons = { critical: '🔴', high: '🟠', medium: '🟡', low: '⚪' };
   const bgIcons = { engineer: '⚙️', data: '📊', business: '💼', designer: '🎨', other: '🌟' };
 
-  const score = analysis.score || 50;
-  const timelineText = analysis.timeline
-    ? `${analysis.timeline.realistic} (realistic)`
-    : '—';
+  const score = (typeof analysis.score === 'number' && analysis.score >= 0) ? analysis.score : 50;
+  const timeline = analysis.timeline && typeof analysis.timeline === 'object' ? analysis.timeline : {};
+  const timelineText = timeline.realistic ? `${timeline.realistic} (realistic)` : '—';
   const confMap = { high: 85, medium: 60, low: 35 };
   const confPct = confMap[analysis.confidence] || 60;
+  const skills = Array.isArray(analysis.skills) ? analysis.skills : [];
+  const strengths = Array.isArray(analysis.strengths) ? analysis.strengths : [];
+  const gaps = Array.isArray(analysis.gaps) ? analysis.gaps : [];
+  const roadmap = Array.isArray(analysis.roadmap) ? analysis.roadmap : [];
 
   // Header scores
   document.getElementById('result-score').textContent = score;
@@ -2100,7 +2208,8 @@ function renderResults(analysis) {
   // Skills
   const skillColors = ['#2563eb', '#7c3aed', '#10b981', '#f59e0b', '#ef4444'];
   const sg = document.getElementById('skills-grid');
-  sg.innerHTML = (analysis.skills || []).map((s, i) => {
+  sg.innerHTML = skills.map((s, i) => {
+    if (!s || typeof s !== 'object') return '';
     const color = impColor[s.importance] || skillColors[i % skillColors.length];
     return `
     <div class="skill-row">
@@ -2111,38 +2220,47 @@ function renderResults(analysis) {
   }).join('');
 
   // Strengths
-  document.getElementById('strengths-list').innerHTML = (analysis.strengths || []).map(s => `
+  document.getElementById('strengths-list').innerHTML = strengths.map(s => `
     <li class="gap-item">
       <div class="gap-icon" style="background:rgba(16,185,129,.1)">✅</div>
-      <div class="gap-text"><span>${s}</span></div>
-    </li>`).join('');
+      <div class="gap-text"><span>${s || ''}</span></div>
+    </li>`).join('') || '<li class="gap-item"><div class="gap-text"><span>No strengths data available.</span></div></li>';
 
   // Gaps
-  document.getElementById('gaps-list').innerHTML = (analysis.gaps || []).map(g => `
+  document.getElementById('gaps-list').innerHTML = gaps.map(g => {
+    if (!g || typeof g !== 'object') return '';
+    return `
     <li class="gap-item">
       <div class="gap-icon" style="background:${sevColor[g.severity] || '#f59e0b'}20">${icons[g.severity] || '🟡'}</div>
-      <div class="gap-text"><strong>${g.gap}</strong><span>${g.fix}</span></div>
-    </li>`).join('');
+      <div class="gap-text"><strong>${g.gap || 'Gap'}</strong><span>${g.fix || ''}</span></div>
+    </li>`;
+  }).join('') || '<li class="gap-item"><div class="gap-text"><span>No gaps data available.</span></div></li>';
 
   // Roadmap
   const phaseColors = ['#2563eb','#7c3aed','#10b981','#f59e0b','#ef4444'];
-  document.getElementById('roadmap-steps').innerHTML = (analysis.roadmap || []).map((r, i) => `
+  document.getElementById('roadmap-steps').innerHTML = roadmap.map((r, i) => {
+    if (!r || typeof r !== 'object') return '';
+    return `
     <div class="roadmap-step">
-      <div class="step-badge" style="background:${phaseColors[i % phaseColors.length]}">${r.phase.replace('Month ','M').replace('Week ','W')}</div>
+      <div class="step-badge" style="background:${phaseColors[i % phaseColors.length]}">${(r.phase||'').replace('Month ','M').replace('Week ','W')}</div>
       <div class="step-content">
-        <div class="step-week">${r.phase}</div>
-        <div class="step-heading">${r.focus}</div>
-        <div class="step-tasks">🎯 <strong>Milestone:</strong> ${r.milestone}</div>
+        <div class="step-week">${r.phase || ''}</div>
+        <div class="step-heading">${r.focus || ''}</div>
+        <div class="step-tasks">🎯 <strong>Milestone:</strong> ${r.milestone || ''}</div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('') || '<div class="roadmap-step"><div class="step-content"><div class="step-heading">No roadmap data available.</div></div></div>';
 
   // Timeline milestones derived from roadmap
-  document.getElementById('timeline-milestones').innerHTML = (analysis.roadmap || []).map(r => `
+  document.getElementById('timeline-milestones').innerHTML = roadmap.map(r => {
+    if (!r || typeof r !== 'object') return '';
+    return `
     <div class="milestone">
-      <div class="milestone-week">${r.phase}</div>
-      <div class="milestone-title">${r.focus}</div>
-      <div class="milestone-desc">${r.milestone}</div>
-    </div>`).join('');
+      <div class="milestone-week">${r.phase || ''}</div>
+      <div class="milestone-title">${r.focus || ''}</div>
+      <div class="milestone-desc">${r.milestone || ''}</div>
+    </div>`;
+  }).join('');
 
   // Top advice banner (inject after gaps if element exists)
   const advEl = document.getElementById('top-advice');
@@ -2152,8 +2270,8 @@ function renderResults(analysis) {
   }
 
   // Update dashboard cards
-  const optimistic = analysis.timeline ? analysis.timeline.optimistic : '—';
-  const realistic = analysis.timeline ? analysis.timeline.realistic : '—';
+  const optimistic = timeline.optimistic || '—';
+  const realistic = timeline.realistic || '—';
   document.querySelector('#panel-overview .dash-cards').innerHTML = `
     <div class="dash-card">
       <div class="dash-card-label">AI Readiness Score</div>

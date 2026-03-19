@@ -46,11 +46,24 @@ async function extractText(file) {
       return data.text;
     } catch (err) {
       console.error('PDF parse error:', err.message);
-      return ''; // Return empty — Claude will still analyze with filename context
+      return '';
     }
   }
 
-  // For DOCX or unknown, return empty string
+  if (
+    mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+    originalname.toLowerCase().endsWith('.docx')
+  ) {
+    try {
+      const mammoth = require('mammoth');
+      const result = await mammoth.extractRawText({ buffer });
+      return result.value;
+    } catch (err) {
+      console.error('DOCX parse error:', err.message);
+      return '';
+    }
+  }
+
   return '';
 }
 
