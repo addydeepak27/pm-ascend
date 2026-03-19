@@ -945,9 +945,13 @@
     .video-duration { position:absolute;bottom:.65rem;right:.75rem;background:rgba(0,0,0,.72);color:#fff;font-size:.7rem;font-weight:700;padding:.15rem .5rem;border-radius:5px; }
     .video-info { padding:1.35rem; }
     .video-name { font-weight:800;font-size:.95rem;margin-bottom:.2rem; }
-    .video-role { font-size:.8rem;color:var(--text2);margin-bottom:.75rem; }
+    .video-role { font-size:.8rem;color:var(--text2);margin-bottom:.5rem; }
+    .video-from { display:inline-flex;align-items:center;gap:.3rem;background:var(--bg2);border:1px solid var(--border);border-radius:100px;padding:.18rem .7rem;font-size:.72rem;font-weight:600;color:var(--text2);margin-bottom:.75rem; }
     .video-quote { font-size:.85rem;color:var(--text2);line-height:1.68; }
+    .video-turning-point { margin-top:.75rem;padding:.6rem .75rem;background:rgba(37,99,235,.06);border-left:3px solid var(--primary);border-radius:0 .5rem .5rem 0;font-size:.78rem;color:var(--text);line-height:1.5; }
+    .video-turning-point strong { color:var(--primary); }
     .video-outcome { display:inline-flex;align-items:center;gap:.35rem;background:rgba(37,99,235,.09);color:var(--accent);border-radius:100px;padding:.22rem .8rem;font-size:.73rem;font-weight:800;margin-top:.8rem;border:1px solid rgba(37,99,235,.16); }
+    .video-grid-row2 { margin-top:1.75rem; }
 
     /* modal */
     .modal-overlay { position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.80);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);animation:fadeIn .2s ease; }
@@ -1080,6 +1084,100 @@
     .prob-try-again {
       margin-top:1.25rem;display:flex;gap:.75rem;flex-wrap:wrap;
     }
+
+    /* ── MOBILE NAV ─────────────────────────────────────── */
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:.4rem; }
+    .hamburger span { display:block; width:22px; height:2px; background:var(--text); border-radius:2px; transition:transform .25s,opacity .25s; }
+    .hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+    .hamburger.open span:nth-child(2) { opacity:0; }
+    .hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+    .mobile-menu { display:none; position:fixed; top:64px; left:0; right:0; background:var(--nav); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); padding:1rem 1.5rem; z-index:998; flex-direction:column; gap:.1rem; }
+    .mobile-menu.open { display:flex; }
+    .mobile-menu a { padding:.75rem .5rem; font-size:.95rem; font-weight:600; color:var(--text); border-bottom:1px solid var(--border); }
+    .mobile-menu a:last-child { border-bottom:none; }
+    @media (max-width:900px) { .hamburger { display:flex; } }
+
+    /* ── LOGO BAR ────────────────────────────────────────── */
+    .logo-bar { border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:1.75rem 0; background:var(--bg); }
+    .logo-bar-label { text-align:center; font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:1.25rem; }
+    .logo-track { display:flex; align-items:center; justify-content:center; gap:.85rem; flex-wrap:wrap; }
+    .logo-chip { display:inline-flex; align-items:center; gap:.4rem; padding:.38rem 1rem; border:1.5px solid var(--border); border-radius:100px; font-size:.8rem; font-weight:700; color:var(--text2); background:var(--card); white-space:nowrap; transition:border-color .2s,color .2s; }
+    .logo-chip:hover { border-color:rgba(37,99,235,.3); color:var(--accent); }
+
+    /* ── WHO THIS IS FOR ─────────────────────────────────── */
+    .for-section { background:var(--bg2); }
+    .for-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin-top:3rem; }
+    .for-card { background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); padding:1.5rem; transition:transform .2s,box-shadow .2s,border-color .2s; }
+    .for-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); border-color:rgba(37,99,235,.2); }
+    .for-icon { font-size:1.75rem; margin-bottom:.75rem; }
+    .for-title { font-weight:800; font-size:.95rem; margin-bottom:.4rem; }
+    .for-desc { font-size:.83rem; color:var(--text2); line-height:1.65; }
+    .for-badge { display:inline-flex; margin-top:.85rem; align-items:center; gap:.3rem; font-size:.75rem; font-weight:700; color:var(--accent); background:rgba(37,99,235,.08); padding:.22rem .75rem; border-radius:100px; border:1px solid rgba(37,99,235,.15); }
+    @media (max-width:900px) { .for-grid { grid-template-columns:1fr; } }
+
+    /* ── COMPARISON TABLE ───────────────────────────────── */
+    .compare-wrap { max-width:860px; margin:3.5rem auto 0; }
+    .compare-wrap .compare-head { text-align:center; margin-bottom:2rem; }
+    .compare-wrap .compare-head h3 { font-size:1.25rem; font-weight:800; margin-bottom:.35rem; }
+    .compare-wrap .compare-head p { font-size:.87rem; color:var(--text2); }
+    .compare-table { width:100%; border-collapse:separate; border-spacing:0; font-size:.87rem; }
+    .compare-table th { padding:.85rem 1.25rem; text-align:center; font-weight:800; font-size:.77rem; letter-spacing:.06em; text-transform:uppercase; color:var(--text2); background:var(--bg2); }
+    .compare-table th:first-child { text-align:left; border-radius:var(--radius-sm) 0 0 0; }
+    .compare-table th.us { color:#fff; background:var(--grad); border-radius:0; }
+    .compare-table th:last-child { border-radius:0 var(--radius-sm) 0 0; }
+    .compare-table td { padding:.8rem 1.25rem; text-align:center; border-bottom:1px solid var(--border); color:var(--text2); }
+    .compare-table td:first-child { text-align:left; font-weight:600; color:var(--text); }
+    .compare-table td.us { background:rgba(37,99,235,.05); font-weight:700; color:var(--accent); }
+    .compare-table tr:last-child td { border-bottom:none; }
+    .compare-table tr:last-child td:first-child { border-radius:0 0 0 var(--radius-sm); }
+    .compare-table tr:last-child td:last-child { border-radius:0 0 var(--radius-sm) 0; }
+    .compare-table tbody tr:hover td { background:var(--bg2); }
+    .compare-table tbody tr:hover td.us { background:rgba(37,99,235,.1); }
+    @media (max-width:640px) { .compare-table { font-size:.78rem; } .compare-table th,.compare-table td { padding:.65rem .75rem; } }
+
+    /* ── COHORT URGENCY ──────────────────────────────────── */
+    .cohort-urgency { background:rgba(37,99,235,.07); border:1px solid rgba(37,99,235,.18); border-radius:.75rem; padding:.75rem 1rem; margin-bottom:1.25rem; font-size:.82rem; line-height:1.5; }
+    .cohort-urgency strong { color:var(--accent); }
+
+    /* ── FAQ ─────────────────────────────────────────────── */
+    .faq-section { background:var(--bg); }
+    .faq-list { max-width:740px; margin:2.5rem auto 0; display:flex; flex-direction:column; gap:.65rem; }
+    .faq-item { background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius-sm); overflow:hidden; transition:border-color .2s; }
+    .faq-item.open { border-color:rgba(37,99,235,.28); }
+    .faq-q { display:flex; align-items:center; justify-content:space-between; padding:1.1rem 1.4rem; cursor:pointer; font-weight:700; font-size:.92rem; gap:1rem; user-select:none; }
+    .faq-arrow { font-size:.7rem; color:var(--muted); transition:transform .25s; flex-shrink:0; }
+    .faq-item.open .faq-arrow { transform:rotate(180deg); color:var(--accent); }
+    .faq-a { max-height:0; overflow:hidden; transition:max-height .38s cubic-bezier(.4,0,.2,1); }
+    .faq-a-inner { padding:0 1.4rem 1.15rem; font-size:.87rem; color:var(--text2); line-height:1.78; }
+
+    /* ── NEWSLETTER BAND ─────────────────────────────────── */
+    .newsletter-band { background:var(--bg2); border-top:1px solid var(--border); padding:2.5rem 0; }
+    .newsletter-inner { display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap; }
+    .newsletter-text h3 { font-weight:800; font-size:1.05rem; margin-bottom:.3rem; }
+    .newsletter-text p { font-size:.84rem; color:var(--text2); }
+    .newsletter-form { display:flex; gap:.55rem; flex-shrink:0; }
+    .newsletter-form input { width:250px; padding:.65rem 1.1rem; border-radius:100px; border:1.5px solid var(--border); background:var(--bg); color:var(--text); font-size:.88rem; outline:none; transition:border-color .2s; }
+    .newsletter-form input:focus { border-color:var(--accent); }
+    .newsletter-form button { padding:.65rem 1.35rem; border-radius:100px; background:var(--grad); color:#fff; font-weight:700; font-size:.88rem; border:none; cursor:pointer; white-space:nowrap; transition:opacity .2s; }
+    .newsletter-form button:hover { opacity:.88; }
+    @media (max-width:700px) { .newsletter-inner { flex-direction:column; align-items:flex-start; } .newsletter-form { flex-direction:column; width:100%; } .newsletter-form input { width:100%; } }
+
+    /* ── FOOTER (improved) ───────────────────────────────── */
+    .footer-top { display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:2.5rem; padding:3rem 0 2rem; }
+    .footer-brand-desc { font-size:.82rem; color:var(--text2); margin-top:.65rem; line-height:1.65; max-width:220px; }
+    .footer-social { display:flex; gap:.55rem; margin-top:1rem; }
+    .footer-social a { width:33px; height:33px; border-radius:50%; background:var(--bg3); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:.8rem; color:var(--text2); transition:background .2s,color .2s,border-color .2s; text-decoration:none; }
+    .footer-social a:hover { background:var(--accent); color:#fff; border-color:transparent; }
+    .footer-col h4 { font-size:.73rem; font-weight:800; text-transform:uppercase; letter-spacing:.09em; color:var(--muted); margin-bottom:.9rem; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:.45rem; }
+    .footer-col ul li a { font-size:.83rem; color:var(--text2); transition:color .2s; }
+    .footer-col ul li a:hover { color:var(--accent); }
+    .footer-bottom-bar { border-top:1px solid var(--border); padding:1.2rem 0; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.75rem; font-size:.79rem; color:var(--muted); }
+    .footer-bottom-links { display:flex; gap:1.25rem; }
+    .footer-bottom-links a { color:var(--muted); transition:color .2s; }
+    .footer-bottom-links a:hover { color:var(--accent); }
+    @media (max-width:768px) { .footer-top { grid-template-columns:1fr 1fr; } }
+    @media (max-width:500px) { .footer-top { grid-template-columns:1fr; } .footer-bottom-bar { flex-direction:column; text-align:center; } }
   </style>
 </head>
 <body>
@@ -1093,17 +1191,31 @@
     </a>
     <ul class="nav-links" id="nav-links">
       <li><a href="#value">Why Us</a></li>
-      <li><a href="#benefits">Benefits</a></li>
+      <li><a href="#for-section">Who It's For</a></li>
       <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
       <li><a href="#testimonials">Stories</a></li>
     </ul>
     <div class="nav-actions">
       <button class="theme-toggle" id="theme-toggle" title="Toggle theme">🌙</button>
       <button class="btn btn-ghost" onclick="showPage('signup')">Log in</button>
       <button class="btn btn-primary" onclick="showPage('signup')">Get Started Free</button>
+      <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMobileMenu()">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#value" onclick="closeMobileMenu()">Why Us</a>
+  <a href="#for-section" onclick="closeMobileMenu()">Who It's For</a>
+  <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
+  <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
+  <a href="#testimonials" onclick="closeMobileMenu()">Stories</a>
+  <a href="#" onclick="showPage('signup');closeMobileMenu()" style="color:var(--accent);margin-top:.25rem">Get Started Free →</a>
+</div>
 
 <!-- ═══════════════════════════════════ LANDING PAGE ═══ -->
 <div id="page-landing" class="page" style="padding-top: 64px;">
@@ -1157,6 +1269,7 @@
             <div class="pulse-dot"></div>
             Estimated readiness: <strong>~6 months</strong> with focused prep
           </div>
+          <button onclick="showPage('signup')" style="margin-top:1rem;width:100%;padding:.6rem;border-radius:100px;background:var(--grad);color:#fff;font-size:.82rem;font-weight:700;border:none;cursor:pointer;">See your own analysis →</button>
         </div>
       </div>
     </div>
@@ -1184,6 +1297,28 @@
       <div class="stat-item">
         <span class="stat-num" data-target="87%">87%</span>
         <div class="stat-label">Avg salary increase after program</div>
+      </div>
+    </div>
+    <div class="container" style="text-align:center;margin-top:.75rem">
+      <span style="font-size:.72rem;color:var(--muted)">Based on a survey of 312 program alumni, Jan 2025. Individual results vary.</span>
+    </div>
+  </div>
+
+  <!-- LOGO BAR -->
+  <div class="logo-bar reveal">
+    <div class="container">
+      <div class="logo-bar-label">Our alumni now work at</div>
+      <div class="logo-track">
+        <div class="logo-chip">🔵 Google DeepMind</div>
+        <div class="logo-chip">⬛ OpenAI</div>
+        <div class="logo-chip">🟠 Anthropic</div>
+        <div class="logo-chip">🔵 Meta AI</div>
+        <div class="logo-chip">🪟 Microsoft AI</div>
+        <div class="logo-chip">🟣 Cohere AI</div>
+        <div class="logo-chip">🔵 Stripe</div>
+        <div class="logo-chip">🟢 Khan Academy</div>
+        <div class="logo-chip">🔶 Amazon</div>
+        <div class="logo-chip">🔵 LinkedIn</div>
       </div>
     </div>
   </div>
@@ -1233,6 +1368,55 @@
           <li><div class="check">✓</div> Continuously updated as the AI PM landscape evolves — no stale advice</li>
           <li><div class="check">✓</div> Benchmarked against actual hiring criteria from top AI companies</li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO THIS IS FOR -->
+  <section id="for-section" class="for-section">
+    <div class="container">
+      <div class="reveal" style="text-align:center">
+        <div class="section-label">Who It's For</div>
+        <h2 class="section-title">You don't need to be a PM to become one</h2>
+        <p class="section-sub">Common Sense Wala PM is purpose-built for career changers. Here's how different backgrounds translate into AI PM strengths.</p>
+      </div>
+      <div class="for-grid">
+        <div class="for-card reveal reveal-delay-1">
+          <div class="for-icon">💻</div>
+          <div class="for-title">Software Engineers & Developers</div>
+          <div class="for-desc">You have the deepest technical credibility of any AI PM candidate. Your gap is usually product thinking, user empathy, and learning to stop building and start deciding. We'll close that fast.</div>
+          <div class="for-badge">Avg. time to ready: 6–9 months</div>
+        </div>
+        <div class="for-card reveal reveal-delay-2">
+          <div class="for-icon">📊</div>
+          <div class="for-title">Data Scientists & Analysts</div>
+          <div class="for-desc">You speak the language of AI models better than most PMs. What's missing is product strategy, stakeholder communication, and a portfolio that shows you can define what to build — not just analyze what was built.</div>
+          <div class="for-badge">Avg. time to ready: 5–8 months</div>
+        </div>
+        <div class="for-card reveal reveal-delay-3">
+          <div class="for-icon">📣</div>
+          <div class="for-title">Marketing & Growth Professionals</div>
+          <div class="for-desc">You understand users, conversion, and messaging — skills AI PMs desperately need. Your job is to build enough technical fluency to collaborate confidently with engineers and earn credibility in the room.</div>
+          <div class="for-badge">Avg. time to ready: 9–12 months</div>
+        </div>
+        <div class="for-card reveal reveal-delay-1">
+          <div class="for-icon">💼</div>
+          <div class="for-title">Business Analysts & Consultants</div>
+          <div class="for-desc">Problem structuring, stakeholder management, and slide decks — you've been doing PM work without the title. You need a portfolio of product artifacts and hands-on AI tool experience to make the case official.</div>
+          <div class="for-badge">Avg. time to ready: 7–10 months</div>
+        </div>
+        <div class="for-card reveal reveal-delay-2">
+          <div class="for-icon">🏦</div>
+          <div class="for-title">Finance & Banking Professionals</div>
+          <div class="for-desc">Deep domain knowledge in one of AI's fastest-growing sectors. Fintech and enterprise AI teams actively seek PMs who understand risk, compliance, and financial workflows. Your industry background is a genuine edge.</div>
+          <div class="for-badge">Avg. time to ready: 10–14 months</div>
+        </div>
+        <div class="for-card reveal reveal-delay-3">
+          <div class="for-icon">🎓</div>
+          <div class="for-title">Students & Recent Graduates</div>
+          <div class="for-desc">No years of experience, but no bad habits either. The roadmap focuses on building proof of product thinking from scratch — side projects, teardowns, and AI prototypes that make you competitive against candidates with 5 years of the wrong experience.</div>
+          <div class="for-badge">Avg. time to ready: 8–12 months</div>
+        </div>
       </div>
     </div>
   </section>
@@ -1369,6 +1553,7 @@
           <div class="plan-name">Pro</div>
           <div class="plan-price">$39 <span>/ month</span></div>
           <div class="plan-desc">Accelerate with expert coaching, unlimited practice, and a direct path to interviews.</div>
+          <div class="cohort-urgency">🗓 <strong>Cohort 14 starts April 7</strong> — only 6 seats remaining. Next cohort opens in June.</div>
           <button class="btn btn-primary" style="width:100%" onclick="showPage('signup')">Start 7-Day Free Trial</button>
           <div class="plan-divider"></div>
           <ul class="plan-features">
@@ -1387,6 +1572,69 @@
           </ul>
         </div>
       </div>
+
+      <!-- Comparison table -->
+      <div class="compare-wrap reveal">
+        <div class="compare-head">
+          <h3>How does it compare?</h3>
+          <p>Common Sense Wala PM vs. the alternatives most people default to.</p>
+        </div>
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="us">Common Sense Wala PM</th>
+              <th>PM Bootcamp</th>
+              <th>Figuring it out alone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Personalized to your background</td>
+              <td class="us">✅ AI analysis of your exact profile</td>
+              <td>❌ Same curriculum for everyone</td>
+              <td>❌ No guidance at all</td>
+            </tr>
+            <tr>
+              <td>Focused on AI PM specifically</td>
+              <td class="us">✅ Built only for AI PM roles</td>
+              <td>⚠️ Usually generic PM content</td>
+              <td>⚠️ Depends what you find</td>
+            </tr>
+            <tr>
+              <td>Real practice problems</td>
+              <td class="us">✅ 200+ AI PM interview problems</td>
+              <td>✅ Some practice included</td>
+              <td>❌ Hard to find quality material</td>
+            </tr>
+            <tr>
+              <td>Cost</td>
+              <td class="us">✅ Free to start, $39/mo Pro</td>
+              <td>❌ $2,000–$15,000 upfront</td>
+              <td>✅ Free (but your time isn't)</td>
+            </tr>
+            <tr>
+              <td>1-on-1 coaching</td>
+              <td class="us">✅ With actual AI PMs (Pro)</td>
+              <td>⚠️ Varies, often group only</td>
+              <td>❌ None</td>
+            </tr>
+            <tr>
+              <td>Portfolio & artifact building</td>
+              <td class="us">✅ Guided prototype & project work</td>
+              <td>⚠️ Sometimes included</td>
+              <td>❌ You're on your own</td>
+            </tr>
+            <tr>
+              <td>Job referral network</td>
+              <td class="us">✅ Mentor referrals (Pro)</td>
+              <td>⚠️ Depends on cohort size</td>
+              <td>❌ None</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
   </section>
 
@@ -1395,8 +1643,8 @@
     <div class="container">
       <div class="reveal">
         <div class="section-label">Video Stories</div>
-        <h2 class="section-title">Hear it from them directly</h2>
-        <p class="section-sub">Watch real members share their journey from aspiring to hired AI PM — in their own words.</p>
+        <h2 class="section-title">From zero PM experience to hired AI PM</h2>
+        <p class="section-sub">Six people from completely different backgrounds — engineering, marketing, teaching, finance — and what actually moved the needle for each of them.</p>
       </div>
       <div class="video-grid">
         <!-- Card 1 -->
@@ -1405,16 +1653,16 @@
             <div class="video-thumb-bg" style="background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 50%,#7c3aed 100%)">
               <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.15);font-size:4rem;font-weight:900;letter-spacing:-.05em">AS</div>
             </div>
-            <div class="video-overlay">
-              <button class="play-btn">▶</button>
-            </div>
+            <div class="video-overlay"><button class="play-btn">▶</button></div>
             <div class="video-duration">2:34</div>
           </div>
           <div class="video-info">
             <div class="video-name">Aisha Sterling</div>
-            <div class="video-role">Software Engineer → AI PM</div>
-            <div class="video-quote">"The resume feedback was shockingly specific. It told me exactly which projects to lead with and what to cut. 8 months later, I had an offer."</div>
-            <div class="video-outcome">🎉 Hired at Cohere AI</div>
+            <div class="video-role">Software Engineer → AI PM at Cohere AI</div>
+            <div class="video-from">📍 Started with zero PM experience</div>
+            <div class="video-quote">"I'd been an engineer for 4 years and had no idea how to position myself as a PM — let alone an AI PM. The AI analysis told me exactly which projects showed product thinking and which ones I should cut entirely. I rewrote my story, started running user interviews in my spare time, and had an offer 8 months later."</div>
+            <div class="video-turning-point"><strong>What made the difference:</strong> Treating her side project as a product case study, not just a code demo</div>
+            <div class="video-outcome">🎉 Hired at Cohere AI · 8 months</div>
           </div>
         </div>
         <!-- Card 2 -->
@@ -1423,16 +1671,16 @@
             <div class="video-thumb-bg" style="background:linear-gradient(135deg,#312e81 0%,#4f46e5 50%,#2563eb 100%)">
               <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.15);font-size:4rem;font-weight:900;letter-spacing:-.05em">MR</div>
             </div>
-            <div class="video-overlay">
-              <button class="play-btn">▶</button>
-            </div>
+            <div class="video-overlay"><button class="play-btn">▶</button></div>
             <div class="video-duration">3:11</div>
           </div>
           <div class="video-info">
             <div class="video-name">Marcus Reid</div>
-            <div class="video-role">Marketing Manager → AI PM</div>
-            <div class="video-quote">"The cohort accountability was unlike anything. 18 driven people, a mentor who'd been through Google's loop — I landed my role in 6 months."</div>
-            <div class="video-outcome">🎉 Hired at Google DeepMind</div>
+            <div class="video-role">Marketing Manager → AI PM at Google DeepMind</div>
+            <div class="video-from">📍 No technical background, no PM title</div>
+            <div class="video-quote">"Every rejection said the same thing — 'not enough technical depth.' I didn't know how to bridge that gap until the roadmap showed me I didn't need to learn ML, I needed to learn how to talk about it with engineers. The cohort kept me accountable when I wanted to quit. I landed DeepMind's offer 6 months in."</div>
+            <div class="video-turning-point"><strong>What made the difference:</strong> Learning to frame his user research skills as an AI PM superpower, not a gap</div>
+            <div class="video-outcome">🎉 Hired at Google DeepMind · 6 months</div>
           </div>
         </div>
         <!-- Card 3 -->
@@ -1441,16 +1689,74 @@
             <div class="video-thumb-bg" style="background:linear-gradient(135deg,#4c1d95 0%,#7c3aed 50%,#9f5cf7 100%)">
               <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.15);font-size:4rem;font-weight:900;letter-spacing:-.05em">PC</div>
             </div>
-            <div class="video-overlay">
-              <button class="play-btn">▶</button>
-            </div>
+            <div class="video-overlay"><button class="play-btn">▶</button></div>
             <div class="video-duration">2:58</div>
           </div>
           <div class="video-info">
             <div class="video-name">Priya Chen</div>
-            <div class="video-role">UX Researcher → AI PM</div>
-            <div class="video-quote">"I built an AI prototype using their guided framework. That prototype literally came up in my final Anthropic interview. It was a turning point."</div>
-            <div class="video-outcome">🎉 Hired at Anthropic</div>
+            <div class="video-role">UX Researcher → AI PM at Anthropic</div>
+            <div class="video-from">📍 Never shipped a product, strong on research</div>
+            <div class="video-quote">"My gap was obvious — I'd studied users for years but never owned a product decision. The roadmap pushed me to build an AI writing assistant prototype and write a real spec for it. That prototype came up in my final Anthropic interview round. The interviewer said it was the most concrete portfolio work they'd seen from a researcher."</div>
+            <div class="video-turning-point"><strong>What made the difference:</strong> Building a real artifact she could demo, not just talking about research methodology</div>
+            <div class="video-outcome">🎉 Hired at Anthropic · 10 months</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="video-grid video-grid-row2">
+        <!-- Card 4 -->
+        <div class="video-card reveal reveal-delay-1">
+          <div class="video-thumb" onclick="openModal('James Okafor','Finance Analyst → AI PM at Stripe')">
+            <div class="video-thumb-bg" style="background:linear-gradient(135deg,#064e3b 0%,#059669 50%,#0d9488 100%)">
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.15);font-size:4rem;font-weight:900;letter-spacing:-.05em">JO</div>
+            </div>
+            <div class="video-overlay"><button class="play-btn">▶</button></div>
+            <div class="video-duration">3:22</div>
+          </div>
+          <div class="video-info">
+            <div class="video-name">James Okafor</div>
+            <div class="video-role">Finance Analyst → AI PM at Stripe</div>
+            <div class="video-from">📍 No coding, no PM titles, just spreadsheets</div>
+            <div class="video-quote">"I genuinely thought you had to be an engineer to be an AI PM. The analysis was blunt — it said my financial modeling skills were a hidden advantage for AI products in fintech, but I needed to prove I could think in systems. I wrote a teardown of Stripe's fraud detection product, shared it on LinkedIn, and it got 4,000 views. That post got me the recruiter call."</div>
+            <div class="video-turning-point"><strong>What made the difference:</strong> Writing a public product teardown that proved domain expertise without needing a PM title</div>
+            <div class="video-outcome">🎉 Hired at Stripe · 11 months</div>
+          </div>
+        </div>
+        <!-- Card 5 -->
+        <div class="video-card reveal reveal-delay-2">
+          <div class="video-thumb" onclick="openModal('Lena Vasquez','High School Teacher → AI PM at Khan Academy')">
+            <div class="video-thumb-bg" style="background:linear-gradient(135deg,#7c2d12 0%,#ea580c 50%,#f59e0b 100%)">
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.15);font-size:4rem;font-weight:900;letter-spacing:-.05em">LV</div>
+            </div>
+            <div class="video-overlay"><button class="play-btn">▶</button></div>
+            <div class="video-duration">2:47</div>
+          </div>
+          <div class="video-info">
+            <div class="video-name">Lena Vasquez</div>
+            <div class="video-role">High School Teacher → AI PM at Khan Academy</div>
+            <div class="video-from">📍 Non-tech, no corporate experience</div>
+            <div class="video-quote">"I felt completely out of place applying for tech roles. But the roadmap helped me see that 8 years of teaching is product work — you design learning experiences, measure outcomes, and iterate constantly. I used the practice problems to train for PM interviews, did 40+ mock cases, and built a spec for an AI tutoring feature. Khan Academy hired me specifically because I understood the learner."</div>
+            <div class="video-turning-point"><strong>What made the difference:</strong> Reframing classroom experience as user research and iterative product design</div>
+            <div class="video-outcome">🎉 Hired at Khan Academy · 9 months</div>
+          </div>
+        </div>
+        <!-- Card 6 -->
+        <div class="video-card reveal reveal-delay-3">
+          <div class="video-thumb" onclick="openModal('Rohan Mehta','Data Scientist → AI PM at OpenAI')">
+            <div class="video-thumb-bg" style="background:linear-gradient(135deg,#1e1b4b 0%,#4338ca 50%,#0ea5e9 100%)">
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.15);font-size:4rem;font-weight:900;letter-spacing:-.05em">RM</div>
+            </div>
+            <div class="video-overlay"><button class="play-btn">▶</button></div>
+            <div class="video-duration">3:05</div>
+          </div>
+          <div class="video-info">
+            <div class="video-name">Rohan Mehta</div>
+            <div class="video-role">Data Scientist → AI PM at OpenAI</div>
+            <div class="video-from">📍 Deep technical skills, weak on product strategy</div>
+            <div class="video-quote">"I could build ML models but couldn't explain why a feature mattered to users — that's a product problem, not a technical one. My skill gap analysis called it out directly: strong AI depth, weak on prioritization and storytelling. I spent 3 months doing user interviews for a side project and writing 1-pagers. When I interviewed at OpenAI, the PM panel said my thinking was unusually grounded for a technical candidate."</div>
+            <div class="video-turning-point"><strong>What made the difference:</strong> Deliberately practicing user interviews and written product reasoning — not more ML study</div>
+            <div class="video-outcome">🎉 Hired at OpenAI · 7 months</div>
           </div>
         </div>
       </div>
@@ -1542,6 +1848,91 @@
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section id="faq" class="faq-section">
+    <div class="container">
+      <div class="reveal" style="text-align:center">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-title">Questions we get a lot</h2>
+        <p class="section-sub">If yours isn't here, email us at hello@commonsenswalapm.com</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Do I need a technical background to use this?
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">No. The platform is built for people coming from all backgrounds — engineering, marketing, finance, teaching, and more. Your analysis and roadmap are generated based on your specific profile, so someone with zero technical experience gets a different plan than a software engineer. The goal isn't to make everyone an engineer; it's to show you what AI knowledge you actually need for the role you want.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            What exactly is an "AI Product Manager"?
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">An AI PM owns the product strategy for software that uses artificial intelligence — things like recommendation systems, chatbots, image recognition tools, or AI-powered features inside larger apps. The role is the same as a traditional PM (define what to build and why, work with engineers and designers, measure outcomes), but requires enough understanding of how AI models work to make smart product decisions — like knowing when an AI approach is the right tool, or how to handle model failures gracefully.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            How is the roadmap generated? Is it really personalized?
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Yes. When you upload your resume or answer the questionnaire, Claude (Anthropic's AI) analyzes your specific background — your role, industry, tools you've used, education, and target role — and generates a roadmap tailored to your gaps. A software engineer targeting consumer AI gets a completely different plan than a finance analyst targeting enterprise AI tools. The more detail you provide, the more specific the roadmap.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            How long does it realistically take to land an AI PM role?
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">It depends heavily on your starting point and how much time you invest. Based on our alumni data, most people land roles between 6 and 14 months. Engineers with some product exposure tend to be at the shorter end; people with no tech background or PM experience typically take 12–18 months. The timeline your analysis gives you is an honest estimate — we don't believe in false promises. Consistency matters more than intensity.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            What's a cohort, and do I have to join one?
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">A cohort is a small group of 15–20 people on similar AI PM journeys, led by a mentor who is a current or former AI PM. Cohorts meet weekly for live problem-solving, resume reviews, mock interviews, and accountability check-ins. You don't have to join one — the free Starter plan includes 1 cohort session per month so you can try it — but most people find it's the single biggest accelerator. Pro members get unlimited cohort access.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Is the free plan actually useful, or is it just a teaser?
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">The free plan gives you a full AI resume analysis, a personalized roadmap, a readiness timeline, 5 practice problems per month, 1 cohort session, and access to our resource library. That's genuinely useful — many people go from zero clarity to a clear 6-month plan just from the free analysis. The Pro plan unlocks 1-on-1 coaching, unlimited practice, mock interviews, and the job referral network — which matter more once you're actively interviewing.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            What if I don't have a resume? Can I still get an analysis?
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Yes. The dashboard has a Quick Profile option — you answer 10 questions about your background, industry, AI tools you've used, and what kind of AI PM role you want. The analysis is just as specific. You don't need a polished resume to get started.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Can I cancel the Pro plan anytime?
+            <span class="faq-arrow">▼</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Yes, cancel anytime with no penalty. You keep access until the end of your billing period and then drop to the free Starter plan. No contracts, no cancellation fees.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER BAND -->
+  <div class="newsletter-band">
+    <div class="container">
+      <div class="newsletter-inner">
+        <div class="newsletter-text">
+          <h3>Not ready to sign up yet?</h3>
+          <p>Get a free weekly AI PM tip, resource, or job market insight — no spam, unsubscribe anytime.</p>
+        </div>
+        <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+          <input type="email" id="newsletter-email" placeholder="your@email.com" required>
+          <button type="submit">Send me tips →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- CTA BANNER -->
   <div class="container">
     <div class="cta-banner">
@@ -1555,16 +1946,56 @@
 
   <!-- FOOTER -->
   <footer>
-    <div class="container footer-inner">
-      <div class="nav-logo">
-        <div class="logo-icon">💡</div>
-        Common Sense Wala PM
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="nav-logo">
+            <div class="logo-icon">💡</div>
+            Common Sense Wala PM
+          </div>
+          <p class="footer-brand-desc">The only platform purpose-built to take career changers from any background to their first AI PM role.</p>
+          <div class="footer-social">
+            <a href="#" title="LinkedIn">in</a>
+            <a href="#" title="Twitter / X">𝕏</a>
+            <a href="#" title="YouTube">▶</a>
+            <a href="#" title="Discord">💬</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#value">How It Works</a></li>
+            <li><a href="#benefits">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#" onclick="showPage('signup')">Start for Free</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#">AI PM Career Guide</a></li>
+            <li><a href="#">Practice Problems</a></li>
+            <li><a href="#">Resume Templates</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
       </div>
-      <div class="footer-copy">© 2026 Common Sense Wala PM. All rights reserved.</div>
-      <div class="footer-links">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">Contact</a>
+      <div class="footer-bottom-bar">
+        <span>© 2026 Common Sense Wala PM. All rights reserved.</span>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Contact</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -2140,6 +2571,50 @@ themeBtn.addEventListener('click', () => {
 // Init theme
 const saved = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 setTheme(saved);
+
+/* ══════════════════════════════════════════
+   MOBILE NAV
+══════════════════════════════════════════ */
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const btn = document.getElementById('hamburger');
+  const open = menu.classList.toggle('open');
+  btn.classList.toggle('open', open);
+}
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+/* ══════════════════════════════════════════
+   FAQ ACCORDION
+══════════════════════════════════════════ */
+function toggleFaq(qEl) {
+  const item = qEl.closest('.faq-item');
+  const answerEl = item.querySelector('.faq-a');
+  const isOpen = item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-item.open').forEach(el => {
+    el.classList.remove('open');
+    el.querySelector('.faq-a').style.maxHeight = null;
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    answerEl.style.maxHeight = answerEl.scrollHeight + 'px';
+  }
+}
+
+/* ══════════════════════════════════════════
+   NEWSLETTER
+══════════════════════════════════════════ */
+function handleNewsletterSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  btn.textContent = '✓ You\'re subscribed!';
+  btn.style.background = 'var(--green)';
+  btn.disabled = true;
+  document.getElementById('newsletter-email').value = '';
+}
 
 /* ══════════════════════════════════════════
    PAGE NAVIGATION
