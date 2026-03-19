@@ -936,13 +936,11 @@
     .video-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.75rem; margin-top:3rem; }
     .video-card { border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); box-shadow:var(--shadow-sm); background:var(--card); transition:transform .25s,box-shadow .25s; }
     .video-card:hover { transform:translateY(-6px); box-shadow:var(--shadow); }
-    .video-thumb { position:relative; aspect-ratio:16/9; background:var(--bg3); overflow:hidden; cursor:pointer; }
-    .video-thumb-bg { position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .4s; }
-    .video-card:hover .video-thumb-bg { transform:scale(1.05); }
-    .video-overlay { position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.12) 0%,rgba(0,0,0,.55) 100%);display:flex;align-items:center;justify-content:center; }
-    .play-btn { width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.94);display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 6px 24px rgba(0,0,0,.28);transition:transform .2s,box-shadow .2s;border:none;cursor:pointer; }
-    .play-btn:hover { transform:scale(1.12);box-shadow:0 10px 32px rgba(0,0,0,.35); }
-    .video-duration { position:absolute;bottom:.65rem;right:.75rem;background:rgba(0,0,0,.72);color:#fff;font-size:.7rem;font-weight:700;padding:.15rem .5rem;border-radius:5px; }
+    .video-story-header { padding:1.35rem 1.35rem 1.1rem; display:flex; align-items:center; gap:.9rem; }
+    .story-avatar { width:46px; height:46px; border-radius:50%; background:rgba(255,255,255,.18); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:.95rem; flex-shrink:0; border:2px solid rgba(255,255,255,.3); }
+    .story-header-text { color:#fff; }
+    .story-name { font-weight:800; font-size:.95rem; }
+    .story-transition { font-size:.78rem; opacity:.8; margin-top:.1rem; }
     .video-info { padding:1.35rem; }
     .video-name { font-weight:800;font-size:.95rem;margin-bottom:.2rem; }
     .video-role { font-size:.8rem;color:var(--text2);margin-bottom:.5rem; }
@@ -1107,12 +1105,12 @@
     /* ── WHO THIS IS FOR ─────────────────────────────────── */
     .for-section { background:var(--bg2); }
     .for-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin-top:3rem; }
-    .for-card { background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); padding:1.5rem; transition:transform .2s,box-shadow .2s,border-color .2s; }
+    .for-card { background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); padding:1.5rem; transition:transform .2s,box-shadow .2s,border-color .2s; text-align:center; display:flex; flex-direction:column; align-items:center; }
     .for-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); border-color:rgba(37,99,235,.2); }
     .for-icon { font-size:1.75rem; margin-bottom:.75rem; }
     .for-title { font-weight:800; font-size:.95rem; margin-bottom:.4rem; }
     .for-desc { font-size:.83rem; color:var(--text2); line-height:1.65; }
-    .for-badge { display:inline-flex; margin-top:.85rem; align-items:center; gap:.3rem; font-size:.75rem; font-weight:700; color:var(--accent); background:rgba(37,99,235,.08); padding:.22rem .75rem; border-radius:100px; border:1px solid rgba(37,99,235,.15); }
+    .for-badge { display:inline-flex; margin-top:auto; padding-top:.85rem; align-items:center; gap:.3rem; font-size:.75rem; font-weight:700; color:var(--accent); background:rgba(37,99,235,.08); padding:.22rem .75rem; border-radius:100px; border:1px solid rgba(37,99,235,.15); }
     @media (max-width:900px) { .for-grid { grid-template-columns:1fr; } }
 
     /* ── COMPARISON TABLE ───────────────────────────────── */
@@ -1231,13 +1229,14 @@
           <span class="badge">🤖 Built for Aspiring AI PMs</span>
         </div>
         <h1>Your <span class="shimmer-text">AI PM Career,</span> Expertly Navigated</h1>
-        <p class="hero-sub">Get a personalized roadmap powered by insights from <strong>1,000+ real product managers</strong>. Upload your resume and discover the exact steps to land your first AI PM role.</p>
+        <p class="hero-sub">Get an AI-powered career analysis built on patterns from <strong>hundreds of real AI PM career paths</strong>. Upload your resume and get the exact steps to land your first AI PM role — in under 60 seconds.</p>
         <div class="hero-actions">
           <button class="btn btn-primary" onclick="showPage('signup')" style="font-size:1rem;padding:.85rem 2rem;border-radius:100px;">
             🚀 Start Your Journey — Free
           </button>
           <a href="#value" class="btn btn-outline">See How It Works</a>
         </div>
+        <div style="margin-top:1rem;font-size:.82rem;color:var(--text2)">🗓 <strong style="color:var(--accent)">Cohort 14 starts April 7</strong> — only 6 seats remaining · <a href="#pricing" style="color:var(--accent);text-decoration:underline">Reserve yours →</a></div>
       </div>
       <div class="hero-right">
         <div class="hero-card">
@@ -1309,16 +1308,16 @@
     <div class="container">
       <div class="logo-bar-label">Our alumni now work at</div>
       <div class="logo-track">
-        <div class="logo-chip">🔵 Google DeepMind</div>
-        <div class="logo-chip">⬛ OpenAI</div>
-        <div class="logo-chip">🟠 Anthropic</div>
-        <div class="logo-chip">🔵 Meta AI</div>
-        <div class="logo-chip">🪟 Microsoft AI</div>
-        <div class="logo-chip">🟣 Cohere AI</div>
-        <div class="logo-chip">🔵 Stripe</div>
-        <div class="logo-chip">🟢 Khan Academy</div>
-        <div class="logo-chip">🔶 Amazon</div>
-        <div class="logo-chip">🔵 LinkedIn</div>
+        <div class="logo-chip">Google DeepMind</div>
+        <div class="logo-chip">OpenAI</div>
+        <div class="logo-chip">Anthropic</div>
+        <div class="logo-chip">Meta AI</div>
+        <div class="logo-chip">Microsoft AI</div>
+        <div class="logo-chip">Cohere AI</div>
+        <div class="logo-chip">Stripe</div>
+        <div class="logo-chip">Khan Academy</div>
+        <div class="logo-chip">Amazon</div>
+        <div class="logo-chip">LinkedIn</div>
       </div>
     </div>
   </div>
@@ -1378,7 +1377,7 @@
       <div class="reveal" style="text-align:center">
         <div class="section-label">Who It's For</div>
         <h2 class="section-title">You don't need to be a PM to become one</h2>
-        <p class="section-sub">Common Sense Wala PM is purpose-built for career changers. Here's how different backgrounds translate into AI PM strengths.</p>
+        <p class="section-sub" style="margin:0 auto;text-align:center">Common Sense Wala PM is purpose-built for career changers. Here's how different backgrounds translate into AI PM strengths.</p>
       </div>
       <div class="for-grid">
         <div class="for-card reveal reveal-delay-1">
@@ -1454,65 +1453,6 @@
           <div class="step-num">5</div>
           <div class="step-title">Land the Role</div>
           <div class="step-desc">Enter the job market with proof of skills, mentor references, and a polished portfolio</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BENEFITS -->
-  <section id="benefits" class="benefits-section">
-    <div class="container">
-      <div class="section-label">What You Get</div>
-      <h2 class="section-title">Everything you need to break in</h2>
-      <p class="section-sub">Common Sense Wala PM is the only platform purpose-built to take aspiring AI PMs from zero to hired.</p>
-      <div class="benefits-grid">
-        <div class="benefit-card reveal reveal-delay-1">
-          <div class="benefit-icon" style="background:rgba(79,70,229,.1)">🤖</div>
-          <div class="benefit-title">AI-Powered Resume Analysis</div>
-          <div class="benefit-desc">Get line-by-line resume feedback tailored to AI PM job descriptions. Understand exactly which skills to highlight and which gaps to close before your first application.</div>
-          <div class="benefit-tags">
-            <span class="tag">Resume Parser</span><span class="tag">Gap Analysis</span>
-          </div>
-        </div>
-        <div class="benefit-card">
-          <div class="benefit-icon" style="background:rgba(16,185,129,.1)">👥</div>
-          <div class="benefit-title">Mentor Access via Cohorts</div>
-          <div class="benefit-desc">Join structured cohorts of 15–20 aspiring AI PMs, each led by an experienced AI PM mentor. Cohorts meet weekly for live problem-solving, feedback, and accountability.</div>
-          <div class="benefit-tags">
-            <span class="tag">Weekly Sessions</span><span class="tag">500+ Mentors</span>
-          </div>
-        </div>
-        <div class="benefit-card">
-          <div class="benefit-icon" style="background:rgba(245,158,11,.1)">🧩</div>
-          <div class="benefit-title">Real-World PM Challenges</div>
-          <div class="benefit-desc">Practice on 200+ real-world problems sourced from actual AI PM interview loops at Google, Meta, OpenAI, and Anthropic — with worked solutions and expert critique.</div>
-          <div class="benefit-tags">
-            <span class="tag">200+ Problems</span><span class="tag">Expert Feedback</span>
-          </div>
-        </div>
-        <div class="benefit-card">
-          <div class="benefit-icon" style="background:rgba(239,68,68,.1)">🛠️</div>
-          <div class="benefit-title">Build AI Prototypes</div>
-          <div class="benefit-desc">Create real AI product prototypes using guided frameworks. Demonstrate tangible product skills to hiring managers with a portfolio of AI tools you actually built and shipped.</div>
-          <div class="benefit-tags">
-            <span class="tag">Portfolio Projects</span><span class="tag">No-Code + Code</span>
-          </div>
-        </div>
-        <div class="benefit-card">
-          <div class="benefit-icon" style="background:rgba(124,58,237,.10)">📅</div>
-          <div class="benefit-title">Personalized Career Roadmap</div>
-          <div class="benefit-desc">Your roadmap updates as you progress. Every week, get clear, prioritized tasks — courses to take, skills to build, people to connect with, and artifacts to create.</div>
-          <div class="benefit-tags">
-            <span class="tag">Week-by-Week</span><span class="tag">Adaptive</span>
-          </div>
-        </div>
-        <div class="benefit-card">
-          <div class="benefit-icon" style="background:rgba(124,58,237,.11)">📈</div>
-          <div class="benefit-title">AI Readiness Timeline</div>
-          <div class="benefit-desc">Our AI calculates when you'll be job-ready based on your background and pace. See a live confidence meter that updates as you complete milestones and close skill gaps.</div>
-          <div class="benefit-tags">
-            <span class="tag">Timeline Predictor</span><span class="tag">Live Updates</span>
-          </div>
         </div>
       </div>
     </div>
@@ -1649,16 +1589,14 @@
       <div class="video-grid">
         <!-- Card 1 -->
         <div class="video-card reveal reveal-delay-1">
-          <div class="video-thumb" onclick="openModal('Aisha Sterling','Software Engineer → AI PM at Cohere AI')">
-            <div class="video-thumb-bg" style="background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 50%,#7c3aed 100%)">
-              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.15);font-size:4rem;font-weight:900;letter-spacing:-.05em">AS</div>
+          <div class="video-story-header" style="background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 50%,#7c3aed 100%)">
+            <div class="story-avatar">AS</div>
+            <div class="story-header-text">
+              <div class="story-name">Aisha Sterling</div>
+              <div class="story-transition">Software Engineer → AI PM</div>
             </div>
-            <div class="video-overlay"><button class="play-btn">▶</button></div>
-            <div class="video-duration">2:34</div>
           </div>
           <div class="video-info">
-            <div class="video-name">Aisha Sterling</div>
-            <div class="video-role">Software Engineer → AI PM at Cohere AI</div>
             <div class="video-from">📍 Started with zero PM experience</div>
             <div class="video-quote">"I'd been an engineer for 4 years and had no idea how to position myself as a PM — let alone an AI PM. The AI analysis told me exactly which projects showed product thinking and which ones I should cut entirely. I rewrote my story, started running user interviews in my spare time, and had an offer 8 months later."</div>
             <div class="video-turning-point"><strong>What made the difference:</strong> Treating her side project as a product case study, not just a code demo</div>
@@ -1667,16 +1605,14 @@
         </div>
         <!-- Card 2 -->
         <div class="video-card reveal reveal-delay-2">
-          <div class="video-thumb" onclick="openModal('Marcus Reid','Marketing Manager → AI PM at Google DeepMind')">
-            <div class="video-thumb-bg" style="background:linear-gradient(135deg,#312e81 0%,#4f46e5 50%,#2563eb 100%)">
-              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.15);font-size:4rem;font-weight:900;letter-spacing:-.05em">MR</div>
+          <div class="video-story-header" style="background:linear-gradient(135deg,#312e81 0%,#4f46e5 50%,#2563eb 100%)">
+            <div class="story-avatar">MR</div>
+            <div class="story-header-text">
+              <div class="story-name">Marcus Reid</div>
+              <div class="story-transition">Marketing Manager → AI PM</div>
             </div>
-            <div class="video-overlay"><button class="play-btn">▶</button></div>
-            <div class="video-duration">3:11</div>
           </div>
           <div class="video-info">
-            <div class="video-name">Marcus Reid</div>
-            <div class="video-role">Marketing Manager → AI PM at Google DeepMind</div>
             <div class="video-from">📍 No technical background, no PM title</div>
             <div class="video-quote">"Every rejection said the same thing — 'not enough technical depth.' I didn't know how to bridge that gap until the roadmap showed me I didn't need to learn ML, I needed to learn how to talk about it with engineers. The cohort kept me accountable when I wanted to quit. I landed DeepMind's offer 6 months in."</div>
             <div class="video-turning-point"><strong>What made the difference:</strong> Learning to frame his user research skills as an AI PM superpower, not a gap</div>
@@ -1685,16 +1621,14 @@
         </div>
         <!-- Card 3 -->
         <div class="video-card reveal reveal-delay-3">
-          <div class="video-thumb" onclick="openModal('Priya Chen','UX Researcher → AI PM at Anthropic')">
-            <div class="video-thumb-bg" style="background:linear-gradient(135deg,#4c1d95 0%,#7c3aed 50%,#9f5cf7 100%)">
-              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.15);font-size:4rem;font-weight:900;letter-spacing:-.05em">PC</div>
+          <div class="video-story-header" style="background:linear-gradient(135deg,#4c1d95 0%,#7c3aed 50%,#9f5cf7 100%)">
+            <div class="story-avatar">PC</div>
+            <div class="story-header-text">
+              <div class="story-name">Priya Chen</div>
+              <div class="story-transition">UX Researcher → AI PM</div>
             </div>
-            <div class="video-overlay"><button class="play-btn">▶</button></div>
-            <div class="video-duration">2:58</div>
           </div>
           <div class="video-info">
-            <div class="video-name">Priya Chen</div>
-            <div class="video-role">UX Researcher → AI PM at Anthropic</div>
             <div class="video-from">📍 Never shipped a product, strong on research</div>
             <div class="video-quote">"My gap was obvious — I'd studied users for years but never owned a product decision. The roadmap pushed me to build an AI writing assistant prototype and write a real spec for it. That prototype came up in my final Anthropic interview round. The interviewer said it was the most concrete portfolio work they'd seen from a researcher."</div>
             <div class="video-turning-point"><strong>What made the difference:</strong> Building a real artifact she could demo, not just talking about research methodology</div>
@@ -1707,16 +1641,14 @@
       <div class="video-grid video-grid-row2">
         <!-- Card 4 -->
         <div class="video-card reveal reveal-delay-1">
-          <div class="video-thumb" onclick="openModal('James Okafor','Finance Analyst → AI PM at Stripe')">
-            <div class="video-thumb-bg" style="background:linear-gradient(135deg,#064e3b 0%,#059669 50%,#0d9488 100%)">
-              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.15);font-size:4rem;font-weight:900;letter-spacing:-.05em">JO</div>
+          <div class="video-story-header" style="background:linear-gradient(135deg,#064e3b 0%,#059669 50%,#0d9488 100%)">
+            <div class="story-avatar">JO</div>
+            <div class="story-header-text">
+              <div class="story-name">James Okafor</div>
+              <div class="story-transition">Finance Analyst → AI PM</div>
             </div>
-            <div class="video-overlay"><button class="play-btn">▶</button></div>
-            <div class="video-duration">3:22</div>
           </div>
           <div class="video-info">
-            <div class="video-name">James Okafor</div>
-            <div class="video-role">Finance Analyst → AI PM at Stripe</div>
             <div class="video-from">📍 No coding, no PM titles, just spreadsheets</div>
             <div class="video-quote">"I genuinely thought you had to be an engineer to be an AI PM. The analysis was blunt — it said my financial modeling skills were a hidden advantage for AI products in fintech, but I needed to prove I could think in systems. I wrote a teardown of Stripe's fraud detection product, shared it on LinkedIn, and it got 4,000 views. That post got me the recruiter call."</div>
             <div class="video-turning-point"><strong>What made the difference:</strong> Writing a public product teardown that proved domain expertise without needing a PM title</div>
@@ -1725,36 +1657,32 @@
         </div>
         <!-- Card 5 -->
         <div class="video-card reveal reveal-delay-2">
-          <div class="video-thumb" onclick="openModal('Lena Vasquez','High School Teacher → AI PM at Khan Academy')">
-            <div class="video-thumb-bg" style="background:linear-gradient(135deg,#7c2d12 0%,#ea580c 50%,#f59e0b 100%)">
-              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.15);font-size:4rem;font-weight:900;letter-spacing:-.05em">LV</div>
+          <div class="video-story-header" style="background:linear-gradient(135deg,#7c2d12 0%,#ea580c 50%,#f59e0b 100%)">
+            <div class="story-avatar">LV</div>
+            <div class="story-header-text">
+              <div class="story-name">Lena Vasquez</div>
+              <div class="story-transition">High School Teacher → AI PM</div>
             </div>
-            <div class="video-overlay"><button class="play-btn">▶</button></div>
-            <div class="video-duration">2:47</div>
           </div>
           <div class="video-info">
-            <div class="video-name">Lena Vasquez</div>
-            <div class="video-role">High School Teacher → AI PM at Khan Academy</div>
             <div class="video-from">📍 Non-tech, no corporate experience</div>
-            <div class="video-quote">"I felt completely out of place applying for tech roles. But the roadmap helped me see that 8 years of teaching is product work — you design learning experiences, measure outcomes, and iterate constantly. I used the practice problems to train for PM interviews, did 40+ mock cases, and built a spec for an AI tutoring feature. Khan Academy hired me specifically because I understood the learner."</div>
+            <div class="video-quote">"I felt completely out of place applying for tech roles. But the roadmap helped me see that 8 years of teaching is product work — you design learning experiences, measure outcomes, and iterate constantly. I did 40+ mock cases and built a spec for an AI tutoring feature. Khan Academy hired me specifically because I understood the learner."</div>
             <div class="video-turning-point"><strong>What made the difference:</strong> Reframing classroom experience as user research and iterative product design</div>
             <div class="video-outcome">🎉 Hired at Khan Academy · 9 months</div>
           </div>
         </div>
         <!-- Card 6 -->
         <div class="video-card reveal reveal-delay-3">
-          <div class="video-thumb" onclick="openModal('Rohan Mehta','Data Scientist → AI PM at OpenAI')">
-            <div class="video-thumb-bg" style="background:linear-gradient(135deg,#1e1b4b 0%,#4338ca 50%,#0ea5e9 100%)">
-              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:rgba(255,255,255,.15);font-size:4rem;font-weight:900;letter-spacing:-.05em">RM</div>
+          <div class="video-story-header" style="background:linear-gradient(135deg,#1e1b4b 0%,#4338ca 50%,#0ea5e9 100%)">
+            <div class="story-avatar">RM</div>
+            <div class="story-header-text">
+              <div class="story-name">Rohan Mehta</div>
+              <div class="story-transition">Data Scientist → AI PM</div>
             </div>
-            <div class="video-overlay"><button class="play-btn">▶</button></div>
-            <div class="video-duration">3:05</div>
           </div>
           <div class="video-info">
-            <div class="video-name">Rohan Mehta</div>
-            <div class="video-role">Data Scientist → AI PM at OpenAI</div>
             <div class="video-from">📍 Deep technical skills, weak on product strategy</div>
-            <div class="video-quote">"I could build ML models but couldn't explain why a feature mattered to users — that's a product problem, not a technical one. My skill gap analysis called it out directly: strong AI depth, weak on prioritization and storytelling. I spent 3 months doing user interviews for a side project and writing 1-pagers. When I interviewed at OpenAI, the PM panel said my thinking was unusually grounded for a technical candidate."</div>
+            <div class="video-quote">"I could build ML models but couldn't explain why a feature mattered to users — that's a product problem, not a technical one. My skill gap analysis called it out: strong AI depth, weak on prioritization and storytelling. I spent 3 months doing user interviews and writing 1-pagers. When I interviewed at OpenAI, the PM panel said my thinking was unusually grounded for a technical candidate."</div>
             <div class="video-turning-point"><strong>What made the difference:</strong> Deliberately practicing user interviews and written product reasoning — not more ML study</div>
             <div class="video-outcome">🎉 Hired at OpenAI · 7 months</div>
           </div>
@@ -1770,44 +1698,6 @@
       <h2 class="section-title">Real people, real outcomes</h2>
       <p class="section-sub">From software engineers to marketing managers — here's how Common Sense Wala PM changed careers.</p>
       <div class="testimonials-grid">
-        <div class="testi-card">
-          <div class="testi-stars">★★★★★</div>
-          <div class="testi-quote">"I had 5 years of backend engineering and zero idea how to reframe my skills for a PM role. Common Sense Wala PM's resume analysis was shockingly specific — it told me exactly which projects to highlight and which bullet points were hurting me. Eight months later, I'm a PM at a Series B AI startup."</div>
-          <div class="testi-author">
-            <div class="testi-avatar" style="background:linear-gradient(135deg,#2d22f0,#7c3aed)">AS</div>
-            <div>
-              <div class="testi-name">Aisha Sterling</div>
-              <div class="testi-role">Software Engineer → AI PM</div>
-              <div class="testi-outcome">🎉 Hired at Cohere AI</div>
-            </div>
-          </div>
-        </div>
-        <div class="testi-card">
-          <div class="testi-stars">★★★★★</div>
-          <div class="testi-quote">"The cohort experience was unlike anything else. Being in a group with 18 other people who were just as hungry as me — and getting real talk from a mentor who'd been through the Google PM loop — that accountability made all the difference. I landed my role in 6 months."</div>
-          <div class="testi-author">
-            <div class="testi-avatar" style="background:linear-gradient(135deg,#7c3aed,#9f5cf7)">MR</div>
-            <div>
-              <div class="testi-name">Marcus Reid</div>
-              <div class="testi-role">Marketing Manager → AI PM</div>
-              <div class="testi-outcome">🎉 Hired at Google DeepMind</div>
-            </div>
-          </div>
-        </div>
-        <div class="testi-card">
-          <div class="testi-stars">★★★★★</div>
-          <div class="testi-quote">"I come from a non-technical background — I was a UX researcher. Common Sense Wala PM told me my biggest gap was understanding how ML models fail in production. They gave me a 3-week learning plan and I built an AI prototype using the guided framework. That prototype literally came up in my final interview."</div>
-          <div class="testi-author">
-            <div class="testi-avatar" style="background:linear-gradient(135deg,#1d4ed8,#2563eb)">PC</div>
-            <div>
-              <div class="testi-name">Priya Chen</div>
-              <div class="testi-role">UX Researcher → AI PM</div>
-              <div class="testi-outcome">🎉 Hired at Anthropic</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonials-grid" style="margin-top:1.5rem">
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
           <div class="testi-quote">"The AI timeline calculator felt like magic at first. It said 9 months to job-ready — I was skeptical. I followed the roadmap to the letter and got an offer at month 8. The step-by-step nature of the plan meant I never felt lost, even coming from a finance background."</div>
@@ -1854,7 +1744,7 @@
       <div class="reveal" style="text-align:center">
         <div class="section-label">FAQ</div>
         <h2 class="section-title">Questions we get a lot</h2>
-        <p class="section-sub">If yours isn't here, email us at hello@commonsenswalapm.com</p>
+        <p class="section-sub" style="margin:0 auto">If yours isn't here, use the Contact link in the footer and we'll get back to you.</p>
       </div>
       <div class="faq-list">
         <div class="faq-item">
@@ -1936,10 +1826,10 @@
   <!-- CTA BANNER -->
   <div class="container">
     <div class="cta-banner">
-      <h2>Ready to find your path into AI PM?</h2>
-      <p>Upload your resume today and get your personalized roadmap in under 60 seconds — completely free.</p>
+      <h2>Your background isn't a barrier. Find out exactly where you stand.</h2>
+      <p>Engineers, teachers, finance analysts, and marketers have all landed AI PM roles through this platform. Get your personalized analysis in under 60 seconds — completely free, no credit card needed.</p>
       <button class="btn btn-white" onclick="showPage('signup')" style="font-size:1rem;padding:.85rem 2rem;border-radius:100px;">
-        🚀 Start for Free — No Credit Card
+        🚀 Get My Free Analysis
       </button>
     </div>
   </div>
@@ -1954,12 +1844,6 @@
             Common Sense Wala PM
           </div>
           <p class="footer-brand-desc">The only platform purpose-built to take career changers from any background to their first AI PM role.</p>
-          <div class="footer-social">
-            <a href="#" title="LinkedIn">in</a>
-            <a href="#" title="Twitter / X">𝕏</a>
-            <a href="#" title="YouTube">▶</a>
-            <a href="#" title="Discord">💬</a>
-          </div>
         </div>
         <div class="footer-col">
           <h4>Product</h4>
