@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Common Sense Wala PM — Navigate Your AI PM Career</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap');
 
     /* ── THEME TOKENS ───────────────────────────────────── */
     :root {
@@ -131,7 +131,7 @@
     }
 
     .section-label {
-      display: inline-flex; align-items: center; gap: .5rem;
+      display: block; text-align: center;
       font-size: .75rem; font-weight: 800; letter-spacing: .12em;
       text-transform: uppercase;
       background: var(--grad);
@@ -144,8 +144,13 @@
       font-weight: 900; line-height: 1.15;
       margin-bottom: 1rem;
       letter-spacing: -.02em;
+      text-align: center;
     }
-    .section-sub { font-size: 1.05rem; color: var(--text2); max-width: 600px; line-height: 1.75; }
+    .section-sub { font-size: 1.05rem; color: var(--text2); max-width: 640px; line-height: 1.75; text-align: center; margin: 0 auto; }
+    /* "Why" section uses a 2-col layout — keep its header left-aligned */
+    .value-right .section-label { display: inline-flex; text-align: left; }
+    .value-right .section-title { text-align: left; }
+    .value-right .section-sub { text-align: left; margin: 0; }
     section { padding: 5.5rem 0; }
 
     /* ── NAVBAR ─────────────────────────────────────────── */
@@ -472,18 +477,23 @@
       font-size: .75rem; font-weight: 800; letter-spacing: .04em;
       box-shadow: 0 4px 16px rgba(37,99,235,.32);
     }
-    .plan-name { font-size: .75rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
-    .plan-price {
-      font-size: 3rem; font-weight: 900; margin: .6rem 0 .1rem;
-      line-height: 1; letter-spacing: -.04em;
+    .price-card {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
-    .plan-price span { font-size: .95rem; font-weight: 500; color: var(--text2); }
-    .plan-desc { font-size: .87rem; color: var(--text2); margin-bottom: 1.6rem; line-height: 1.6; }
+    .plan-name { font-size: .72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .12em; font-family: 'DM Sans', sans-serif; }
+    .plan-price {
+      font-size: 3rem; font-weight: 700; margin: .6rem 0 .1rem;
+      line-height: 1; letter-spacing: -.02em; font-family: 'DM Sans', sans-serif;
+    }
+    .plan-price span { font-size: .95rem; font-weight: 400; color: var(--text2); }
+    .plan-desc { font-size: .9rem; color: var(--text2); margin-bottom: 1.6rem; line-height: 1.65; font-family: 'DM Sans', sans-serif; }
     .plan-divider { height: 1px; background: var(--border); margin: 1.3rem 0; }
     .plan-features { list-style: none; }
     .plan-features li {
       display: flex; align-items: flex-start; gap: .65rem;
-      padding: .5rem 0; font-size: .87rem; color: var(--text2);
+      padding: .55rem 0; font-size: .9rem; color: var(--text2);
+      font-family: 'DM Sans', sans-serif; line-height: 1.5;
     }
     .plan-features li .fi { color: var(--green); flex-shrink: 0; margin-top: .15rem; font-style: normal; }
     .plan-features li .fi.no { color: var(--muted); }
@@ -1176,9 +1186,77 @@
     .footer-bottom-links a:hover { color:var(--accent); }
     @media (max-width:768px) { .footer-top { grid-template-columns:1fr 1fr; } }
     @media (max-width:500px) { .footer-top { grid-template-columns:1fr; } .footer-bottom-bar { flex-direction:column; text-align:center; } }
+
+    /* ── ANNOUNCE BAR ─────────────────────────────────── */
+    .announce-bar {
+      background: var(--grad); color: #fff;
+      text-align: center; padding: .55rem 1rem;
+      font-size: .8rem; font-weight: 600; letter-spacing: .01em;
+      position: relative; z-index: 200;
+    }
+    .announce-bar a { color: #fff; text-decoration: underline; font-weight: 700; }
+    .announce-bar strong { font-weight: 900; }
+
+    /* ── HOW IT WORKS ─────────────────────────────────── */
+    .how-section { background: var(--bg2); padding: 4rem 0; }
+    .how-steps {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; margin-top: 2.5rem; position: relative;
+    }
+    .how-step {
+      text-align: center; padding: 2rem 2rem 2rem;
+      position: relative;
+    }
+    .how-step:not(:last-child)::after {
+      content: '→';
+      position: absolute; right: -0.5rem; top: 2.75rem;
+      font-size: 1.6rem; color: var(--muted); z-index: 1;
+    }
+    .how-num {
+      width: 3rem; height: 3rem; border-radius: 50%;
+      background: var(--grad); color: #fff;
+      font-size: 1.1rem; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+      box-shadow: 0 4px 16px rgba(37,99,235,.3);
+    }
+    .how-step-icon { font-size: 1.6rem; margin-bottom: .75rem; }
+    .how-step-title { font-size: 1rem; font-weight: 800; margin-bottom: .5rem; }
+    .how-step-desc { font-size: .87rem; color: var(--text2); line-height: 1.65; }
+    @media (max-width: 768px) {
+      .how-steps { grid-template-columns: 1fr; }
+      .how-step:not(:last-child)::after { content: '↓'; right: 50%; top: auto; bottom: -.75rem; transform: translateX(50%); }
+    }
+
+    /* ── MOBILE STICKY CTA ────────────────────────────── */
+    .mobile-cta-bar {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0;
+      padding: .85rem 1.25rem;
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -4px 20px rgba(0,0,0,.12);
+      z-index: 150;
+    }
+    .mobile-cta-bar button { width: 100%; font-size: .95rem; padding: .8rem; }
+    .mobile-cta-bar p { text-align: center; font-size: .73rem; color: var(--muted); margin-top: .4rem; }
+    @media (max-width: 768px) { .mobile-cta-bar { display: block; } body { padding-bottom: 80px; } }
+
+    /* ── TRUST SIGNALS ────────────────────────────────── */
+    .plan-trust {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: .5rem 1rem; margin-top: .85rem;
+      font-size: .76rem; color: var(--muted);
+    }
+    .plan-trust span { display: flex; align-items: center; gap: .3rem; }
   </style>
 </head>
 <body>
+
+<!-- ═══════════════════════════════════ ANNOUNCE BAR ═══ -->
+<div class="announce-bar">
+  🚀 AI PM hiring is up 3x year-over-year — <a href="#pricing">your roadmap starts here →</a>
+</div>
 
 <!-- ═══════════════════════════════════ NAVBAR ═══ -->
 <nav id="main-nav">
@@ -1197,7 +1275,7 @@
     <div class="nav-actions">
       <button class="theme-toggle" id="theme-toggle" title="Toggle theme">🌙</button>
       <button class="btn btn-ghost" onclick="showPage('signup')">Log in</button>
-      <button class="btn btn-primary" onclick="showPage('signup')">Get Started Free</button>
+      <button class="btn btn-primary" onclick="showPage('signup')">Get My Free Analysis</button>
       <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMobileMenu()">
         <span></span><span></span><span></span>
       </button>
@@ -1212,7 +1290,7 @@
   <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
   <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
   <a href="#testimonials" onclick="closeMobileMenu()">Stories</a>
-  <a href="#" onclick="showPage('signup');closeMobileMenu()" style="color:var(--accent);margin-top:.25rem">Get Started Free →</a>
+  <a href="#" onclick="showPage('signup');closeMobileMenu()" style="color:var(--accent);margin-top:.25rem">Get My Free Analysis →</a>
 </div>
 
 <!-- ═══════════════════════════════════ LANDING PAGE ═══ -->
@@ -1226,17 +1304,17 @@
     <div class="container hero-grid">
       <div class="hero-left">
         <div class="hero-eyebrow">
-          <span class="badge">🤖 Built for Aspiring AI PMs</span>
+          <span class="badge">🤖 The only platform built exclusively for AI PM career changers</span>
         </div>
-        <h1>Your <span class="shimmer-text">AI PM Career,</span> Expertly Navigated</h1>
-        <p class="hero-sub">Get an AI-powered career analysis built on patterns from <strong>hundreds of real AI PM career paths</strong>. Upload your resume and get the exact steps to land your first AI PM role — in under 60 seconds.</p>
+        <h1>Break into AI PM —<br><span class="shimmer-text">without the guesswork.</span></h1>
+        <p class="hero-sub">Get an AI-powered career analysis built on patterns from <strong>1,000+ real AI PM career paths</strong>. Upload your resume and get the exact steps to land your first AI PM role — in under 60 seconds.</p>
         <div class="hero-actions">
           <button class="btn btn-primary" onclick="showPage('signup')" style="font-size:1rem;padding:.85rem 2rem;border-radius:100px;">
-            🚀 Start Your Journey — Free
+            🚀 Get My Free Analysis
           </button>
           <a href="#value" class="btn btn-outline">See How It Works</a>
         </div>
-        <div style="margin-top:1rem;font-size:.82rem;color:var(--text2)">🗓 <strong style="color:var(--accent)">Cohort 14 starts April 7</strong> — only 6 seats remaining · <a href="#pricing" style="color:var(--accent);text-decoration:underline">Reserve yours →</a></div>
+        <div style="margin-top:1rem;font-size:.8rem;color:var(--muted)">✓ Free to start &nbsp;·&nbsp; ✓ No credit card required &nbsp;·&nbsp; ✓ Results in 60 seconds</div>
       </div>
       <div class="hero-right">
         <div class="hero-card">
@@ -1266,7 +1344,7 @@
           </div>
           <div class="hero-card-footer">
             <div class="pulse-dot"></div>
-            Estimated readiness: <strong>~6 months</strong> with focused prep
+            Estimated readiness: <strong>~7 months</strong> with focused prep
           </div>
           <button onclick="showPage('signup')" style="margin-top:1rem;width:100%;padding:.6rem;border-radius:100px;background:var(--grad);color:#fff;font-size:.82rem;font-weight:700;border:none;cursor:pointer;">See your own analysis →</button>
         </div>
@@ -1278,16 +1356,16 @@
   <div class="stats-bar reveal">
     <div class="container stats-inner">
       <div class="stat-item">
-        <span class="stat-num" data-target="1000+">1,000+</span>
-        <div class="stat-label">PMs surveyed & analyzed</div>
+        <span class="stat-num" data-target="312+">312+</span>
+        <div class="stat-label">Program alumni</div>
       </div>
       <div class="stat-item">
         <span class="stat-num" data-target="94%">94%</span>
         <div class="stat-label">Found roles within 12 months</div>
       </div>
       <div class="stat-item">
-        <span class="stat-num" data-target="500+">500+</span>
-        <div class="stat-label">Mentors available</div>
+        <span class="stat-num" data-target="30+">30+</span>
+        <div class="stat-label">Active AI PM mentors</div>
       </div>
       <div class="stat-item">
         <span class="stat-num" data-target="200+">200+</span>
@@ -1295,11 +1373,11 @@
       </div>
       <div class="stat-item">
         <span class="stat-num" data-target="87%">87%</span>
-        <div class="stat-label">Avg salary increase after program</div>
+        <div class="stat-label">Reported a salary increase after landing their role</div>
       </div>
     </div>
     <div class="container" style="text-align:center;margin-top:.75rem">
-      <span style="font-size:.72rem;color:var(--muted)">Based on a survey of 312 program alumni, Jan 2025. Individual results vary.</span>
+      <span style="font-size:.72rem;color:var(--muted)">Outcome stats based on a survey of 312 program alumni, Jan 2025. Career path data drawn from analysis of 1,000+ publicly available AI PM profiles. Individual results vary.</span>
     </div>
   </div>
 
@@ -1322,6 +1400,40 @@
     </div>
   </div>
 
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <div class="container">
+      <div style="text-align:center">
+        <div class="section-label">How It Works</div>
+        <h2 class="section-title">From resume to roadmap in <span style="color:var(--accent)">60 seconds</span></h2>
+        <p class="section-sub">Three steps. No fluff. Just a clear, personalised path to your first AI PM role.</p>
+      </div>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="how-num">1</div>
+          <div class="how-step-icon">📄</div>
+          <div class="how-step-title">Upload your resume</div>
+          <div class="how-step-desc">No resume? No problem — answer 10 quick questions about your background instead. Takes under 2 minutes either way.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-num">2</div>
+          <div class="how-step-icon">🤖</div>
+          <div class="how-step-title">Get your AI analysis</div>
+          <div class="how-step-desc">Our AI scores your readiness, pinpoints your exact skill gaps, and predicts how long it will take you to land a role — based on 1,000+ real AI PM paths.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-num">3</div>
+          <div class="how-step-icon">🗺️</div>
+          <div class="how-step-title">Follow your week-by-week plan</div>
+          <div class="how-step-desc">Get a personalised roadmap with specific actions, practice problems, and milestones — so you always know exactly what to do next.</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:2.5rem">
+        <button class="btn btn-primary" onclick="showPage('signup')" style="font-size:.97rem;padding:.8rem 2rem">Get My Free Analysis →</button>
+      </div>
+    </div>
+  </section>
+
   <!-- VALUE PROP -->
   <section id="value">
     <div class="container value-grid">
@@ -1330,42 +1442,42 @@
           <div class="insight-row">
             <div class="insight-icon" style="background:rgba(79,70,229,.1)">📊</div>
             <div class="insight-text">
-              <strong>1,000+ PM career paths analyzed</strong>
-              <span>Patterns from Google, OpenAI, Anthropic, Meta, Microsoft & more</span>
+              <strong>1,000+ AI PM career paths studied</strong>
+              <span>We know what separates hired from rejected — at every top AI company</span>
             </div>
           </div>
           <div class="insight-row">
             <div class="insight-icon" style="background:rgba(16,185,129,.1)">🎯</div>
             <div class="insight-text">
-              <strong>Personalized gap analysis</strong>
-              <span>Pinpoint exactly what skills are missing for your target role</span>
+              <strong>Brutally honest gap analysis</strong>
+              <span>Know exactly what's holding you back — and how to fix it fast</span>
             </div>
           </div>
           <div class="insight-row">
             <div class="insight-icon" style="background:rgba(245,158,11,.1)">🗺️</div>
             <div class="insight-text">
-              <strong>Step-by-step guidance</strong>
-              <span>Week-by-week action plans, not vague advice</span>
+              <strong>Week-by-week action plan</strong>
+              <span>No vague advice — just the next concrete step, every week</span>
             </div>
           </div>
           <div class="insight-row">
             <div class="insight-icon" style="background:rgba(239,68,68,.1)">⏱️</div>
             <div class="insight-text">
-              <strong>AI timeline predictor</strong>
-              <span>Know exactly when you'll be job-ready, with milestones</span>
+              <strong>Your personal readiness timeline</strong>
+              <span>See your realistic job-ready date — with milestones to hit along the way</span>
             </div>
           </div>
         </div>
       </div>
       <div class="value-right">
         <div class="section-label">Why Common Sense Wala PM</div>
-        <h2 class="section-title">Guidance built from <span style="color:var(--accent)">real PM journeys</span></h2>
-        <p class="section-sub">Most career resources give you generic advice. Common Sense Wala PM is different. Every recommendation we make is backed by the actual career trajectories of 1,000+ product managers who broke into AI PM roles — across every background.</p>
+        <h2 class="section-title">Stop guessing. Start with a <span style="color:var(--accent)">plan that works.</span></h2>
+        <p class="section-sub">Most career resources hand you a generic checklist and wish you luck. We don't. Every roadmap we generate is built from the real career paths of 1,000+ people who actually broke into AI PM roles — so you get the exact moves that work, not the ones that sound good on a blog post.</p>
         <ul class="value-list">
-          <li><div class="check">✓</div> Insights aggregated from PMs at OpenAI, Google DeepMind, Anthropic, Meta AI, Microsoft and 200+ other companies</li>
-          <li><div class="check">✓</div> Recommendations tailored to your specific background — engineering, design, business, or no tech experience</li>
-          <li><div class="check">✓</div> Continuously updated as the AI PM landscape evolves — no stale advice</li>
-          <li><div class="check">✓</div> Benchmarked against actual hiring criteria from top AI companies</li>
+          <li><div class="check">✓</div> Patterns drawn from successful PMs at OpenAI, Google DeepMind, Anthropic, Meta AI, Microsoft, and 200+ other companies</li>
+          <li><div class="check">✓</div> Your roadmap is built around your background — not a stranger's. Engineer, analyst, marketer, or career changer: your plan is different from everyone else's</li>
+          <li><div class="check">✓</div> Updated continuously as hiring standards shift — you'll never be working off outdated advice</li>
+          <li><div class="check">✓</div> Every milestone is benchmarked against what top AI companies actually screen for in interviews</li>
         </ul>
       </div>
     </div>
@@ -1376,85 +1488,48 @@
     <div class="container">
       <div class="reveal" style="text-align:center">
         <div class="section-label">Who It's For</div>
-        <h2 class="section-title">You don't need to be a PM to become one</h2>
-        <p class="section-sub" style="margin:0 auto;text-align:center">Common Sense Wala PM is purpose-built for career changers. Here's how different backgrounds translate into AI PM strengths.</p>
+        <h2 class="section-title">Your current background is closer than you think</h2>
+        <p class="section-sub">Every background brings something AI PM hiring teams are actively looking for. Here's what yours already gives you — and the exact gap we'll help you close.</p>
       </div>
       <div class="for-grid">
         <div class="for-card reveal reveal-delay-1">
           <div class="for-icon">💻</div>
           <div class="for-title">Software Engineers & Developers</div>
           <div class="for-desc">You have the deepest technical credibility of any AI PM candidate. Your gap is usually product thinking, user empathy, and learning to stop building and start deciding. We'll close that fast.</div>
-          <div class="for-badge">Avg. time to ready: 6–9 months</div>
+          <div class="for-badge">Average time to achieve goal: 5–9 months</div>
         </div>
         <div class="for-card reveal reveal-delay-2">
           <div class="for-icon">📊</div>
           <div class="for-title">Data Scientists & Analysts</div>
           <div class="for-desc">You speak the language of AI models better than most PMs. What's missing is product strategy, stakeholder communication, and a portfolio that shows you can define what to build — not just analyze what was built.</div>
-          <div class="for-badge">Avg. time to ready: 5–8 months</div>
+          <div class="for-badge">Average time to achieve goal: 5–8 months</div>
         </div>
         <div class="for-card reveal reveal-delay-3">
           <div class="for-icon">📣</div>
           <div class="for-title">Marketing & Growth Professionals</div>
           <div class="for-desc">You understand users, conversion, and messaging — skills AI PMs desperately need. Your job is to build enough technical fluency to collaborate confidently with engineers and earn credibility in the room.</div>
-          <div class="for-badge">Avg. time to ready: 9–12 months</div>
+          <div class="for-badge">Average time to achieve goal: 6–9 months</div>
         </div>
         <div class="for-card reveal reveal-delay-1">
           <div class="for-icon">💼</div>
           <div class="for-title">Business Analysts & Consultants</div>
           <div class="for-desc">Problem structuring, stakeholder management, and slide decks — you've been doing PM work without the title. You need a portfolio of product artifacts and hands-on AI tool experience to make the case official.</div>
-          <div class="for-badge">Avg. time to ready: 7–10 months</div>
+          <div class="for-badge">Average time to achieve goal: 6–8 months</div>
         </div>
         <div class="for-card reveal reveal-delay-2">
           <div class="for-icon">🏦</div>
           <div class="for-title">Finance & Banking Professionals</div>
           <div class="for-desc">Deep domain knowledge in one of AI's fastest-growing sectors. Fintech and enterprise AI teams actively seek PMs who understand risk, compliance, and financial workflows. Your industry background is a genuine edge.</div>
-          <div class="for-badge">Avg. time to ready: 10–14 months</div>
+          <div class="for-badge">Average time to achieve goal: 9–11 months</div>
         </div>
         <div class="for-card reveal reveal-delay-3">
           <div class="for-icon">🎓</div>
           <div class="for-title">Students & Recent Graduates</div>
           <div class="for-desc">No years of experience, but no bad habits either. The roadmap focuses on building proof of product thinking from scratch — side projects, teardowns, and AI prototypes that make you competitive against candidates with 5 years of the wrong experience.</div>
-          <div class="for-badge">Avg. time to ready: 8–12 months</div>
+          <div class="for-badge">Average time to achieve goal: 7–10 months</div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section style="background:var(--bg2)">
-    <div class="container">
-      <div style="text-align:center;margin-bottom:1rem">
-        <div class="section-label">How It Works</div>
-        <h2 class="section-title">From resume to <span style="color:var(--accent)">offer letter</span></h2>
-        <p class="section-sub" style="margin:0 auto">Five steps designed by real AI PMs to systematically get you interview-ready and confident.</p>
-      </div>
-      <div class="steps-grid">
-        <div class="step-item">
-          <div class="step-num">1</div>
-          <div class="step-title">Upload Resume</div>
-          <div class="step-desc">Our AI parser reads your background in seconds and identifies your starting point</div>
-        </div>
-        <div class="step-item">
-          <div class="step-num">2</div>
-          <div class="step-title">Get Your Analysis</div>
-          <div class="step-desc">Receive detailed, specific feedback — not generic tips — with a scored skill breakdown</div>
-        </div>
-        <div class="step-item">
-          <div class="step-num">3</div>
-          <div class="step-title">Follow Your Roadmap</div>
-          <div class="step-desc">Execute a custom week-by-week plan with resources, projects, and milestones</div>
-        </div>
-        <div class="step-item">
-          <div class="step-num">4</div>
-          <div class="step-title">Practice & Build</div>
-          <div class="step-desc">Solve real PM problems, build AI prototypes, and get expert feedback from mentors</div>
-        </div>
-        <div class="step-item">
-          <div class="step-num">5</div>
-          <div class="step-title">Land the Role</div>
-          <div class="step-desc">Enter the job market with proof of skills, mentor references, and a polished portfolio</div>
-        </div>
-      </div>
+      <p style="text-align:center;font-size:.73rem;color:var(--muted);margin-top:1.5rem">Based on alumni data. Individual results vary depending on background and hours invested per week.</p>
     </div>
   </section>
 
@@ -1463,14 +1538,19 @@
     <div class="container" style="text-align:center">
       <div class="section-label">Pricing</div>
       <h2 class="section-title">Start free. Accelerate with Pro.</h2>
-      <p class="section-sub" style="margin:0 auto 1rem">No credit card required to start. Upgrade anytime when you want 1-on-1 support.</p>
+      <p class="section-sub" style="margin:0 auto 1rem">No credit card required to start. Upgrade anytime when you want 1-on-1 support.</p><!-- margin-bottom kept intentionally -->
       <div class="pricing-grid">
         <!-- FREE -->
         <div class="price-card">
           <div class="plan-name">Starter</div>
-          <div class="plan-price">$0 <span>/ forever</span></div>
+          <div class="plan-price">FREE</div>
           <div class="plan-desc">Everything you need to start your AI PM journey and build momentum.</div>
-          <button class="btn btn-outline" style="width:100%" onclick="showPage('signup')">Get Started Free</button>
+          <button class="btn btn-outline" style="width:100%" onclick="showPage('signup')">Get My Free Analysis</button>
+          <div class="plan-trust">
+            <span>✓ No credit card</span>
+            <span>✓ Free forever</span>
+            <span>✓ Instant access</span>
+          </div>
           <div class="plan-divider"></div>
           <ul class="plan-features">
             <li><span class="fi">✓</span> AI resume analysis &amp; scoring</li>
@@ -1495,6 +1575,11 @@
           <div class="plan-desc">Accelerate with expert coaching, unlimited practice, and a direct path to interviews.</div>
           <div class="cohort-urgency">🗓 <strong>Cohort 14 starts April 7</strong> — only 6 seats remaining. Next cohort opens in June.</div>
           <button class="btn btn-primary" style="width:100%" onclick="showPage('signup')">Start 7-Day Free Trial</button>
+          <div class="plan-trust">
+            <span>✓ 7-day free trial</span>
+            <span>✓ Cancel anytime</span>
+            <span>✓ No contracts</span>
+          </div>
           <div class="plan-divider"></div>
           <ul class="plan-features">
             <li><span class="fi">✓</span> Everything in Starter</li>
@@ -1525,7 +1610,7 @@
               <th></th>
               <th class="us">Common Sense Wala PM</th>
               <th>PM Bootcamp</th>
-              <th>Figuring it out alone</th>
+              <th>Generic PM Course</th>
             </tr>
           </thead>
           <tbody>
@@ -1533,43 +1618,43 @@
               <td>Personalized to your background</td>
               <td class="us">✅ AI analysis of your exact profile</td>
               <td>❌ Same curriculum for everyone</td>
-              <td>❌ No guidance at all</td>
+              <td>❌ One-size-fits-all curriculum</td>
             </tr>
             <tr>
               <td>Focused on AI PM specifically</td>
               <td class="us">✅ Built only for AI PM roles</td>
               <td>⚠️ Usually generic PM content</td>
-              <td>⚠️ Depends what you find</td>
+              <td>❌ Rarely AI PM specific</td>
             </tr>
             <tr>
               <td>Real practice problems</td>
               <td class="us">✅ 200+ AI PM interview problems</td>
               <td>✅ Some practice included</td>
-              <td>❌ Hard to find quality material</td>
+              <td>⚠️ Generic case studies only</td>
             </tr>
             <tr>
               <td>Cost</td>
               <td class="us">✅ Free to start, $39/mo Pro</td>
               <td>❌ $2,000–$15,000 upfront</td>
-              <td>✅ Free (but your time isn't)</td>
+              <td>❌ $500–$3,000 upfront</td>
             </tr>
             <tr>
               <td>1-on-1 coaching</td>
               <td class="us">✅ With actual AI PMs (Pro)</td>
               <td>⚠️ Varies, often group only</td>
-              <td>❌ None</td>
+              <td>❌ No coaching included</td>
             </tr>
             <tr>
               <td>Portfolio & artifact building</td>
               <td class="us">✅ Guided prototype & project work</td>
               <td>⚠️ Sometimes included</td>
-              <td>❌ You're on your own</td>
+              <td>❌ Not included</td>
             </tr>
             <tr>
               <td>Job referral network</td>
               <td class="us">✅ Mentor referrals (Pro)</td>
               <td>⚠️ Depends on cohort size</td>
-              <td>❌ None</td>
+              <td>❌ No network access</td>
             </tr>
           </tbody>
         </table>
@@ -1582,7 +1667,7 @@
   <section class="video-testi-section">
     <div class="container">
       <div class="reveal">
-        <div class="section-label">Video Stories</div>
+        <div class="section-label">Success Stories</div>
         <h2 class="section-title">From zero PM experience to hired AI PM</h2>
         <p class="section-sub">Six people from completely different backgrounds — engineering, marketing, teaching, finance — and what actually moved the needle for each of them.</p>
       </div>
@@ -1694,9 +1779,9 @@
   <!-- TESTIMONIALS -->
   <section id="testimonials" class="testimonials-section">
     <div class="container">
-      <div class="section-label">Success Stories</div>
+      <div class="section-label">In Their Own Words</div>
       <h2 class="section-title">Real people, real outcomes</h2>
-      <p class="section-sub">From software engineers to marketing managers — here's how Common Sense Wala PM changed careers.</p>
+      <p class="section-sub">From software engineers to marketing managers — here's what members say about making the switch.</p>
       <div class="testimonials-grid">
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
@@ -1744,61 +1829,61 @@
       <div class="reveal" style="text-align:center">
         <div class="section-label">FAQ</div>
         <h2 class="section-title">Questions we get a lot</h2>
-        <p class="section-sub" style="margin:0 auto">If yours isn't here, use the Contact link in the footer and we'll get back to you.</p>
+        <p class="section-sub">If yours isn't here, use the Contact link in the footer and we'll get back to you.</p>
       </div>
       <div class="faq-list">
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            Do I need a technical background to use this?
+            Do I need technical experience to sign up?
             <span class="faq-arrow">▼</span>
           </div>
           <div class="faq-a"><div class="faq-a-inner">No. The platform is built for people coming from all backgrounds — engineering, marketing, finance, teaching, and more. Your analysis and roadmap are generated based on your specific profile, so someone with zero technical experience gets a different plan than a software engineer. The goal isn't to make everyone an engineer; it's to show you what AI knowledge you actually need for the role you want.</div></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            What exactly is an "AI Product Manager"?
+            What does an AI Product Manager actually do?
             <span class="faq-arrow">▼</span>
           </div>
           <div class="faq-a"><div class="faq-a-inner">An AI PM owns the product strategy for software that uses artificial intelligence — things like recommendation systems, chatbots, image recognition tools, or AI-powered features inside larger apps. The role is the same as a traditional PM (define what to build and why, work with engineers and designers, measure outcomes), but requires enough understanding of how AI models work to make smart product decisions — like knowing when an AI approach is the right tool, or how to handle model failures gracefully.</div></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            How is the roadmap generated? Is it really personalized?
+            How is my roadmap generated, and is it truly personalized?
             <span class="faq-arrow">▼</span>
           </div>
           <div class="faq-a"><div class="faq-a-inner">Yes. When you upload your resume or answer the questionnaire, Claude (Anthropic's AI) analyzes your specific background — your role, industry, tools you've used, education, and target role — and generates a roadmap tailored to your gaps. A software engineer targeting consumer AI gets a completely different plan than a finance analyst targeting enterprise AI tools. The more detail you provide, the more specific the roadmap.</div></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            How long does it realistically take to land an AI PM role?
+            How long does it take to land an AI PM role?
             <span class="faq-arrow">▼</span>
           </div>
-          <div class="faq-a"><div class="faq-a-inner">It depends heavily on your starting point and how much time you invest. Based on our alumni data, most people land roles between 6 and 14 months. Engineers with some product exposure tend to be at the shorter end; people with no tech background or PM experience typically take 12–18 months. The timeline your analysis gives you is an honest estimate — we don't believe in false promises. Consistency matters more than intensity.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">It depends on your starting point and how much time you invest. Based on our alumni data: engineers typically land roles in 5–9 months, data scientists in 5–8 months, business analysts in 6–8 months, marketing and operations backgrounds in 6–9 months, finance backgrounds in 9–11 months, and students or career changers in 7–11 months. The timeline your analysis generates is calibrated to your specific background — we don't believe in false promises. Consistency matters more than intensity.</div></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            What's a cohort, and do I have to join one?
+            What is a cohort, and do I have to join one?
             <span class="faq-arrow">▼</span>
           </div>
           <div class="faq-a"><div class="faq-a-inner">A cohort is a small group of 15–20 people on similar AI PM journeys, led by a mentor who is a current or former AI PM. Cohorts meet weekly for live problem-solving, resume reviews, mock interviews, and accountability check-ins. You don't have to join one — the free Starter plan includes 1 cohort session per month so you can try it — but most people find it's the single biggest accelerator. Pro members get unlimited cohort access.</div></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            Is the free plan actually useful, or is it just a teaser?
+            Is the free plan genuinely useful, or is it just a preview?
             <span class="faq-arrow">▼</span>
           </div>
-          <div class="faq-a"><div class="faq-a-inner">The free plan gives you a full AI resume analysis, a personalized roadmap, a readiness timeline, 5 practice problems per month, 1 cohort session, and access to our resource library. That's genuinely useful — many people go from zero clarity to a clear 6-month plan just from the free analysis. The Pro plan unlocks 1-on-1 coaching, unlimited practice, mock interviews, and the job referral network — which matter more once you're actively interviewing.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">The free plan gives you a full AI resume analysis, a personalized roadmap, a readiness timeline, 5 practice problems per month, 1 cohort session, and access to our resource library. That's genuinely useful — many people go from zero clarity to a personalised, week-by-week plan just from the free analysis. The Pro plan unlocks 1-on-1 coaching, unlimited practice, mock interviews, and the job referral network — which matter more once you're actively interviewing.</div></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            What if I don't have a resume? Can I still get an analysis?
+            Can I get an analysis without a resume?
             <span class="faq-arrow">▼</span>
           </div>
           <div class="faq-a"><div class="faq-a-inner">Yes. The dashboard has a Quick Profile option — you answer 10 questions about your background, industry, AI tools you've used, and what kind of AI PM role you want. The analysis is just as specific. You don't need a polished resume to get started.</div></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
-            Can I cancel the Pro plan anytime?
+            Can I cancel my Pro plan at any time?
             <span class="faq-arrow">▼</span>
           </div>
           <div class="faq-a"><div class="faq-a-inner">Yes, cancel anytime with no penalty. You keep access until the end of your billing period and then drop to the free Starter plan. No contracts, no cancellation fees.</div></div>
@@ -1807,27 +1892,11 @@
     </div>
   </section>
 
-  <!-- NEWSLETTER BAND -->
-  <div class="newsletter-band">
-    <div class="container">
-      <div class="newsletter-inner">
-        <div class="newsletter-text">
-          <h3>Not ready to sign up yet?</h3>
-          <p>Get a free weekly AI PM tip, resource, or job market insight — no spam, unsubscribe anytime.</p>
-        </div>
-        <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
-          <input type="email" id="newsletter-email" placeholder="your@email.com" required>
-          <button type="submit">Send me tips →</button>
-        </form>
-      </div>
-    </div>
-  </div>
-
   <!-- CTA BANNER -->
   <div class="container">
     <div class="cta-banner">
-      <h2>Your background isn't a barrier. Find out exactly where you stand.</h2>
-      <p>Engineers, teachers, finance analysts, and marketers have all landed AI PM roles through this platform. Get your personalized analysis in under 60 seconds — completely free, no credit card needed.</p>
+      <h2>Your background is not the problem. Not knowing your next step is.</h2>
+      <p>Engineers, teachers, finance analysts, and marketers have all landed AI PM roles through this platform. Find out exactly where you stand — and what to do next — in under 60 seconds. Free, no credit card required.</p>
       <button class="btn btn-white" onclick="showPage('signup')" style="font-size:1rem;padding:.85rem 2rem;border-radius:100px;">
         🚀 Get My Free Analysis
       </button>
@@ -1846,43 +1915,50 @@
           <p class="footer-brand-desc">The only platform purpose-built to take career changers from any background to their first AI PM role.</p>
         </div>
         <div class="footer-col">
-          <h4>Product</h4>
+          <h4>Navigate</h4>
           <ul>
-            <li><a href="#value">How It Works</a></li>
-            <li><a href="#benefits">Features</a></li>
+            <li><a href="#value">Why Us</a></li>
+            <li><a href="#for-section">Who It's For</a></li>
             <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#" onclick="showPage('signup')">Start for Free</a></li>
+            <li><a href="#testimonials">Success Stories</a></li>
+            <li><a href="#faq">FAQ</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Resources</h4>
+          <h4>Platform</h4>
           <ul>
-            <li><a href="#">AI PM Career Guide</a></li>
-            <li><a href="#">Practice Problems</a></li>
-            <li><a href="#">Resume Templates</a></li>
-            <li><a href="#">Blog</a></li>
+            <li><a href="#" onclick="showPage('signup')">Get My Free Analysis</a></li>
+            <li><a href="#" onclick="showPage('signup')">Practice Problems</a></li>
+            <li><a href="#" onclick="showPage('signup')">My Roadmap</a></li>
+            <li><a href="#" onclick="showPage('signup')">Join a Cohort</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Company</h4>
           <ul>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#value" onclick="document.getElementById('value').scrollIntoView({behavior:'smooth'});return false;">About Us</a></li>
+            <li><a href="mailto:hello@commonsensewalapm.com">Contact</a></li>
+            <li><a href="#" onclick="showLegalModal('privacy');return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="showLegalModal('terms');return false;">Terms of Service</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom-bar">
         <span>© 2026 Common Sense Wala PM. All rights reserved.</span>
         <div class="footer-bottom-links">
-          <a href="#">Privacy</a>
-          <a href="#">Terms</a>
-          <a href="#">Contact</a>
+          <a href="#" onclick="showLegalModal('privacy');return false;">Privacy</a>
+          <a href="#" onclick="showLegalModal('terms');return false;">Terms</a>
+          <a href="mailto:hello@commonsensewalapm.com">Contact</a>
         </div>
       </div>
     </div>
   </footer>
+
+<!-- Mobile sticky CTA -->
+<div class="mobile-cta-bar" id="mobile-cta-bar">
+  <button class="btn btn-primary" onclick="showPage('signup')">🚀 Get My Free Analysis</button>
+  <p>No credit card · Free forever · Results in 60 sec</p>
+</div>
 
 </div><!-- /page-landing -->
 
@@ -1896,7 +1972,7 @@
       <ul class="auth-perks">
         <li>AI-powered resume analysis &amp; scoring</li>
         <li>Week-by-week personalized roadmap</li>
-        <li>Access to 500+ PM mentors in cohorts</li>
+        <li>Access to a community of 1,000+ PMs</li>
         <li>200+ real AI PM practice problems</li>
         <li>Build &amp; showcase AI prototypes</li>
         <li>Job-readiness timeline predictor</li>
@@ -1996,7 +2072,7 @@
             <div class="dash-card-sub">Upload resume to unlock</div>
           </div>
           <div class="dash-card">
-            <div class="dash-card-label">Est. Time to Ready</div>
+            <div class="dash-card-label">Est. Time to Get Ready</div>
             <div class="dash-card-val">—</div>
             <div class="dash-card-sub">Upload resume to calculate</div>
           </div>
@@ -2010,19 +2086,38 @@
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
             <div>
               <div class="dash-card-label">Next Step</div>
-              <div style="font-weight:800;font-size:1.05rem;margin-top:.25rem">Upload your resume to get started</div>
+              <div style="font-weight:800;font-size:1.05rem;margin-top:.25rem">Get your personalised AI analysis</div>
             </div>
-            <div style="font-size:2rem">📄</div>
+            <div style="font-size:2rem">🤖</div>
           </div>
-          <p style="font-size:.88rem;color:var(--text2);margin-bottom:1rem">Your personalized roadmap, readiness score, and timeline will appear once our AI analyzes your background.</p>
-          <button class="btn btn-primary" onclick="switchPanel('resume',null)">Upload Resume Now →</button>
+          <p style="font-size:.88rem;color:var(--text2);margin-bottom:1.25rem">Your personalised roadmap, readiness score, and timeline will appear once our AI analyses your background. Choose whichever option works for you.</p>
+          <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+            <button class="btn btn-primary" onclick="switchPanel('resume',null);setInputMode('upload')">📄 Upload Resume</button>
+            <button class="btn btn-outline" onclick="switchPanel('resume',null);setInputMode('questions')">💬 Answer Questions Instead</button>
+          </div>
+          <p style="font-size:.75rem;color:var(--muted);margin-top:.75rem">No resume? No problem — answering 10 quick questions takes under 2 minutes and gives the same result.</p>
         </div>
       </div>
 
       <!-- RESUME PANEL -->
       <div class="dash-panel" id="panel-resume">
-        <h2 style="font-weight:800;font-size:1.3rem;margin-bottom:.5rem">Resume Analysis</h2>
-        <p style="color:var(--text2);font-size:.9rem;margin-bottom:1.5rem">Upload your resume and our AI will analyze it against 1,000+ AI PM profiles to give you precise, actionable feedback.</p>
+        <h2 style="font-weight:800;font-size:1.3rem;margin-bottom:.5rem">Get Your AI PM Roadmap</h2>
+        <p style="color:var(--text2);font-size:.9rem;margin-bottom:1.25rem">Choose one option — pick whichever is easier. You only need to do one.</p>
+
+        <!-- Toggle Tabs -->
+        <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem" id="input-mode-tabs">
+          <button id="tab-upload" onclick="setInputMode('upload')" style="flex:1;padding:1rem 1.25rem;border-radius:1rem;border:2.5px solid #2563eb;background:#2563eb;color:#fff;font-weight:800;font-size:1rem;cursor:pointer;transition:all .2s;letter-spacing:-.01em;box-shadow:0 4px 14px rgba(37,99,235,.35)">
+            📄 Upload My Resume
+          </button>
+          <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <div style="width:1px;height:18px;background:var(--border)"></div>
+            <span style="font-size:.7rem;font-weight:900;letter-spacing:.1em;color:var(--text2);text-transform:uppercase">or</span>
+            <div style="width:1px;height:18px;background:var(--border)"></div>
+          </div>
+          <button id="tab-questions" onclick="setInputMode('questions')" style="flex:1;padding:1rem 1.25rem;border-radius:1rem;border:2.5px solid #d1d5db;background:#fff;color:#111;font-weight:800;font-size:1rem;cursor:pointer;transition:all .2s;letter-spacing:-.01em">
+            💬 Answer Questions Instead
+          </button>
+        </div>
 
         <!-- Upload Zone -->
         <div id="upload-zone-wrap">
@@ -2043,202 +2138,86 @@
           </div>
         </div>
 
-        <!-- OR divider -->
-        <div style="display:flex;align-items:center;gap:1rem;margin:1.5rem 0">
-          <div style="flex:1;height:1px;background:var(--border)"></div>
-          <span style="font-size:.85rem;color:var(--text2);font-weight:600">OR answer a few questions instead</span>
-          <div style="flex:1;height:1px;background:var(--border)"></div>
-        </div>
-
         <!-- Quick Questions Form -->
-        <div id="quick-form-wrap" style="background:var(--card);border:1px solid var(--border);border-radius:1.25rem;padding:1.5rem">
+        <div id="quick-form-wrap" class="hidden" style="background:var(--card);border:1px solid var(--border);border-radius:1.25rem;padding:1.5rem">
           <div style="font-weight:700;font-size:1rem;margin-bottom:.25rem">Tell us about yourself</div>
-          <div style="font-size:.85rem;color:var(--text2);margin-bottom:1.5rem">Answer 10 quick questions — no resume needed. The more you share, the more specific your analysis will be.</div>
+          <div style="font-size:.85rem;color:var(--text2);margin-bottom:1.5rem">6 questions — no resume needed. Write freely, the more detail you share, the more tailored your roadmap will be.</div>
 
-          <!-- Section: Your Background -->
-          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--primary);opacity:.8;margin-bottom:.75rem">Your Background</div>
-          <div style="display:grid;gap:1rem;margin-bottom:1.5rem">
+          <!-- Section: Your Starting Point -->
+          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--primary);opacity:.8;margin-bottom:.75rem">Your Starting Point</div>
+          <div style="display:grid;gap:1.25rem;margin-bottom:1.75rem">
 
             <div>
-              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What is your current job title or role?</label>
-              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Pick the closest match — this helps us understand what skills you're starting from.</div>
-              <select id="q-role" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
-                <option value="">Select your role…</option>
-                <option value="Software Engineer / Developer">Software Engineer / Developer — I write code professionally</option>
-                <option value="Data Scientist / Analyst">Data Scientist / Analyst — I work with data, models, or reports</option>
-                <option value="Product Manager (non-AI)">Product Manager (non-AI) — I already manage products, just not AI ones</option>
-                <option value="UX Designer / Researcher">UX Designer / Researcher — I design or research user experiences</option>
-                <option value="Business Analyst / Consultant">Business Analyst / Consultant — I analyze problems and advise on solutions</option>
-                <option value="Marketing / Growth">Marketing / Growth — I work on acquiring or retaining users/customers</option>
-                <option value="Finance / Banking">Finance / Banking — I work in financial services or operations</option>
-                <option value="Student / Recent Graduate">Student / Recent Graduate — I'm in school or recently finished</option>
-                <option value="Other">Other — my role doesn't fit the options above</option>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What is your current role, and how long have you been doing it?</label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Include your job title, industry, and rough years of experience. This is our baseline for understanding where you're starting from.</div>
+              <select id="q-role" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none;margin-bottom:.6rem">
+                <option value="">Select the closest match…</option>
+                <option value="Software Engineer / Developer">Software Engineer / Developer</option>
+                <option value="Data Scientist / Analyst">Data Scientist / Analyst</option>
+                <option value="Product Manager (non-AI)">Product Manager (non-AI)</option>
+                <option value="UX Designer / Researcher">UX Designer / Researcher</option>
+                <option value="Business Analyst / Consultant">Business Analyst / Consultant</option>
+                <option value="Marketing / Growth">Marketing / Growth</option>
+                <option value="Finance / Banking">Finance / Banking</option>
+                <option value="Student / Recent Graduate">Student / Recent Graduate</option>
+                <option value="Other">Other</option>
               </select>
-            </div>
-
-            <div>
-              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">How many years of total work experience do you have?</label>
-              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Count all full-time jobs, not just tech. Internships and freelance work count too.</div>
               <select id="q-exp" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
-                <option value="">Select experience…</option>
-                <option value="Less than 1 year">Less than 1 year — just starting out</option>
-                <option value="1–2 years">1–2 years — early in my career</option>
-                <option value="3–5 years">3–5 years — a few years in</option>
-                <option value="6–10 years">6–10 years — mid-career</option>
-                <option value="10+ years">10+ years — senior / experienced</option>
+                <option value="">Years of total work experience…</option>
+                <option value="Less than 1 year">Less than 1 year</option>
+                <option value="1–2 years">1–2 years</option>
+                <option value="3–5 years">3–5 years</option>
+                <option value="6–10 years">6–10 years</option>
+                <option value="10+ years">10+ years</option>
               </select>
             </div>
 
             <div>
-              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What industry do you currently work in?</label>
-              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">The sector your current or most recent employer operates in.</div>
-              <select id="q-industry" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
-                <option value="">Select industry…</option>
-                <option value="Technology / Software">Technology / Software — e.g. SaaS, apps, platforms</option>
-                <option value="Healthcare / Biotech">Healthcare / Biotech — e.g. hospitals, pharma, medical devices</option>
-                <option value="Finance / Fintech">Finance / Fintech — e.g. banking, insurance, payments</option>
-                <option value="E-commerce / Retail">E-commerce / Retail — e.g. online shopping, consumer goods</option>
-                <option value="Consulting / Professional Services">Consulting / Professional Services — e.g. strategy, IT consulting</option>
-                <option value="Education">Education — e.g. schools, edtech, training</option>
-                <option value="Government / Non-profit">Government / Non-profit — e.g. public sector, NGOs</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-
-            <div>
-              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What is your educational background?</label>
-              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Your highest degree or how you primarily learned your skills — no degree required for AI PM.</div>
-              <select id="q-edu" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
-                <option value="">Select background…</option>
-                <option value="Computer Science / Engineering">Computer Science / Engineering degree</option>
-                <option value="Business / MBA">Business degree or MBA</option>
-                <option value="Data Science / Statistics">Data Science, Statistics, or Math degree</option>
-                <option value="Science / Research">Science or Research degree (biology, physics, etc.)</option>
-                <option value="Humanities / Social Sciences">Humanities, Social Sciences, or Liberal Arts</option>
-                <option value="Self-taught / Bootcamp">Self-taught, bootcamp, or online certifications</option>
-                <option value="Other">Other</option>
-              </select>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">Describe what you actually do day-to-day in your current role.</label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">What problems do you solve? Who do you work with? What decisions do you make? This helps us find the PM skills already hidden in your work.</div>
+              <textarea id="q-daytoday" rows="3" placeholder="e.g. I analyse customer data to find patterns, build dashboards for the sales team, and present findings to stakeholders every week. I often spot product issues before anyone else but I'm not the one who decides what to do about them…" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none;resize:vertical;font-family:inherit;box-sizing:border-box"></textarea>
             </div>
 
           </div>
 
-          <!-- Section: Your Technical Experience -->
-          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--primary);opacity:.8;margin-bottom:.75rem">Your Technical Experience</div>
-          <div style="display:grid;gap:1rem;margin-bottom:1.5rem">
+          <!-- Section: Your Product Instincts -->
+          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--primary);opacity:.8;margin-bottom:.75rem">Your Product Instincts</div>
+          <div style="display:grid;gap:1.25rem;margin-bottom:1.75rem">
 
             <div>
-              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">How much do you know about AI and machine learning?</label>
-              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">AI = systems that can learn and make decisions. ML = the technique behind most modern AI. Be honest — there's no wrong answer.</div>
-              <select id="q-ai" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
-                <option value="">Select level…</option>
-                <option value="No experience — I am a complete beginner">Just starting — I haven't used AI tools for work yet</option>
-                <option value="Basic awareness — I know what LLMs and AI tools are">I use AI tools — I regularly use ChatGPT, Copilot, or similar for work</option>
-                <option value="Intermediate — I have used AI APIs or built ML models">I've built with AI — I've connected to AI APIs or worked hands-on with data models</option>
-                <option value="Advanced — I work with AI/ML systems professionally">I work in AI — I build or manage AI/ML systems as part of my job</option>
-              </select>
-            </div>
-
-            <div>
-              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">Which of these AI tools or technologies have you actually used?</label>
-              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Only check things you've genuinely worked with — not just heard of. It's fine to check none.</div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem .75rem;margin-top:.25rem">
-                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
-                  <input type="checkbox" id="q-tool-llm" value="ChatGPT / Claude APIs (prompt engineering)" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
-                  <span><strong>ChatGPT / Claude APIs</strong><br><span style="font-size:.75rem;opacity:.7">Using AI chat tools via API or for automation</span></span>
-                </label>
-                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
-                  <input type="checkbox" id="q-tool-python" value="Python for data/ML" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
-                  <span><strong>Python for data / ML</strong><br><span style="font-size:.75rem;opacity:.7">Writing Python scripts for analysis or modeling</span></span>
-                </label>
-                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
-                  <input type="checkbox" id="q-tool-ml" value="ML frameworks (TensorFlow, PyTorch, scikit-learn)" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
-                  <span><strong>ML frameworks</strong><br><span style="font-size:.75rem;opacity:.7">TensorFlow, PyTorch, or scikit-learn — training AI models</span></span>
-                </label>
-                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
-                  <input type="checkbox" id="q-tool-rag" value="LangChain / LlamaIndex / RAG systems" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
-                  <span><strong>LangChain / RAG systems</strong><br><span style="font-size:.75rem;opacity:.7">Building AI apps that search and reason over documents</span></span>
-                </label>
-                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
-                  <input type="checkbox" id="q-tool-sql" value="SQL & data analysis tools" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
-                  <span><strong>SQL &amp; data analysis</strong><br><span style="font-size:.75rem;opacity:.7">Querying databases or using tools like Excel, Tableau, Looker</span></span>
-                </label>
-                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
-                  <input type="checkbox" id="q-tool-cloud" value="Cloud AI services (AWS SageMaker, GCP Vertex, Azure AI)" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
-                  <span><strong>Cloud AI services</strong><br><span style="font-size:.75rem;opacity:.7">AWS, Google Cloud, or Azure AI platforms</span></span>
-                </label>
-                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
-                  <input type="checkbox" id="q-tool-none" value="None yet" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
-                  <span><strong>None of the above</strong><br><span style="font-size:.75rem;opacity:.7">That's totally fine — you can still become an AI PM</span></span>
-                </label>
-              </div>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">Have you ever influenced a product, feature, or process decision — even informally?</label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">It doesn't have to be a formal PM role. Think: suggesting a change that got built, running a user test, writing a spec, or convincing your team to do something differently. Tell us what happened.</div>
+              <textarea id="q-pm" rows="3" placeholder="e.g. I noticed users were dropping off at the checkout step, flagged it to the team, and wrote up a short doc on what I thought was causing it. The PM used it to prioritise a redesign. OR: Nothing like this yet — I've never been in a position to influence product decisions." style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none;resize:vertical;font-family:inherit;box-sizing:border-box"></textarea>
             </div>
 
           </div>
 
-          <!-- Section: Your PM Goals -->
-          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--primary);opacity:.8;margin-bottom:.75rem">Your Product Management Goals</div>
-          <div style="display:grid;gap:1rem">
+          <!-- Section: Your AI Experience -->
+          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--primary);opacity:.8;margin-bottom:.75rem">Your AI Experience</div>
+          <div style="display:grid;gap:1.25rem;margin-bottom:1.75rem">
 
             <div>
-              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">Have you done any product management work before?</label>
-              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">A Product Manager (PM) decides what a product should do and why. They work between engineering, design, and business teams.</div>
-              <select id="q-pm" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
-                <option value="">Select option…</option>
-                <option value="No PM experience at all">No — I haven't done any product management work</option>
-                <option value="Informally — I have done some product thinking or side projects">A little — I've done product thinking, side projects, or case studies informally</option>
-                <option value="Some PM tasks in my current role (e.g. roadmaps, specs, user research)">Some — I write specs, run user research, or help shape roadmaps in my current job</option>
-                <option value="Full PM experience in a non-AI product">Yes — I'm already a PM, just not on an AI product</option>
-              </select>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What is your honest relationship with AI right now?</label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Tell us what tools, projects, or concepts you've worked with — or why you haven't engaged with AI much yet. No experience is fine; we just need to know where you're starting.</div>
+              <textarea id="q-ai" rows="3" placeholder="e.g. I use ChatGPT daily for writing and code reviews, and I've built a small Python script that calls the OpenAI API. I understand what LLMs are but I've never trained a model. OR: Honestly I've barely touched AI tools — I know they exist but haven't used them in my work yet." style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none;resize:vertical;font-family:inherit;box-sizing:border-box"></textarea>
+            </div>
+
+          </div>
+
+          <!-- Section: Your Goal -->
+          <div style="font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--primary);opacity:.8;margin-bottom:.75rem">Your Goal</div>
+          <div style="display:grid;gap:1.25rem">
+
+            <div>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What kind of AI PM role are you aiming for, and what's drawing you to it?</label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Be as specific as you can — company type, product area, industry. The more precise your goal, the more targeted your roadmap will be.</div>
+              <textarea id="q-target" rows="3" placeholder="e.g. I want to be a PM at a mid-size AI startup building tools for healthcare. I'm drawn to it because I've worked in hospitals and I think AI is being applied badly in that space — I want to be the person who does it right. OR: I'm not sure yet — I just know I want to work on AI products and get away from pure data analysis." style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none;resize:vertical;font-family:inherit;box-sizing:border-box"></textarea>
             </div>
 
             <div>
-              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What kind of AI PM role do you want?</label>
-              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">AI PM roles vary a lot — from consumer apps to back-end infrastructure. Pick the one that excites you most.</div>
-              <select id="q-target" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none">
-                <option value="">Select target role…</option>
-                <option value="Consumer AI products (apps, assistants)">Consumer AI products — e.g. ChatGPT, Google Photos, Spotify recommendations</option>
-                <option value="Enterprise / B2B AI software">Business AI software — e.g. Salesforce AI, enterprise copilots, workflow tools</option>
-                <option value="AI infrastructure & developer tools">AI infrastructure &amp; developer tools — e.g. model APIs, MLOps platforms, SDKs</option>
-                <option value="Internal AI tooling / automation">Internal AI / automation — building AI tools for your own company's teams</option>
-                <option value="Not sure yet — any AI PM role">Not sure yet — I'm open to any AI PM opportunity</option>
-              </select>
-            </div>
-
-            <div>
-              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What are you already doing to prepare for an AI PM role?</label>
-              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Check everything that applies — this helps us see what's working and what gaps to fill.</div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem .75rem;margin-top:.25rem">
-                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
-                  <input type="checkbox" id="q-prep-courses" value="Taking online courses (Coursera, fast.ai, etc.)" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
-                  <span><strong>Online courses</strong><br><span style="font-size:.75rem;opacity:.7">Coursera, fast.ai, Udemy, YouTube, etc.</span></span>
-                </label>
-                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
-                  <input type="checkbox" id="q-prep-projects" value="Building AI side projects" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
-                  <span><strong>Building AI side projects</strong><br><span style="font-size:.75rem;opacity:.7">Making something with AI, even a small prototype</span></span>
-                </label>
-                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
-                  <input type="checkbox" id="q-prep-network" value="Networking & informational interviews" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
-                  <span><strong>Networking &amp; coffee chats</strong><br><span style="font-size:.75rem;opacity:.7">Talking to current AI PMs or attending events</span></span>
-                </label>
-                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
-                  <input type="checkbox" id="q-prep-reading" value="Reading PM books / newsletters" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
-                  <span><strong>Reading books / newsletters</strong><br><span style="font-size:.75rem;opacity:.7">Lenny's Newsletter, PM books, AI news, etc.</span></span>
-                </label>
-                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
-                  <input type="checkbox" id="q-prep-oss" value="Contributing to open-source / writing" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
-                  <span><strong>Writing or public projects</strong><br><span style="font-size:.75rem;opacity:.7">Blog posts, LinkedIn articles, open-source contributions</span></span>
-                </label>
-                <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;cursor:pointer;line-height:1.35">
-                  <input type="checkbox" id="q-prep-none" value="Nothing structured yet" style="accent-color:var(--primary);width:1rem;height:1rem;margin-top:.1rem;flex-shrink:0">
-                  <span><strong>Nothing structured yet</strong><br><span style="font-size:.75rem;opacity:.7">I'm just getting started — that's okay</span></span>
-                </label>
-              </div>
-            </div>
-
-            <div>
-              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What's your biggest challenge right now? <span style="font-weight:400;opacity:.7">(optional)</span></label>
-              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Be specific — the more you share, the more targeted your roadmap will be.</div>
-              <textarea id="q-challenge" rows="2" placeholder="e.g. I don't know where to start, I struggle to explain AI concepts to non-technical people, I can't get past resume screening…" style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none;resize:vertical;font-family:inherit;box-sizing:border-box"></textarea>
+              <label style="display:block;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What's your biggest worry or obstacle on the path to becoming an AI PM?</label>
+              <div style="font-size:.78rem;color:var(--text2);margin-bottom:.5rem">Be honest — this is where your roadmap gets most personalised. What keeps you stuck, scared, or confused?</div>
+              <textarea id="q-challenge" rows="3" placeholder="e.g. I'm worried I'm too technical and interviewers won't see me as a 'real' PM. OR: I have no idea how to build a portfolio with no PM title on my CV. OR: I don't know enough about AI to sound credible in interviews — I feel like I'll get found out." style="width:100%;padding:.65rem .9rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem;outline:none;resize:vertical;font-family:inherit;box-sizing:border-box"></textarea>
             </div>
 
           </div>
@@ -2435,6 +2414,65 @@
   </div><!-- /dash-wrap -->
 </div><!-- /page-dashboard -->
 
+<!-- PRACTICE PROBLEM MODAL -->
+<div class="prob-overlay hidden" id="prob-overlay">
+  <div class="prob-modal">
+    <button class="prob-close" onclick="closeProblem()" title="Close">✕</button>
+
+    <div class="prob-cat-badge" id="prob-cat"></div>
+    <div class="prob-title" id="prob-title"></div>
+
+    <div class="prob-statement" id="prob-statement"></div>
+
+    <div class="prob-hints">
+      <div class="prob-hints-title">Things to think about</div>
+      <ul id="prob-hints-list"></ul>
+    </div>
+
+    <textarea
+      class="prob-textarea"
+      id="prob-answer"
+      placeholder="Write your answer here. There's no single right answer — think out loud, show your reasoning…"
+      oninput="updateWordCount()"
+    ></textarea>
+    <div class="prob-word-count" id="prob-word-count">0 words</div>
+
+    <div id="prob-submit-row">
+      <button class="btn btn-primary" id="prob-submit-btn" style="width:100%" onclick="submitProblem()">Submit for Feedback</button>
+    </div>
+
+    <div class="prob-feedback hidden" id="prob-feedback-wrap">
+      <div class="prob-score-row">
+        <div class="prob-score-num" id="prob-score-num">—</div>
+        <div>
+          <div class="prob-verdict" id="prob-verdict"></div>
+          <div class="prob-headline" id="prob-headline"></div>
+        </div>
+      </div>
+
+      <div class="prob-section-title">What you did well</div>
+      <div class="prob-strengths" id="prob-strengths-list"></div>
+
+      <div class="prob-section-title">Where to improve</div>
+      <div class="prob-improvements" id="prob-improvements-list"></div>
+
+      <div class="prob-section-title">Frameworks to know for this type of problem</div>
+      <div class="prob-frameworks" id="prob-frameworks-list"></div>
+
+      <div class="prob-section-title">What a strong answer covers</div>
+      <div class="prob-hint-box" id="prob-model-hint"></div>
+
+      <div class="prob-section-title">Your #1 next step</div>
+      <div class="prob-nextstep" id="prob-nextstep"></div>
+
+      <div class="prob-try-again">
+        <button class="btn btn-outline" onclick="retryProblem()">Try Again</button>
+        <button class="btn btn-ghost" onclick="closeProblem()">Back to Problems</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ══════════════════════════════════════════
    THEME TOGGLE
@@ -2518,7 +2556,21 @@ function showPage(name) {
     navLinks.style.display = '';
     document.getElementById('main-nav').style.display = '';
   }
+
+  // Show/hide mobile CTA bar
+  const mobileCta = document.getElementById('mobile-cta-bar');
+  if (mobileCta) mobileCta.style.display = name === 'landing' ? '' : 'none';
 }
+
+// Hide mobile CTA while user is in hero, show after scrolling past
+window.addEventListener('scroll', () => {
+  const mobileCta = document.getElementById('mobile-cta-bar');
+  if (!mobileCta) return;
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+  const heroBottom = hero.getBoundingClientRect().bottom;
+  mobileCta.style.display = heroBottom < 0 ? '' : 'none';
+}, { passive: true });
 
 /* ══════════════════════════════════════════
    AUTH TABS
@@ -2545,6 +2597,27 @@ function switchPanel(name, el) {
   document.getElementById('panel-' + name).classList.add('active');
   document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
   if (el) el.classList.add('active');
+}
+
+function setInputMode(mode) {
+  const uploadWrap = document.getElementById('upload-zone-wrap');
+  const questionWrap = document.getElementById('quick-form-wrap');
+  const tabUpload = document.getElementById('tab-upload');
+  const tabQ = document.getElementById('tab-questions');
+
+  const activeStyle = 'flex:1;padding:1rem 1.25rem;border-radius:1rem;border:2.5px solid #2563eb;background:#2563eb;color:#fff;font-weight:800;font-size:1rem;cursor:pointer;transition:all .2s;letter-spacing:-.01em;box-shadow:0 4px 14px rgba(37,99,235,.35)';
+  const inactiveStyle = 'flex:1;padding:1rem 1.25rem;border-radius:1rem;border:2.5px solid #d1d5db;background:#fff;color:#111;font-weight:800;font-size:1rem;cursor:pointer;transition:all .2s;letter-spacing:-.01em';
+  if (mode === 'upload') {
+    uploadWrap.classList.remove('hidden');
+    questionWrap.classList.add('hidden');
+    tabUpload.style.cssText = activeStyle;
+    tabQ.style.cssText = inactiveStyle;
+  } else {
+    uploadWrap.classList.add('hidden');
+    questionWrap.classList.remove('hidden');
+    tabQ.style.cssText = activeStyle;
+    tabUpload.style.cssText = inactiveStyle;
+  }
 }
 
 /* ══════════════════════════════════════════
@@ -2583,41 +2656,39 @@ function runDemoAnalysis(e) {
 async function runQuickAnalysis() {
   const role = document.getElementById('q-role').value;
   const exp = document.getElementById('q-exp').value;
-  const industry = document.getElementById('q-industry').value;
-  const edu = document.getElementById('q-edu').value;
-  const ai = document.getElementById('q-ai').value;
-  const pm = document.getElementById('q-pm').value;
-  const target = document.getElementById('q-target').value;
+  const daytoday = document.getElementById('q-daytoday').value.trim();
+  const pm = document.getElementById('q-pm').value.trim();
+  const ai = document.getElementById('q-ai').value.trim();
+  const target = document.getElementById('q-target').value.trim();
   const challenge = document.getElementById('q-challenge').value.trim();
 
-  if (!role || !exp || !industry || !edu || !ai || !pm || !target) {
+  if (!role || !exp || !daytoday || !pm || !ai || !target) {
     alert('Please answer all required questions before continuing.');
     return;
   }
 
-  // Collect multi-select checkboxes
-  const toolIds = ['q-tool-llm','q-tool-python','q-tool-ml','q-tool-rag','q-tool-sql','q-tool-cloud','q-tool-none'];
-  const toolsUsed = toolIds.map(id => document.getElementById(id)).filter(el => el.checked).map(el => el.value).join(', ') || 'None selected';
-
-  const prepIds = ['q-prep-courses','q-prep-projects','q-prep-network','q-prep-reading','q-prep-oss','q-prep-none'];
-  const prepActivities = prepIds.map(id => document.getElementById(id)).filter(el => el.checked).map(el => el.value).join(', ') || 'Nothing selected';
-
   // Build a rich text summary to send as the "resume"
   const summaryText = `Current Role: ${role}
 Years of Experience: ${exp}
-Industry: ${industry}
-Education: ${edu}
-AI/ML Familiarity: ${ai}
-AI Tools Used: ${toolsUsed}
-PM Experience: ${pm}
-Target AI PM Role: ${target}
-Current Learning: ${prepActivities}
-${challenge ? 'Biggest Challenge: ' + challenge : ''}`.trim();
+
+What I do day-to-day:
+${daytoday}
+
+Product / PM experience:
+${pm}
+
+My relationship with AI:
+${ai}
+
+Target AI PM role and motivation:
+${target}
+${challenge ? '\nBiggest worry or obstacle:\n' + challenge : ''}`.trim();
 
   const blob = new Blob([summaryText], { type: 'text/plain' });
   const file = new File([blob], 'quick_profile.txt', { type: 'text/plain' });
 
-  // Hide the form and upload zone
+  // Track mode and hide the form
+  document.getElementById('quick-form-wrap').dataset.lastMode = 'questions';
   document.getElementById('quick-form-wrap').classList.add('hidden');
   uploadAndAnalyze(file);
 }
@@ -2655,8 +2726,9 @@ async function uploadAndAnalyze(file) {
   } catch (err) {
     clearInterval(stepInterval);
     document.getElementById('analysis-loading').classList.add('hidden');
-    document.getElementById('upload-zone-wrap').classList.remove('hidden');
-    document.getElementById('quick-form-wrap').classList.remove('hidden');
+    // Restore whichever input mode was active
+    const activeMode = document.getElementById('quick-form-wrap').dataset.lastMode || 'upload';
+    setInputMode(activeMode);
     alert('Analysis failed: ' + err.message + '\n\nMake sure the server is running (npm start) and ANTHROPIC_API_KEY is set.');
   }
 }
@@ -2700,7 +2772,7 @@ const PROFILES = {
     summaryBase: 'Your engineering background is a significant asset for AI PM roles — technical credibility is highly valued. You can speak the language of ML engineers and understand system constraints. However, your profile shows limited exposure to core PM competencies: user research, product strategy, stakeholder communication, and business metrics. AI PM hiring managers will expect you to demonstrate that you can bridge the technical and business divide — not just have one side.',
     score: 62,
     confidence: 32,
-    timeline: '5–7 months',
+    timeline: '5–9 months',
     skills: [
       { name: 'Technical Depth', pct: 82, color: '#2d22f0' },
       { name: 'PM Fundamentals', pct: 38, color: '#f59e0b' },
@@ -2733,7 +2805,7 @@ const PROFILES = {
       { week: 'Month 2', title: 'AI Prototype Built', desc: 'Working prototype with PRD — portfolio piece #1', done: false },
       { week: 'Month 2.5', title: 'Mock Interview Ready', desc: 'Completed 2 mock interviews with mentor feedback', done: false },
       { week: 'Month 3', title: 'Applications Live', desc: 'Applied to 15+ roles with polished materials', done: false },
-      { week: 'Month 5–7', title: '🎉 Offer Received', desc: 'Based on avg time for engineering backgrounds', done: false },
+      { week: 'Month 5–9', title: '🎉 Offer Received', desc: 'Based on avg time for engineering backgrounds', done: false },
     ],
   },
   data: {
@@ -2781,7 +2853,7 @@ const DEFAULT_PROFILE = {
   summaryBase: 'You\'re making a bold and achievable move into AI PM. While you may not have a technical background, AI PM roles increasingly value diverse perspectives — business acumen, communication skills, and domain expertise from adjacent fields are genuinely sought after. Your path will take longer than a technical switcher, but it is well-defined, and many successful AI PMs came from exactly your type of background.',
   score: 44,
   confidence: 22,
-  timeline: '8–12 months',
+  timeline: '6–9 months',
   skills: [
     { name: 'Technical Depth', pct: 18, color: '#ef4444' },
     { name: 'PM Fundamentals', pct: 30, color: '#ef4444' },
@@ -2814,7 +2886,7 @@ const DEFAULT_PROFILE = {
     { week: 'Month 2', title: 'Built Something', desc: 'AI prototype + PRD in portfolio', done: false },
     { week: 'Month 3', title: 'Network Growing', desc: '10+ PM connections, active in 1+ community', done: false },
     { week: 'Month 4', title: 'Applying', desc: '20 applications submitted', done: false },
-    { week: 'Month 8–12', title: '🎉 Offer Received', desc: 'Avg timeline for career changers', done: false },
+    { week: 'Month 6–9', title: '🎉 Offer Received', desc: 'Avg timeline for career changers', done: false },
   ],
 };
 
@@ -3276,64 +3348,54 @@ document.getElementById('prob-overlay').addEventListener('click', function(e) {
 
 </script>
 
-<!-- PRACTICE PROBLEM MODAL -->
-<div class="prob-overlay hidden" id="prob-overlay">
-  <div class="prob-modal">
-    <button class="prob-close" onclick="closeProblem()" title="Close">✕</button>
-
-    <div class="prob-cat-badge" id="prob-cat"></div>
-    <div class="prob-title" id="prob-title"></div>
-
-    <div class="prob-statement" id="prob-statement"></div>
-
-    <div class="prob-hints">
-      <div class="prob-hints-title">Things to think about</div>
-      <ul id="prob-hints-list"></ul>
-    </div>
-
-    <textarea
-      class="prob-textarea"
-      id="prob-answer"
-      placeholder="Write your answer here. There's no single right answer — think out loud, show your reasoning…"
-      oninput="updateWordCount()"
-    ></textarea>
-    <div class="prob-word-count" id="prob-word-count">0 words</div>
-
-    <div id="prob-submit-row">
-      <button class="btn btn-primary" id="prob-submit-btn" style="width:100%" onclick="submitProblem()">Submit for Feedback</button>
-    </div>
-
-    <div class="prob-feedback hidden" id="prob-feedback-wrap">
-      <div class="prob-score-row">
-        <div class="prob-score-num" id="prob-score-num">—</div>
-        <div>
-          <div class="prob-verdict" id="prob-verdict"></div>
-          <div class="prob-headline" id="prob-headline"></div>
-        </div>
-      </div>
-
-      <div class="prob-section-title">What you did well</div>
-      <div class="prob-strengths" id="prob-strengths-list"></div>
-
-      <div class="prob-section-title">Where to improve</div>
-      <div class="prob-improvements" id="prob-improvements-list"></div>
-
-      <div class="prob-section-title">Frameworks to know for this type of problem</div>
-      <div class="prob-frameworks" id="prob-frameworks-list"></div>
-
-      <div class="prob-section-title">What a strong answer covers</div>
-      <div class="prob-hint-box" id="prob-model-hint"></div>
-
-      <div class="prob-section-title">Your #1 next step</div>
-      <div class="prob-nextstep" id="prob-nextstep"></div>
-
-      <div class="prob-try-again">
-        <button class="btn btn-outline" onclick="retryProblem()">Try Again</button>
-        <button class="btn btn-ghost" onclick="closeProblem()">Back to Problems</button>
-      </div>
-    </div>
+<!-- LEGAL MODALS -->
+<div id="legal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;overflow-y:auto;" onclick="if(event.target===this)closeLegalModal()">
+  <div style="background:var(--bg-card);border-radius:16px;max-width:680px;margin:60px auto;padding:40px 48px;position:relative;">
+    <button onclick="closeLegalModal()" style="position:absolute;top:16px;right:20px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text-secondary);">×</button>
+    <div id="legal-content"></div>
   </div>
 </div>
+
+<script>
+const LEGAL = {
+  privacy: `<h2 style="margin-top:0">Privacy Policy</h2>
+<p style="color:var(--text-secondary);font-size:.9rem">Last updated: March 2026</p>
+<p>Common Sense Wala PM ("we", "us") is committed to protecting your privacy. This policy explains what data we collect and how we use it.</p>
+<h3>What we collect</h3>
+<ul><li>Resume or questionnaire text you voluntarily submit for analysis</li><li>Email address if you create an account</li><li>Usage data (pages visited, features used) via anonymous analytics</li></ul>
+<h3>How we use it</h3>
+<ul><li>To generate your personalised AI PM readiness analysis via the Anthropic Claude API</li><li>To improve our coaching content and product</li><li>We do <strong>not</strong> sell your data to third parties</li></ul>
+<h3>Data retention</h3>
+<p>Uploaded resumes are processed in memory and not stored on our servers. Account data is retained until you request deletion.</p>
+<h3>Contact</h3>
+<p>Questions? Email us at <a href="mailto:hello@commonsensewalapm.com">hello@commonsensewalapm.com</a></p>`,
+
+  terms: `<h2 style="margin-top:0">Terms of Service</h2>
+<p style="color:var(--text-secondary);font-size:.9rem">Last updated: March 2026</p>
+<p>By using Common Sense Wala PM you agree to these terms. Please read them carefully.</p>
+<h3>Use of the service</h3>
+<ul><li>You must be 18 or older to use this platform</li><li>You may not use the service for any unlawful purpose</li><li>AI-generated analysis is for informational purposes only and is not a guarantee of employment outcomes</li></ul>
+<h3>Intellectual property</h3>
+<p>All platform content, design, and coaching materials are owned by Common Sense Wala PM. You retain ownership of any resume or personal content you submit.</p>
+<h3>Limitation of liability</h3>
+<p>We provide this service "as is". We are not liable for decisions you make based on AI-generated analysis.</p>
+<h3>Changes</h3>
+<p>We may update these terms. Continued use of the platform after changes constitutes acceptance.</p>
+<h3>Contact</h3>
+<p>Questions? Email us at <a href="mailto:hello@commonsensewalapm.com">hello@commonsensewalapm.com</a></p>`
+};
+
+function showLegalModal(type) {
+  document.getElementById('legal-content').innerHTML = LEGAL[type] || '';
+  document.getElementById('legal-overlay').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLegalModal() {
+  document.getElementById('legal-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+</script>
 
 </body>
 </html>

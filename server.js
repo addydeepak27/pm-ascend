@@ -75,59 +75,107 @@ Resume filename: ${filename}
 Resume content:
 ${resumeText || '(Resume text could not be extracted — base your analysis on the filename and any context available, or provide general guidance for the most common background type)'}
 
+ABSOLUTE TIMELINE RULE — this overrides everything else, including your own judgment:
+The maximum value you may ever output for ANY timeline field is 12 months.
+This applies even if the readiness score is 0/100. Even if the person has zero relevant experience.
+Even if you believe more time is needed. 12 months is the ceiling. No exceptions. No rounding up.
+Any number above 12 in any timeline field is a hallucination and must not appear.
+
+- Optimistic: 3–6 months for most backgrounds. Never exceed 8.
+- Realistic: 6–10 months for most backgrounds. Never exceed 11.
+- Conservative: 8–12 months for most backgrounds. Hard cap at 12. Always.
+
+Per-background benchmarks (stay within these ranges):
+- Software Engineers / Developers: optimistic 4, realistic 5–7, conservative 8
+- Data Scientists / Analysts: optimistic 4, realistic 5–7, conservative 8
+- Business Analysts / Consultants: optimistic 5, realistic 6–8, conservative 9
+- Finance / Banking: optimistic 6, realistic 8–10, conservative 11
+- Marketing / Operations / non-technical: optimistic 5, realistic 6–9, conservative 10
+- Students / Recent Graduates: optimistic 5, realistic 7–9, conservative 11
+- Complete career changers (no corporate experience): optimistic 6, realistic 9–10, conservative 12
+- Existing Product Managers (non-AI): optimistic 3, realistic 4–6, conservative 8
+- UX Designers / Researchers: optimistic 4, realistic 6–8, conservative 9
+
+PERSONALIZATION RULES — every part of your response must be specific to THIS person:
+- Reference their actual job title, company type, industry, or specific skills from their resume
+- Strengths must name something concrete from their resume (e.g. "Your 4 years building recommendation systems at a fintech startup..." not "Your technical background...")
+- Gaps must name the specific missing thing relative to AI PM roles (e.g. "No evidence of user interviews or discovery work despite 6 years in product-adjacent roles" not "lacks PM experience")
+- Gap fixes must be a single concrete action tied to their industry (e.g. "Interview 3 loan officers about how they use AI tools today — write up the findings as a 1-page discovery brief")
+- Roadmap phases must reference their actual industry, tools, or domain — not generic AI products
+- topAdvice must be the ONE thing most specific and highest-leverage for this exact person right now
+
 Respond ONLY with a valid JSON object in this exact format (no markdown, no extra text):
 {
   "background": "engineer|data|business|designer|other",
   "score": <integer 0-100 representing PM readiness>,
-  "summary": "<2-3 sentence honest assessment of their PM potential>",
+  "summary": "<2-3 sentences — name their actual role/background, their biggest asset for AI PM, and the single most important gap standing between them and a role>",
   "timeline": {
-    "optimistic": "<e.g. 6 months>",
-    "realistic": "<e.g. 12 months>",
-    "conservative": "<e.g. 18-24 months>",
-    "explanation": "<1-2 sentences explaining what drives the timeline>"
+    "optimistic": "<e.g. 4 months>",
+    "realistic": "<e.g. 6-8 months — MUST be within the benchmark above for their background>",
+    "conservative": "<e.g. 9 months — HARD MAX 12 months>",
+    "explanation": "<1-2 sentences — name the specific factor from their background that most accelerates or delays their timeline>"
   },
   "confidence": "<high|medium|low> — how confident you are in this analysis based on resume quality",
   "skills": [
-    {"name": "<skill>", "score": <0-100>, "importance": "<critical|high|medium>"},
+    {"name": "<skill most relevant to their background>", "score": <0-100>, "importance": "<critical|high|medium>"},
     {"name": "<skill>", "score": <0-100>, "importance": "<critical|high|medium>"},
     {"name": "<skill>", "score": <0-100>, "importance": "<critical|high|medium>"},
     {"name": "<skill>", "score": <0-100>, "importance": "<critical|high|medium>"},
     {"name": "<skill>", "score": <0-100>, "importance": "<critical|high|medium>"}
   ],
   "strengths": [
-    "<specific strength from their background>",
-    "<specific strength from their background>",
-    "<specific strength from their background>"
+    "<name a specific project, role, or skill from their resume and explain exactly why it matters for AI PM>",
+    "<name a second specific thing from their background and its direct relevance to AI PM hiring>",
+    "<name a third specific transferable asset — be concrete, not generic>"
   ],
   "gaps": [
-    {"gap": "<specific gap>", "severity": "<high|medium|low>", "fix": "<actionable 1-line fix>"},
-    {"gap": "<specific gap>", "severity": "<high|medium|low>", "fix": "<actionable 1-line fix>"},
-    {"gap": "<specific gap>", "severity": "<high|medium|low>", "fix": "<actionable 1-line fix>"}
+    {"gap": "<specific missing skill or experience — name what is absent, not just a category>", "severity": "high", "fix": "<one concrete action tied to their industry — e.g. 'Interview 3 [their domain] professionals about their biggest workflow frustration with AI tools and write a 1-page discovery brief'>"},
+    {"gap": "<second specific gap>", "severity": "<high|medium>", "fix": "<one concrete action>"},
+    {"gap": "<third specific gap>", "severity": "<medium|low>", "fix": "<one concrete action>"}
   ],
   "roadmap": [
-    {"phase": "Month 1-2", "focus": "<what to work on>", "milestone": "<concrete deliverable>"},
-    {"phase": "Month 3-4", "focus": "<what to work on>", "milestone": "<concrete deliverable>"},
-    {"phase": "Month 5-6", "focus": "<what to work on>", "milestone": "<concrete deliverable>"},
-    {"phase": "Month 7+", "focus": "<what to work on>", "milestone": "<concrete deliverable>"}
+    {
+      "phase": "Month 1-2",
+      "focus": "<theme for this phase — what capability they are building>",
+      "milestone": "<EXACT deliverable: describe precisely what they will create, who they will talk to, what they will publish — name the specific industry, product, or domain from their background. Format: ACTION + OBJECT + STANDARD. E.g. 'Interview 5 [their role] professionals about how AI has changed their workflow, synthesise findings into a 1-page opportunity brief, and post it on LinkedIn for feedback'>"
+    },
+    {
+      "phase": "Month 3-4",
+      "focus": "<theme>",
+      "milestone": "<EXACT deliverable with the same specificity — must be a different type of artifact from Month 1-2>"
+    },
+    {
+      "phase": "Month 5-6",
+      "focus": "<theme>",
+      "milestone": "<EXACT deliverable — by this phase they should have a portfolio piece they can show in interviews>"
+    },
+    {
+      "phase": "Month 7-9",
+      "focus": "Active job search and interview preparation",
+      "milestone": "<EXACT actions: how many roles to apply to, what type of companies match their background, what specific interview question types to prepare for given their gaps>"
+    }
   ],
-  "topAdvice": "<The single most important thing they should do in the next 30 days>"
+  "topAdvice": "<The single highest-leverage action for THIS specific person in the next 7 days — be precise: name what they should do, with whom, producing what output>"
 }
 
-Be specific to their background. Be honest — if they have a long road ahead, say so clearly. Focus on AI PM roles specifically (not generic PM roles).
+ROADMAP QUALITY BAR — each milestone must pass ALL of these tests:
+1. Could I hand this to the person and they know exactly what to do on Monday morning? (yes/no)
+2. Does it produce something they can show a hiring manager? (yes/no)
+3. Is it specific to their industry or background — not something any PM candidate could do? (yes/no)
+If any answer is no, rewrite the milestone until all three are yes.
 
-IMPORTANT — Roadmap rule for candidates with no PM experience:
-If the resume or profile indicates no PM experience (e.g. "No PM experience at all", no mention of roadmaps, specs, user research, or product ownership), then every roadmap phase MUST be grounded in a concrete, hands-on problem to solve — not abstract study tasks. Each milestone should be a real artifact or real action, for example:
-- Pick one app or AI product they use daily and write a 1-page teardown: what works, what's broken, what you'd change and why
-- Find a real user (friend, colleague, online community) who has a problem, interview them for 20 minutes, and write up what you learned
-- Identify one real AI product announcement this week and write a 200-word critique of the product decision
-- Build a 3-feature product spec for an AI tool that would solve a problem in their own industry
-- Take one feature of an existing AI product and mock up an improved version using Figma or even a paper sketch, then explain your reasoning
-- Post a product teardown publicly (LinkedIn or a blog) and get at least one comment or piece of feedback
-Avoid generic advice like "take a PM course", "read a PM book", or "learn about PRDs" as standalone milestones. If courses or reading are mentioned, they must be paired with a specific output the person produces as a result. The goal is to build a portfolio of real work, not a reading list.`;
+STRICTLY FORBIDDEN in any field:
+- Generic course names (Reforge, Exponent, Product School, Udemy, Coursera, etc.)
+- Book recommendations as standalone milestones
+- "Study X framework" without a paired artifact
+- Vague verbs: "explore", "learn about", "familiarise yourself with", "research", "look into"
+- Any milestone a career coach could have written without reading the resume
+
+REQUIRED milestone verbs: Interview, Write, Build, Publish, Pitch, Redesign, Analyse, Map, Prototype, Critique, Present, Submit`;
 
   const response = await anthropic.messages.create({
     model: 'claude-opus-4-6',
-    max_tokens: 2000,
+    max_tokens: 3000,
     messages: [{ role: 'user', content: prompt }],
   });
 
@@ -135,7 +183,26 @@ Avoid generic advice like "take a PM course", "read a PM book", or "learn about 
 
   // Parse JSON — strip any accidental markdown fences
   const cleaned = text.replace(/^```json?\s*/i, '').replace(/\s*```$/i, '').trim();
-  return JSON.parse(cleaned);
+  const result = JSON.parse(cleaned);
+
+  // Safety clamp: enforce 12-month ceiling on all timeline fields regardless of model output
+  if (result.timeline && typeof result.timeline === 'object') {
+    const clampMonths = (val) => {
+      if (!val) return val;
+      // Extract the largest number from strings like "9 months", "10-12 months", "24 months"
+      const nums = String(val).match(/\d+/g);
+      if (!nums) return val;
+      const max = Math.max(...nums.map(Number));
+      if (max <= 12) return val;
+      // Replace all numbers above 12 with clamped equivalents
+      return String(val).replace(/\d+/g, n => Math.min(Number(n), 12));
+    };
+    result.timeline.optimistic = clampMonths(result.timeline.optimistic);
+    result.timeline.realistic = clampMonths(result.timeline.realistic);
+    result.timeline.conservative = clampMonths(result.timeline.conservative);
+  }
+
+  return result;
 }
 
 // POST /analyze-resume
@@ -194,8 +261,10 @@ Evaluate this answer honestly and constructively. Respond ONLY with valid JSON (
   ],
   "keyFrameworks": ["<framework name>", "<framework name>"],
   "modelAnswerHint": "<2-3 sentences on what a strong answer covers — don't write it for them, just guide>",
-  "nextStep": "<single most important thing to practice or study based on this answer>"
-}`;
+  "nextStep": "<single most important thing to practice — MUST be a specific hands-on action or artifact to produce, never a course, book, or passive study task>"
+}
+
+IMPORTANT — nextStep rule: The next step must always be a concrete action that produces something real. Examples of good next steps: "Pick a real AI product and write a 1-page critique of one specific decision the PM team made", "Find one person with this problem and interview them for 15 minutes — write up what you learned", "Rewrite your answer using the CIRCLES framework and post it for peer feedback". Never recommend courses, certifications, or books as the next step.`;
 
   const response = await anthropic.messages.create({
     model: 'claude-opus-4-6',
