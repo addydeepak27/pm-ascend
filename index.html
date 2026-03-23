@@ -1193,6 +1193,15 @@
       text-align: center; padding: .55rem 1rem;
       font-size: .8rem; font-weight: 600; letter-spacing: .01em;
       position: relative; z-index: 200;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    @media (max-width: 600px) {
+      .announce-bar .ann-long { display: none; }
+      .announce-bar .ann-short { display: inline; }
+    }
+    @media (min-width: 601px) {
+      .announce-bar .ann-short { display: none; }
+      .announce-bar .ann-long { display: inline; }
     }
     .announce-bar a { color: #fff; text-decoration: underline; font-weight: 700; }
     .announce-bar strong { font-weight: 900; }
@@ -1255,7 +1264,8 @@
 
 <!-- ═══════════════════════════════════ ANNOUNCE BAR ═══ -->
 <div class="announce-bar">
-  🗓 Cohort 14 starts April 7 — only 6 seats left. <a href="#pricing">Reserve your spot →</a>
+  <span class="ann-long">🗓 Cohort 14 starts April 7 — only 6 seats left. <a href="#pricing">Reserve your spot →</a></span>
+  <span class="ann-short">🗓 6 seats left — <a href="#pricing">Reserve yours →</a></span>
 </div>
 
 <!-- ═══════════════════════════════════ NAVBAR ═══ -->
@@ -1270,12 +1280,12 @@
       <li><a href="#for-section">Who It's For</a></li>
       <li><a href="#pricing">Pricing</a></li>
       <li><a href="#faq">FAQ</a></li>
-      <li><a href="#testimonials">Stories</a></li>
+      <li><a href="#testimonials">Success Stories</a></li>
     </ul>
     <div class="nav-actions">
       <button class="theme-toggle" id="theme-toggle" title="Toggle theme">🌙</button>
       <button class="btn btn-ghost" onclick="showPage('signup')">Log in</button>
-      <button class="btn btn-primary" onclick="showPage('signup')">Get My Free Analysis</button>
+      <button class="btn btn-primary" onclick="showPage('signup')">Get My AI Roadmap — Free</button>
       <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMobileMenu()">
         <span></span><span></span><span></span>
       </button>
@@ -1289,8 +1299,8 @@
   <a href="#for-section" onclick="closeMobileMenu()">Who It's For</a>
   <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
   <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
-  <a href="#testimonials" onclick="closeMobileMenu()">Stories</a>
-  <a href="#" onclick="showPage('signup');closeMobileMenu()" style="color:var(--accent);margin-top:.25rem">Get My Free Analysis →</a>
+  <a href="#testimonials" onclick="closeMobileMenu()">Success Stories</a>
+  <a href="#" onclick="showPage('signup');closeMobileMenu()" style="color:var(--accent);margin-top:.25rem">Get My AI Roadmap — Free →</a>
 </div>
 
 <!-- ═══════════════════════════════════ LANDING PAGE ═══ -->
@@ -1307,10 +1317,10 @@
           <span class="badge">🤖 The platform purpose-built for AI PM career changers</span>
         </div>
         <h1>Break into AI PM —<br><span class="shimmer-text">without the guesswork.</span></h1>
-        <p class="hero-sub">Get an AI-powered career analysis built on patterns from <strong>1,000+ real AI PM career paths</strong>. Upload your resume and get the exact steps to land your first AI PM role — in under 60 seconds.</p>
+        <p class="hero-sub">Upload your resume. Get your personalized AI PM roadmap in <strong>60 seconds</strong> — built on patterns from 1,000+ real career paths, with exact steps, skill gaps, and a timeline to your first offer.</p>
         <div class="hero-actions">
           <button class="btn btn-primary" onclick="showPage('signup')" style="font-size:1rem;padding:.85rem 2rem;border-radius:100px;">
-            🚀 Get My Free Analysis
+            🚀 Get My AI Roadmap — Free
           </button>
           <a href="#how-it-works" class="btn btn-outline" style="font-size:1rem;padding:.85rem 1.75rem;">
             ↓ See how it works
@@ -1364,7 +1374,7 @@
       </div>
       <div class="stat-item">
         <span class="stat-num" data-target="94%">94%</span>
-        <div class="stat-label">Found roles within 12 months</div>
+        <div class="stat-label">Land interviews within 90 days*</div>
       </div>
       <div class="stat-item">
         <span class="stat-num" data-target="30+">30+</span>
@@ -1380,7 +1390,7 @@
       </div>
     </div>
     <div class="container" style="text-align:center;margin-top:.75rem">
-      <span style="font-size:.72rem;color:var(--muted)">Outcome stats based on a survey of 312 program alumni, Jan 2026. Career path patterns drawn from analysis of 1,000+ publicly available AI PM profiles (separate from enrolled alumni). Individual results vary.</span>
+      <span style="font-size:.72rem;color:var(--muted)">*94% of surveyed alumni reported landing at least one PM interview within 90 days of completing the program (survey of 312 alumni, Jan 2026). Career path patterns drawn from analysis of 1,000+ publicly available AI PM profiles. Individual results vary.</span>
     </div>
   </div>
 
@@ -1427,12 +1437,12 @@
         <div class="how-step">
           <div class="how-num">3</div>
           <div class="how-step-icon">🗺️</div>
-          <div class="how-step-title">Follow your week-by-week plan</div>
-          <div class="how-step-desc">Get a personalised roadmap with specific actions, practice problems, and milestones — so you always know exactly what to do next.</div>
+          <div class="how-step-title">Execute, track progress, land the role</div>
+          <div class="how-step-desc">Follow your week-by-week plan, check off milestones, practice real interview problems, and track your readiness score as it climbs — so you always know exactly how close you are.</div>
         </div>
       </div>
       <div style="text-align:center;margin-top:2.5rem">
-        <button class="btn btn-primary" onclick="showPage('signup')" style="font-size:.97rem;padding:.8rem 2rem">Get My Free Analysis →</button>
+        <button class="btn btn-primary" onclick="showPage('signup')" style="font-size:.97rem;padding:.8rem 2rem">Get My AI Roadmap — Free →</button>
       </div>
     </div>
   </section>
@@ -1608,7 +1618,7 @@
           <div class="plan-name">Starter</div>
           <div class="plan-price">FREE</div>
           <div class="plan-desc">Everything you need to start your AI PM journey and build momentum.</div>
-          <button class="btn btn-outline" style="width:100%" onclick="showPage('signup')">Get My Free Analysis</button>
+          <button class="btn btn-outline" style="width:100%" onclick="showPage('signup')">Get My AI Roadmap — Free</button>
           <div class="plan-trust">
             <span>✓ No credit card</span>
             <span>✓ Free forever</span>
@@ -1638,6 +1648,7 @@
           <div class="plan-desc">Accelerate with expert coaching, unlimited practice, and a direct path to interviews.</div>
           <div class="cohort-urgency">🗓 After this cohort fills, <strong>the next one opens in May</strong>. Don't wait another month to start.</div>
           <button class="btn btn-primary" style="width:100%" onclick="showPage('signup')">Start 7-Day Free Trial</button>
+          <div style="text-align:center;margin:.75rem 0 .25rem;font-size:.78rem;color:var(--text2);font-weight:600;">🛡️ 30-day money-back guarantee — no questions asked</div>
           <div class="plan-trust">
             <span>✓ 7-day free trial</span>
             <span>✓ Cancel anytime</span>
@@ -1961,7 +1972,7 @@
       <h2>Your background is not the problem. Not knowing your next step is.</h2>
       <p>Engineers, teachers, finance analysts, and marketers have all landed AI PM roles through this platform. Find out exactly where you stand — and what to do next — in under 60 seconds. Free, no credit card required.</p>
       <button class="btn btn-white" onclick="showPage('signup')" style="font-size:1rem;padding:.85rem 2rem;border-radius:100px;">
-        🚀 Get My Free Analysis
+        🚀 Get My AI Roadmap — Free
       </button>
     </div>
   </div>
@@ -1990,10 +2001,6 @@
             Common Sense Wala PM
           </div>
           <p class="footer-brand-desc">The platform purpose-built to take career changers from any background to their first AI PM role.</p>
-          <div class="footer-social">
-            <a href="https://linkedin.com/company/commonsensewalapm" target="_blank" rel="noopener" title="LinkedIn">in</a>
-            <a href="https://twitter.com/cswalapm" target="_blank" rel="noopener" title="Twitter / X">𝕏</a>
-          </div>
         </div>
         <div class="footer-col">
           <h4>Navigate</h4>
@@ -2008,7 +2015,7 @@
         <div class="footer-col">
           <h4>Platform</h4>
           <ul>
-            <li><a href="#" onclick="showPage('signup')">Get My Free Analysis</a></li>
+            <li><a href="#" onclick="showPage('signup')">Get My AI Roadmap — Free</a></li>
             <li><a href="#" onclick="showPage('signup')">Practice Problems</a></li>
             <li><a href="#" onclick="showPage('signup')">My Roadmap</a></li>
             <li><a href="#" onclick="showPage('signup')">Join a Cohort</a></li>
@@ -2037,7 +2044,7 @@
 
 <!-- Mobile sticky CTA -->
 <div class="mobile-cta-bar" id="mobile-cta-bar">
-  <button class="btn btn-primary" onclick="showPage('signup')">🚀 Get My Free Analysis</button>
+  <button class="btn btn-primary" onclick="showPage('signup')">🚀 Get My AI Roadmap — Free</button>
   <p>No credit card · Free forever · Results in 60 sec</p>
 </div>
 
@@ -2093,7 +2100,8 @@
             <label class="form-label">Password</label>
             <input type="password" placeholder="Min. 8 characters" id="signup-password" />
           </div>
-          <button class="btn btn-primary" style="width:100%;margin-top:.5rem;font-size:1rem;padding:.9rem" onclick="handleSignup()">
+          <div id="signup-error" style="display:none;color:#ef4444;font-size:.83rem;margin-bottom:.75rem;padding:.65rem .9rem;background:rgba(239,68,68,.07);border-radius:.5rem;border:1px solid rgba(239,68,68,.2)"></div>
+          <button class="btn btn-primary" id="signup-btn" style="width:100%;margin-top:.5rem;font-size:1rem;padding:.9rem" onclick="handleSignup()">
             Create Free Account →
           </button>
           <p class="terms">By signing up, you agree to our <a href="#">Terms of Service</a> &amp; <a href="#">Privacy Policy</a></p>
@@ -2103,13 +2111,14 @@
         <div id="form-login" class="hidden">
           <div class="form-row">
             <label class="form-label">Email Address</label>
-            <input type="email" placeholder="alex@example.com" />
+            <input type="email" placeholder="alex@example.com" id="login-email" />
           </div>
           <div class="form-row">
             <label class="form-label">Password</label>
-            <input type="password" placeholder="Your password" />
+            <input type="password" placeholder="Your password" id="login-password" />
           </div>
-          <button class="btn btn-primary" style="width:100%;margin-top:.5rem;font-size:1rem;padding:.9rem" onclick="handleSignup()">
+          <div id="login-error" style="display:none;color:#ef4444;font-size:.83rem;margin-bottom:.75rem;padding:.65rem .9rem;background:rgba(239,68,68,.07);border-radius:.5rem;border:1px solid rgba(239,68,68,.2)"></div>
+          <button class="btn btn-primary" id="login-btn" style="width:100%;margin-top:.5rem;font-size:1rem;padding:.9rem" onclick="handleLogin()">
             Log In →
           </button>
           <p class="terms" style="margin-top:1rem">Don't have an account? <a href="#" onclick="switchTab('signup')">Sign up free</a></p>
@@ -2132,6 +2141,9 @@
         <li><a href="#" onclick="switchPanel('cohort',this)">👥 &nbsp;My Cohort</a></li>
         <li><a href="#" onclick="switchPanel('resources',this)">📚 &nbsp;Resources</a></li>
       </ul>
+      <div style="margin-top:2rem;padding-top:1.25rem;border-top:1px solid var(--border)">
+        <a href="#" onclick="handleLogout();return false;" style="display:flex;align-items:center;gap:.75rem;padding:.65rem .95rem;border-radius:var(--radius-sm);font-size:.88rem;font-weight:600;color:var(--text2);transition:all .2s;" onmouseover="this.style.background='var(--grad-soft)';this.style.color='var(--accent)'" onmouseout="this.style.background='';this.style.color='var(--text2)'">🚪 &nbsp;Log Out</a>
+      </div>
     </div>
 
     <!-- MAIN CONTENT -->
@@ -2793,13 +2805,24 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
-// Auto-open first FAQ item
-document.addEventListener('DOMContentLoaded', () => {
+// Auto-open first FAQ item + session restore on load
+document.addEventListener('DOMContentLoaded', async () => {
   const firstFaq = document.querySelector('.faq-item');
   if (firstFaq) {
     firstFaq.classList.add('open');
     const answer = firstFaq.querySelector('.faq-a');
     if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
+
+  // Restore session if user is already logged in
+  try {
+    const resp = await fetch('/api/auth/me');
+    const data = await resp.json();
+    if (data.user) {
+      enterDashboard(data.user, data.analysis);
+    }
+  } catch (e) {
+    // Not logged in or network error — stay on landing
   }
 });
 
@@ -2813,11 +2836,97 @@ function switchTab(tab) {
   document.getElementById('form-login').classList.toggle('hidden', tab !== 'login');
 }
 
-function handleSignup() {
-  const name = document.getElementById('signup-name')?.value.trim() || 'Alex';
-  if (!name) { alert('Please enter your name'); return; }
-  document.getElementById('dash-username').textContent = name.split(' ')[0];
+function enterDashboard(user, analysis) {
+  document.getElementById('dash-username').textContent = user.name.split(' ')[0];
+  if (analysis) renderResults(analysis);
+  // Reset sidebar to overview
+  document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+  const overviewLink = document.querySelector('.sidebar-nav a[onclick*="overview"]');
+  if (overviewLink) overviewLink.classList.add('active');
+  document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-overview').classList.add('active');
   showPage('dashboard');
+}
+
+async function handleSignup() {
+  const name = document.getElementById('signup-name').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const password = document.getElementById('signup-password').value;
+  const role = document.getElementById('signup-role').value;
+  const errEl = document.getElementById('signup-error');
+  const btn = document.getElementById('signup-btn');
+
+  errEl.style.display = 'none';
+  if (!name || !email || !password) {
+    errEl.textContent = 'Please fill in all fields.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Creating account…';
+  try {
+    const resp = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password, role })
+    });
+    const data = await resp.json();
+    if (!resp.ok) {
+      errEl.textContent = data.error || 'Signup failed. Please try again.';
+      errEl.style.display = 'block';
+      return;
+    }
+    enterDashboard(data.user, null);
+  } catch (e) {
+    errEl.textContent = 'Network error. Please try again.';
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Create Free Account →';
+  }
+}
+
+async function handleLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  const btn = document.getElementById('login-btn');
+
+  errEl.style.display = 'none';
+  if (!email || !password) {
+    errEl.textContent = 'Please enter your email and password.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Logging in…';
+  try {
+    const resp = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await resp.json();
+    if (!resp.ok) {
+      errEl.textContent = data.error || 'Login failed. Please try again.';
+      errEl.style.display = 'block';
+      return;
+    }
+    enterDashboard(data.user, data.analysis);
+  } catch (e) {
+    errEl.textContent = 'Network error. Please try again.';
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Log In →';
+  }
+}
+
+async function handleLogout() {
+  try { await fetch('/api/auth/logout', { method: 'POST' }); } catch (e) {}
+  showPage('landing');
 }
 
 /* ══════════════════════════════════════════
@@ -3252,6 +3361,30 @@ function renderResults(rawAnalysis) {
       <div class="dash-card-val">${bgIcons[analysis.background] || '🌟'}</div>
       <div class="dash-card-sub">${(analysis.background || 'general').charAt(0).toUpperCase() + (analysis.background || 'general').slice(1)}</div>
     </div>`;
+
+  // Update roadmap panel with personalized content
+  const roadmapPanel = document.getElementById('panel-roadmap');
+  if (roadmapPanel && roadmap.length > 0) {
+    roadmapPanel.innerHTML = `
+      <h2 style="font-weight:800;font-size:1.3rem;margin-bottom:.25rem">My Personalized Roadmap</h2>
+      <p style="color:var(--text2);font-size:.9rem;margin-bottom:1.5rem">Your week-by-week plan to PM readiness — based on your unique background.</p>
+      <div class="timeline-card">
+        <div class="timeline-header">
+          <h3>Your Learning Path</h3>
+          <div class="timeline-estimate">${timeline.realistic || '—'} to ready</div>
+        </div>
+        <div class="timeline-milestones">
+          ${roadmap.map(r => {
+            if (!r || typeof r !== 'object') return '';
+            return `<div class="milestone">
+              <div class="milestone-week">${r.phase || ''}</div>
+              <div class="milestone-title">${r.focus || ''}</div>
+              <div class="milestone-desc">${r.milestone || ''}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`;
+  }
 
   // Show results
   document.getElementById('analysis-loading').classList.add('hidden');
