@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.36.0",
+    "@supabase/supabase-js": "^2.100.0",
     "bcrypt": "^6.0.0",
     "better-sqlite3": "^12.8.0",
     "connect-sqlite3": "^0.9.16",

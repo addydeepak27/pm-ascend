@@ -1,96 +1,136 @@
-const Database = require('better-sqlite3');
-const path = require('path');
+const { createClient } = require('@supabase/supabase-js');
 
-const db = new Database(path.join(__dirname, 'pm-ascend.db'));
-
-// WAL mode for better concurrent access
-db.pragma('journal_mode = WAL');
-
-// Initialize tables
-db.exec(`
-  CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    role TEXT,
-    password_hash TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  );
-
-  CREATE TABLE IF NOT EXISTS analyses (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    analysis_json TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
-  );
-
-  CREATE TABLE IF NOT EXISTS problem_attempts (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    problem_id TEXT NOT NULL,
-    answer TEXT NOT NULL,
-    feedback_json TEXT NOT NULL,
-    score INTEGER,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
-  );
-
-  CREATE TABLE IF NOT EXISTS roadmap_progress (
-    user_id INTEGER NOT NULL,
-    phase_index INTEGER NOT NULL,
-    completed INTEGER DEFAULT 0,
-    completed_at DATETIME,
-    PRIMARY KEY (user_id, phase_index),
-    FOREIGN KEY (user_id) REFERENCES users(id)
-  );
-`);
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_KEY
+);
 
 // --- User helpers ---
 
-function createUser({ name, email, role, passwordHash }) {
-  const stmt = db.prepare(
-    'INSERT INTO users (name, email, role, password_hash) VALUES (?, ?, ?, ?)'
-  );
-  const result = stmt.run(name, email, role || null, passwordHash);
-  return db.prepare('SELECT id, name, email, role, created_at FROM users WHERE id = ?').get(result.lastInsertRowid);
+async function createUser({ name, email, role, passwordHash }) {
+  const { data, error } = await supabase
+    .from('users')
+    .insert({ name, email, role: role || null, password_hash: passwordHash || null })
+    .select('id, name, email, role, created_at')
+    .single();
+  if (error) throw error;
+  return data;
 }
 
-function findUserByEmail(email) {
-  return db.prepare('SELECT * FROM users WHERE email = ?').get(email);
+async function findUserByEmail(email) {
+  const { data } = await supabase
+    .from('users')
+    .select('*')
+    .eq('email', email)
+    .single();
+  return data || null;
+}
+
+async function findUserById(id) {
+  const { data } = await supabase
+    .from('users')
+    .select('id, name, email, role')
+    .eq('id', id)
+    .single();
+  return data || null;
 }
 
 // --- Analysis helpers ---
 
-function saveAnalysis(userId, analysisJson) {
-  db.prepare('INSERT INTO analyses (user_id, analysis_json) VALUES (?, ?)').run(userId, analysisJson);
+async function saveAnalysis(userId, analysisJson) {
+  const { data, error } = await supabase
+    .from('analyses')
+    .insert({ user_id: userId, analysis_json: analysisJson })
+    .select('id')
+    .single();
+  if (error) throw error;
+  return data.id;
 }
 
-function getLatestAnalysis(userId) {
-  const row = db.prepare(
-    'SELECT analysis_json FROM analyses WHERE user_id = ? ORDER BY created_at DESC LIMIT 1'
-  ).get(userId);
-  if (!row) return null;
+async function getLatestAnalysis(userId) {
+  const { data } = await supabase
+    .from('analyses')
+    .select('analysis_json')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single();
+  if (!data) return null;
+  try { return JSON.parse(data.analysis_json); } catch { return null; }
+}
+
+async function getAnalysisHistory(userId) {
+  const { data } = await supabase
+    .from('analyses')
+    .select('id, analysis_json, created_at')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false });
+  if (!data) return [];
+  return data.map(r => {
+    let parsed = {};
+    try { parsed = JSON.parse(r.analysis_json); } catch {}
+    return { id: r.id, score: parsed.score, background: parsed.background, summary: parsed.summary, created_at: r.created_at };
+  });
+}
+
+async function getAnalysisById(userId, id) {
+  const { data } = await supabase
+    .from('analyses')
+    .select('analysis_json')
+    .eq('id', id)
+    .eq('user_id', userId)
+    .single();
+  if (!data) return null;
+  try { return JSON.parse(data.analysis_json); } catch { return null; }
+}
+
+async function getAnalysisByShareToken(token) {
+  const { data } = await supabase
+    .from('analyses')
+    .select('id, analysis_json, created_at')
+    .eq('share_token', token)
+    .single();
+  if (!data) return null;
   try {
-    return JSON.parse(row.analysis_json);
-  } catch {
-    return null;
-  }
+    return { id: data.id, analysis: JSON.parse(data.analysis_json), created_at: data.created_at };
+  } catch { return null; }
+}
+
+async function setShareToken(analysisId, userId, token) {
+  const { error } = await supabase
+    .from('analyses')
+    .update({ share_token: token })
+    .eq('id', analysisId)
+    .eq('user_id', userId);
+  if (error) throw error;
+}
+
+async function getShareToken(analysisId, userId) {
+  const { data } = await supabase
+    .from('analyses')
+    .select('share_token')
+    .eq('id', analysisId)
+    .eq('user_id', userId)
+    .single();
+  return data ? data.share_token : null;
 }
 
 // --- Problem attempt helpers ---
 
-function saveProblemAttempt(userId, problemId, answer, feedbackJson, score) {
-  db.prepare(
-    'INSERT INTO problem_attempts (user_id, problem_id, answer, feedback_json, score) VALUES (?, ?, ?, ?, ?)'
-  ).run(userId, String(problemId), answer, feedbackJson, score);
+async function saveProblemAttempt(userId, problemId, answer, feedbackJson, score) {
+  await supabase
+    .from('problem_attempts')
+    .insert({ user_id: userId, problem_id: String(problemId), answer, feedback_json: feedbackJson, score });
 }
 
-function getProblemAttempts(userId) {
-  const rows = db.prepare(
-    'SELECT problem_id, score, feedback_json, created_at FROM problem_attempts WHERE user_id = ? ORDER BY created_at DESC'
-  ).all(userId);
-  return rows.map(r => {
+async function getProblemAttempts(userId) {
+  const { data } = await supabase
+    .from('problem_attempts')
+    .select('problem_id, score, feedback_json, created_at')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false });
+  if (!data) return [];
+  return data.map(r => {
     let feedback = null;
     try { feedback = JSON.parse(r.feedback_json); } catch {}
     return { problem_id: r.problem_id, score: r.score, feedback, created_at: r.created_at };
@@ -99,30 +139,49 @@ function getProblemAttempts(userId) {
 
 // --- Roadmap progress helpers ---
 
-function upsertRoadmapProgress(userId, phaseIndex, completed) {
+async function upsertRoadmapProgress(userId, phaseIndex, completed) {
   const completedAt = completed ? new Date().toISOString() : null;
-  db.prepare(`
-    INSERT INTO roadmap_progress (user_id, phase_index, completed, completed_at)
-    VALUES (?, ?, ?, ?)
-    ON CONFLICT(user_id, phase_index) DO UPDATE SET
-      completed = excluded.completed,
-      completed_at = excluded.completed_at
-  `).run(userId, phaseIndex, completed ? 1 : 0, completedAt);
+  await supabase
+    .from('roadmap_progress')
+    .upsert({
+      user_id: userId,
+      phase_index: phaseIndex,
+      completed: completed ? 1 : 0,
+      completed_at: completedAt,
+    }, { onConflict: 'user_id,phase_index' });
 }
 
-function getRoadmapProgress(userId) {
-  return db.prepare(
-    'SELECT phase_index, completed, completed_at FROM roadmap_progress WHERE user_id = ?'
-  ).all(userId);
+async function getRoadmapProgress(userId) {
+  const { data } = await supabase
+    .from('roadmap_progress')
+    .select('phase_index, completed, completed_at')
+    .eq('user_id', userId);
+  return data || [];
+}
+
+// --- Newsletter ---
+
+async function saveSubscriber(email) {
+  const { error } = await supabase
+    .from('subscribers')
+    .upsert({ email }, { onConflict: 'email', ignoreDuplicates: true });
+  if (error && !error.message.includes('duplicate')) throw error;
 }
 
 module.exports = {
   createUser,
   findUserByEmail,
+  findUserById,
   saveAnalysis,
   getLatestAnalysis,
+  getAnalysisHistory,
+  getAnalysisById,
+  getAnalysisByShareToken,
+  setShareToken,
+  getShareToken,
   saveProblemAttempt,
   getProblemAttempts,
   upsertRoadmapProgress,
   getRoadmapProgress,
+  saveSubscriber,
 };

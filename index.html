@@ -169,7 +169,7 @@
     .nav-logo {
       display: flex; align-items: center; gap: .65rem;
       font-size: 1.05rem; font-weight: 800; color: var(--text);
-      letter-spacing: -.01em;
+      letter-spacing: -.01em; white-space: nowrap; flex-shrink: 0;
     }
     .nav-logo .logo-icon {
       width: 36px; height: 36px; border-radius: 11px;
@@ -179,15 +179,17 @@
       box-shadow: 0 4px 12px rgba(37,99,235,.32);
     }
     .nav-links {
-      display: flex; align-items: center; gap: 2rem;
+      display: flex; align-items: center; gap: 1.75rem;
       list-style: none;
+      margin: 0 1rem;
+      white-space: nowrap;
     }
     .nav-links a {
       color: var(--text2); font-size: .88rem; font-weight: 500;
-      transition: color .2s; letter-spacing: .005em;
+      transition: color .2s; letter-spacing: .005em; white-space: nowrap;
     }
     .nav-links a:hover { color: var(--accent); }
-    .nav-actions { display: flex; align-items: center; gap: .65rem; }
+    .nav-actions { display: flex; align-items: center; gap: .65rem; flex-shrink: 0; }
     .theme-toggle {
       width: 38px; height: 38px; border-radius: 10px;
       background: var(--bg2); border: 1.5px solid var(--border);
@@ -487,13 +489,13 @@
       line-height: 1; letter-spacing: -.02em; font-family: 'DM Sans', sans-serif;
     }
     .plan-price span { font-size: .95rem; font-weight: 400; color: var(--text2); }
-    .plan-desc { font-size: .9rem; color: var(--text2); margin-bottom: 1.6rem; line-height: 1.65; font-family: 'DM Sans', sans-serif; }
+    .plan-desc { font-size: .9rem; color: var(--text); margin-bottom: 1.6rem; line-height: 1.65; font-family: 'DM Sans', sans-serif; font-weight: 500; }
     .plan-divider { height: 1px; background: var(--border); margin: 1.3rem 0; }
     .plan-features { list-style: none; }
     .plan-features li {
       display: flex; align-items: flex-start; gap: .65rem;
-      padding: .55rem 0; font-size: .9rem; color: var(--text2);
-      font-family: 'DM Sans', sans-serif; line-height: 1.5;
+      padding: .55rem 0; font-size: .9rem; color: var(--text);
+      font-family: 'DM Sans', sans-serif; line-height: 1.5; font-weight: 500;
     }
     .plan-features li .fi { color: var(--green); flex-shrink: 0; margin-top: .15rem; font-style: normal; }
     .plan-features li .fi.no { color: var(--muted); }
@@ -627,9 +629,11 @@
     .auth-perks li {
       display: flex; align-items: center; gap: .8rem;
       padding: .65rem 0; font-size: .9rem; opacity: .92;
+      font-weight: 600;
       border-bottom: 1px solid rgba(255,255,255,.1);
     }
     .auth-perks li:last-child { border-bottom: none; }
+    .auth-perk-highlight { font-weight: 700 !important; opacity: 1 !important; }
     .auth-perks li::before {
       content: '✓';
       font-weight: 900;
@@ -640,9 +644,9 @@
     }
     .auth-right {
       display: flex; align-items: center; justify-content: center;
-      padding: 3rem 2rem; background: var(--bg);
+      padding: 2rem 2rem; background: var(--bg);
     }
-    .auth-form-box { width: 100%; max-width: 420px; }
+    .auth-form-box { width: 100%; max-width: 480px; }
     .auth-form-box h3 { font-size: 1.65rem; font-weight: 900; margin-bottom: .5rem; letter-spacing: -.02em; }
     .auth-form-box .sub { font-size: .9rem; color: var(--text2); margin-bottom: 2rem; line-height: 1.6; }
     .form-row { margin-bottom: 1rem; }
@@ -657,11 +661,11 @@
     }
     .form-tab {
       flex: 1; padding: .6rem; text-align: center;
-      font-size: .88rem; font-weight: 700; color: var(--text2);
+      font-size: .88rem; font-weight: 600; color: var(--text);
       background: transparent; cursor: pointer;
       transition: all .22s; border-radius: 100px;
     }
-    .form-tab.active { background: var(--grad); color: #fff; box-shadow: 0 2px 10px rgba(124,58,237,.28); }
+    .form-tab.active { background: var(--grad); color: #fff; font-weight: 700; box-shadow: 0 2px 10px rgba(124,58,237,.28); }
     .terms { font-size: .78rem; color: var(--muted); text-align: center; margin-top: 1rem; line-height: 1.55; }
     .terms a { color: var(--accent); }
 
@@ -803,6 +807,69 @@
     .step-week { font-size: .72rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .2rem; }
     .step-heading { font-weight: 800; font-size: .92rem; margin-bottom: .35rem; }
     .step-tasks { font-size: .83rem; color: var(--text2); line-height: 1.75; }
+    .step-milestone-label { font-size: .72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .07em; margin: .6rem 0 .2rem; }
+    .step-milestone-text { font-size: .84rem; color: var(--text); font-weight: 600; margin-bottom: .6rem; }
+    .step-actions { margin-top: .6rem; padding: 0; list-style: none; }
+    .step-action {
+      display: flex; gap: .6rem; align-items: flex-start;
+      padding: .45rem .6rem; border-radius: 8px; margin-bottom: .3rem;
+      background: var(--bg); font-size: .82rem; color: var(--text2); line-height: 1.6;
+    }
+    .step-action-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: .42rem; }
+    .step-action strong { color: var(--text); font-weight: 700; }
+    /* Roadmap panel checklist */
+    .rm-phase {
+      border: 1.5px solid var(--border); border-radius: 16px; margin-bottom: 1.25rem;
+      overflow: hidden; transition: border-color .2s;
+    }
+    .rm-phase.rm-done { border-color: #10b981; background: rgba(16,185,129,.03); }
+    .rm-phase-header {
+      display: flex; align-items: center; gap: 1rem; padding: 1.1rem 1.25rem;
+      cursor: pointer; user-select: none;
+    }
+    .rm-phase-dot {
+      width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: .78rem; color: #fff;
+    }
+    .rm-phase-meta { flex: 1; min-width: 0; }
+    .rm-phase-period { font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: .15rem; }
+    .rm-phase-title { font-weight: 800; font-size: .95rem; line-height: 1.3; }
+    .rm-phase-status { font-size: .78rem; font-weight: 700; padding: .25rem .7rem; border-radius: 100px; flex-shrink: 0; }
+    .rm-phase-status.not-started { background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); }
+    .rm-phase-status.in-progress { background: rgba(37,99,235,.1); color: #2563eb; }
+    .rm-phase-status.completed { background: rgba(16,185,129,.12); color: #059669; }
+    .rm-phase-body { padding: 0 1.25rem 1.25rem; border-top: 1px solid var(--border); }
+    .rm-goal { font-size: .82rem; background: var(--bg); border-left: 3px solid var(--accent); padding: .55rem .8rem; border-radius: 0 8px 8px 0; margin: .9rem 0 .75rem; color: var(--text); }
+    .rm-goal strong { font-weight: 700; color: var(--text); display: block; font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .2rem; color: var(--accent); }
+    .rm-steps { list-style: none; padding: 0; margin: 0 0 1rem; }
+    .rm-step {
+      display: flex; gap: .75rem; align-items: flex-start;
+      padding: .6rem .5rem; border-radius: 8px; margin-bottom: .25rem;
+      transition: background .15s; cursor: pointer;
+    }
+    .rm-step:hover { background: var(--bg); }
+    .rm-step.step-done .rm-step-label { color: var(--text-muted); text-decoration: line-through; }
+    .rm-check {
+      width: 18px; height: 18px; border-radius: 5px; flex-shrink: 0;
+      border: 2px solid var(--border); margin-top: .15rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; transition: all .15s;
+    }
+    .rm-step.step-done .rm-check { background: #10b981; border-color: #10b981; color: #fff; }
+    .rm-step-label { font-size: .84rem; color: var(--text2); line-height: 1.55; }
+    .rm-step-label strong { color: var(--text); font-weight: 700; }
+    .rm-complete-btn {
+      width: 100%; padding: .7rem; border-radius: 10px; border: none; cursor: pointer;
+      font-weight: 800; font-size: .9rem; transition: all .2s;
+    }
+    .rm-complete-btn:disabled { background: var(--bg); color: var(--text-muted); border: 1.5px solid var(--border); cursor: not-allowed; }
+    .rm-complete-btn:not(:disabled) { background: #10b981; color: #fff; }
+    .rm-complete-btn.completed { background: rgba(16,185,129,.12); color: #059669; border: 1.5px solid #10b981; cursor: default; }
+    .rm-generating { display: flex; align-items: center; gap: .75rem; padding: 2rem; justify-content: center; color: var(--text-muted); font-size: .9rem; }
+    .rm-chevron { font-size: .8rem; color: var(--text-muted); transition: transform .2s; flex-shrink: 0; }
+    .rm-phase.collapsed .rm-phase-body { display: none; }
+    .rm-phase.collapsed .rm-chevron { transform: rotate(-90deg); }
     .gap-list { list-style: none; }
     .gap-item {
       display: flex; align-items: flex-start; gap: .8rem;
@@ -1144,7 +1211,7 @@
     @media (max-width:640px) { .compare-table { font-size:.78rem; } .compare-table th,.compare-table td { padding:.65rem .75rem; } }
 
     /* ── COHORT URGENCY ──────────────────────────────────── */
-    .cohort-urgency { background:rgba(37,99,235,.07); border:1px solid rgba(37,99,235,.18); border-radius:.75rem; padding:.75rem 1rem; margin-bottom:1.25rem; font-size:.82rem; line-height:1.5; }
+    .cohort-urgency { background:rgba(37,99,235,.07); border:1px solid rgba(37,99,235,.18); border-radius:.75rem; padding:.75rem 1rem; margin-bottom:1.25rem; font-size:.85rem; line-height:1.55; color: var(--text); font-weight: 500; }
     .cohort-urgency strong { color:var(--accent); }
 
     /* ── FAQ ─────────────────────────────────────────────── */
@@ -1255,16 +1322,17 @@
     .plan-trust {
       display: flex; flex-wrap: wrap; justify-content: center;
       gap: .5rem 1rem; margin-top: .85rem;
-      font-size: .76rem; color: var(--muted);
+      font-size: .78rem; color: var(--text2); font-weight: 500;
     }
     .plan-trust span { display: flex; align-items: center; gap: .3rem; }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
 
 <!-- ═══════════════════════════════════ ANNOUNCE BAR ═══ -->
 <div class="announce-bar">
-  <span class="ann-long">🗓 Cohort 14 starts April 7 — only 6 seats left. <a href="#pricing">Reserve your spot →</a></span>
+  <span class="ann-long">🗓 Cohort 14 filling now — only 6 seats left. <a href="#pricing">Reserve your spot →</a></span>
   <span class="ann-short">🗓 6 seats left — <a href="#pricing">Reserve yours →</a></span>
 </div>
 
@@ -1279,8 +1347,8 @@
       <li><a href="#value">Why Us</a></li>
       <li><a href="#for-section">Who It's For</a></li>
       <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#faq">FAQ</a></li>
       <li><a href="#testimonials">Success Stories</a></li>
+      <li><a href="#faq">FAQ</a></li>
     </ul>
     <div class="nav-actions">
       <button class="theme-toggle" id="theme-toggle" title="Toggle theme">🌙</button>
@@ -1298,13 +1366,13 @@
   <a href="#value" onclick="closeMobileMenu()">Why Us</a>
   <a href="#for-section" onclick="closeMobileMenu()">Who It's For</a>
   <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
-  <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
   <a href="#testimonials" onclick="closeMobileMenu()">Success Stories</a>
+  <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
   <a href="#" onclick="showPage('signup');closeMobileMenu()" style="color:var(--accent);margin-top:.25rem">Get My AI Roadmap — Free →</a>
 </div>
 
 <!-- ═══════════════════════════════════ LANDING PAGE ═══ -->
-<div id="page-landing" class="page" style="padding-top: 64px;">
+<div id="page-landing" class="page hidden" style="padding-top: 64px;">
 
   <!-- HERO -->
   <section class="hero">
@@ -1335,7 +1403,7 @@
             <div class="hc-avatar">JK</div>
             <div>
               <div class="hc-name">Jordan Kim</div>
-              <div class="hc-role">Software Engineer → AI PM Candidate</div>
+              <div class="hc-role">Software Engineer → AI PM at Cohere</div>
             </div>
           </div>
           <p style="font-size:.82rem;color:var(--text2);margin-bottom:1rem;">AI-powered resume analysis</p>
@@ -1370,7 +1438,7 @@
     <div class="container stats-inner">
       <div class="stat-item">
         <span class="stat-num" data-target="312+">312+</span>
-        <div class="stat-label">Program alumni</div>
+        <div class="stat-label">Members who've completed a roadmap</div>
       </div>
       <div class="stat-item">
         <span class="stat-num" data-target="94%">94%</span>
@@ -1645,7 +1713,7 @@
           <div class="popular-badge">Most Popular</div>
           <div class="plan-name">Pro</div>
           <div class="plan-price" id="pro-price">$39 <span>/ month</span></div>
-          <div class="plan-desc">Accelerate with expert coaching, unlimited practice, and a direct path to interviews.</div>
+          <div class="plan-desc">Accelerate with expert coaching, uncapped practice, and a direct path to interviews.</div>
           <div class="cohort-urgency">🗓 After this cohort fills, <strong>the next one opens in May</strong>. Don't wait another month to start.</div>
           <button class="btn btn-primary" style="width:100%" onclick="showPage('signup')">Start 7-Day Free Trial</button>
           <div style="text-align:center;margin:.75rem 0 .25rem;font-size:.78rem;color:var(--text2);font-weight:600;">🛡️ 30-day money-back guarantee — no questions asked</div>
@@ -1658,9 +1726,9 @@
           <ul class="plan-features">
             <li><span class="fi">✓</span> Everything in Starter</li>
             <li><span class="fi">✓</span> <strong>2 x 1-on-1 coaching sessions</strong> / month</li>
-            <li><span class="fi">✓</span> Unlimited practice problems</li>
-            <li><span class="fi">✓</span> Unlimited cohort sessions</li>
-            <li><span class="fi">✓</span> Unlimited prototype reviews</li>
+            <li><span class="fi">✓</span> Uncapped access to practice problems</li>
+            <li><span class="fi">✓</span> Uncapped access to cohort sessions</li>
+            <li><span class="fi">✓</span> Uncapped access to prototype reviews</li>
             <li><span class="fi">✓</span> Priority mentor matching (&lt;24h)</li>
             <li><span class="fi">✓</span> Resume &amp; LinkedIn review by senior PMs</li>
             <li><span class="fi">✓</span> 2 mock interviews per month</li>
@@ -1939,14 +2007,14 @@
             What is a cohort, and do I have to join one?
             <span class="faq-arrow">▼</span>
           </div>
-          <div class="faq-a"><div class="faq-a-inner">A cohort is a small group of 15–20 people on similar AI PM journeys, led by a mentor who is a current or former AI PM. Cohorts meet weekly for live problem-solving, resume reviews, mock interviews, and accountability check-ins. You don't have to join one — the free Starter plan includes 1 cohort session per month so you can try it — but most people find it's the single biggest accelerator. Pro members get unlimited cohort access.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">A cohort is a small group of 15–20 people on similar AI PM journeys, led by a mentor who is a current or former AI PM. Cohorts meet weekly for live problem-solving, resume reviews, mock interviews, and accountability check-ins. You don't have to join one — the free Starter plan includes 1 cohort session per month so you can try it — but most people find it's the single biggest accelerator. Pro members get uncapped cohort access.</div></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
             Is the free plan genuinely useful, or is it just a preview?
             <span class="faq-arrow">▼</span>
           </div>
-          <div class="faq-a"><div class="faq-a-inner">The free plan gives you a full AI resume analysis, a personalized roadmap, a readiness timeline, 5 practice problems per month, 1 cohort session, and access to our resource library. That's genuinely useful — many people go from zero clarity to a personalised, week-by-week plan just from the free analysis. The Pro plan unlocks 1-on-1 coaching, unlimited practice, mock interviews, and the job referral network — which matter more once you're actively interviewing.</div></div>
+          <div class="faq-a"><div class="faq-a-inner">The free plan gives you a full AI resume analysis, a personalized roadmap, a readiness timeline, 5 practice problems per month, 1 cohort session, and access to our resource library. That's genuinely useful — many people go from zero clarity to a personalised, week-by-week plan just from the free analysis. The Pro plan unlocks 1-on-1 coaching, uncapped practice, mock interviews, and the job referral network — which matter more once you're actively interviewing.</div></div>
         </div>
         <div class="faq-item">
           <div class="faq-q" onclick="toggleFaq(this)">
@@ -2050,17 +2118,36 @@
 
 </div><!-- /page-landing -->
 
+<!-- Auth-check loading screen — shown until session check resolves -->
+<div id="auth-loading" style="position:fixed;inset:0;z-index:9999;background:var(--surface,#fff);display:flex;align-items:center;justify-content:center;">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:1rem">
+    <div style="width:36px;height:36px;border:3px solid var(--border,#e5e7eb);border-top-color:var(--primary,#2563eb);border-radius:50%;animation:spin 0.7s linear infinite"></div>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════════ SIGNUP PAGE ═══ -->
 <div id="page-signup" class="page hidden" style="padding-top:64px;">
   <div class="auth-wrap">
     <div class="auth-left">
-      <div class="auth-left-badge">⬆ Common Sense Wala PM</div>
-      <h2>Join hundreds of aspiring AI PMs on their journey</h2>
-      <p>Get your personalized roadmap backed by insights from 1,000+ real product managers — for free.</p>
+      <h2>Get your personalized AI PM roadmap — free</h2>
+      <p>Tailored to where you are. Built from 1,000+ real AI PM career paths.</p>
+      <div style="margin-bottom:2rem;padding:1rem 1.25rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:.85rem;font-size:.88rem;line-height:1.6">
+        <div style="font-weight:800;margin-bottom:.2rem">94% landed a PM interview within 90 days.*</div>
+        <div style="opacity:.82">Of members who completed their journey — survey of 312 alumni, Jan 2026.</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem">
+        <div style="display:flex">
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#ef4444);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#fff;margin-right:-8px">AK</div>
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#10b981,#3b82f6);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#fff;margin-right:-8px">MR</div>
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#ec4899);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#fff;margin-right:-8px">SP</div>
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#f97316,#facc15);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#fff">+</div>
+        </div>
+        <div style="font-size:.82rem;opacity:.88;line-height:1.4">312+ members already on their journeys</div>
+      </div>
       <ul class="auth-perks">
-        <li>AI-powered resume analysis &amp; scoring</li>
-        <li>Week-by-week personalized roadmap</li>
-        <li>Access to a community of 1,000+ PMs</li>
+        <li class="auth-perk-highlight">AI-powered resume analysis &amp; scoring</li>
+        <li class="auth-perk-highlight">Week-by-week personalized roadmap</li>
+        <li>Peer cohort with people at your exact stage</li>
         <li>200+ real AI PM practice problems</li>
         <li>Build &amp; showcase AI prototypes</li>
         <li>Job-readiness timeline predictor</li>
@@ -2068,6 +2155,10 @@
     </div>
     <div class="auth-right">
       <div class="auth-form-box">
+        <div style="text-align:center;margin-bottom:1.25rem">
+          <div style="font-size:1.25rem;font-weight:900;color:var(--text);letter-spacing:-.02em">Start free — no card needed</div>
+          <div style="font-size:.8rem;color:var(--muted);margin-top:.35rem">✓ Free forever &nbsp;·&nbsp; ✓ No credit card &nbsp;·&nbsp; ✓ Results in 60 seconds</div>
+        </div>
         <div class="form-tabs">
           <div class="form-tab active" id="tab-signup" onclick="switchTab('signup')">Create Account</div>
           <div class="form-tab" id="tab-login" onclick="switchTab('login')">Log In</div>
@@ -2077,16 +2168,23 @@
         <div id="form-signup">
           <div class="form-row">
             <label class="form-label">Full Name</label>
-            <input type="text" placeholder="Alex Johnson" id="signup-name" />
+            <input type="text" placeholder="Alex Johnson" id="signup-name" autofocus />
           </div>
           <div class="form-row">
             <label class="form-label">Email Address</label>
             <input type="email" placeholder="alex@example.com" id="signup-email" />
           </div>
           <div class="form-row">
-            <label class="form-label">Current Role</label>
+            <label class="form-label">Password</label>
+            <div style="position:relative">
+              <input type="password" placeholder="Min. 8 characters" id="signup-password" style="width:100%;padding-right:2.8rem;box-sizing:border-box" />
+              <button type="button" onclick="togglePasswordVisibility('signup-password',this)" style="position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--accent);font-size:.75rem;font-weight:700;padding:0;line-height:1;letter-spacing:.01em" aria-label="Show password">Show</button>
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Your Background <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
             <select id="signup-role">
-              <option value="">Select your background…</option>
+              <option value="">Select your background</option>
               <option>Software Engineer / Developer</option>
               <option>Data Scientist / Analyst</option>
               <option>UX Designer / Researcher</option>
@@ -2095,16 +2193,28 @@
               <option>Student / Recent Graduate</option>
               <option>Other</option>
             </select>
-          </div>
-          <div class="form-row">
-            <label class="form-label">Password</label>
-            <input type="password" placeholder="Min. 8 characters" id="signup-password" />
+            <div style="font-size:.75rem;color:var(--muted);margin-top:.4rem">Helps us personalize your journey — completely optional</div>
           </div>
           <div id="signup-error" style="display:none;color:#ef4444;font-size:.83rem;margin-bottom:.75rem;padding:.65rem .9rem;background:rgba(239,68,68,.07);border-radius:.5rem;border:1px solid rgba(239,68,68,.2)"></div>
           <button class="btn btn-primary" id="signup-btn" style="width:100%;margin-top:.5rem;font-size:1rem;padding:.9rem" onclick="handleSignup()">
-            Create Free Account →
+            Start My Free Journey →
           </button>
-          <p class="terms">By signing up, you agree to our <a href="#">Terms of Service</a> &amp; <a href="#">Privacy Policy</a></p>
+          <div style="display:flex;align-items:center;gap:.75rem;margin:1rem 0">
+            <div style="flex:1;height:1px;background:var(--border)"></div>
+            <span style="font-size:.75rem;color:var(--muted);font-weight:500">or continue with</span>
+            <div style="flex:1;height:1px;background:var(--border)"></div>
+          </div>
+          <div style="display:flex;gap:.75rem">
+            <button onclick="signInWithGoogle()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:.6rem;padding:.75rem .5rem;border:1.5px solid var(--border);border-radius:.75rem;background:#fff;cursor:pointer;font-size:.85rem;font-weight:700;color:#333;transition:all .2s" onmouseover="this.style.borderColor='#4285f4';this.style.boxShadow='0 2px 8px rgba(66,133,244,.15)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+              <svg width="16" height="16" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.174 0 7.548 0 9s.348 2.826.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/></svg>
+              Google
+            </button>
+            <button onclick="signInWithLinkedIn()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:.6rem;padding:.75rem .5rem;border:1.5px solid var(--border);border-radius:.75rem;background:#fff;cursor:pointer;font-size:.85rem;font-weight:700;color:#333;transition:all .2s" onmouseover="this.style.borderColor='#0077b5';this.style.boxShadow='0 2px 8px rgba(0,119,181,.15)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#0077b5"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </button>
+          </div>
+          <p class="terms">By signing up, you agree to our <a href="#" onclick="showLegalModal('terms');return false;">Terms of Service</a> &amp; <a href="#" onclick="showLegalModal('privacy');return false;">Privacy Policy</a></p>
         </div>
 
         <!-- LOGIN FORM -->
@@ -2115,13 +2225,32 @@
           </div>
           <div class="form-row">
             <label class="form-label">Password</label>
-            <input type="password" placeholder="Your password" id="login-password" />
+            <div style="position:relative">
+              <input type="password" placeholder="Your password" id="login-password" style="width:100%;padding-right:2.8rem;box-sizing:border-box" />
+              <button type="button" onclick="togglePasswordVisibility('login-password',this)" style="position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--accent);font-size:.75rem;font-weight:700;padding:0;line-height:1;letter-spacing:.01em" aria-label="Show password">Show</button>
+            </div>
           </div>
           <div id="login-error" style="display:none;color:#ef4444;font-size:.83rem;margin-bottom:.75rem;padding:.65rem .9rem;background:rgba(239,68,68,.07);border-radius:.5rem;border:1px solid rgba(239,68,68,.2)"></div>
           <button class="btn btn-primary" id="login-btn" style="width:100%;margin-top:.5rem;font-size:1rem;padding:.9rem" onclick="handleLogin()">
             Log In →
           </button>
+          <div style="display:flex;align-items:center;gap:.75rem;margin:1rem 0">
+            <div style="flex:1;height:1px;background:var(--border)"></div>
+            <span style="font-size:.75rem;color:var(--muted);font-weight:500">or continue with</span>
+            <div style="flex:1;height:1px;background:var(--border)"></div>
+          </div>
+          <div style="display:flex;gap:.75rem">
+            <button onclick="signInWithGoogle()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:.6rem;padding:.75rem .5rem;border:1.5px solid var(--border);border-radius:.75rem;background:#fff;cursor:pointer;font-size:.85rem;font-weight:700;color:#333;transition:all .2s" onmouseover="this.style.borderColor='#4285f4';this.style.boxShadow='0 2px 8px rgba(66,133,244,.15)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+              <svg width="16" height="16" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.174 0 7.548 0 9s.348 2.826.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/></svg>
+              Google
+            </button>
+            <button onclick="signInWithLinkedIn()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:.6rem;padding:.75rem .5rem;border:1.5px solid var(--border);border-radius:.75rem;background:#fff;cursor:pointer;font-size:.85rem;font-weight:700;color:#333;transition:all .2s" onmouseover="this.style.borderColor='#0077b5';this.style.boxShadow='0 2px 8px rgba(0,119,181,.15)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#0077b5"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </button>
+          </div>
           <p class="terms" style="margin-top:1rem">Don't have an account? <a href="#" onclick="switchTab('signup')">Sign up free</a></p>
+          <p class="terms" style="margin-top:.5rem"><a href="mailto:hello@commonsensewalapm.com?subject=Password Reset">Forgot password?</a></p>
         </div>
       </div>
     </div>
@@ -2136,9 +2265,10 @@
       <ul class="sidebar-nav">
         <li><a href="#" class="active" onclick="switchPanel('overview',this)">🏠 &nbsp;Overview</a></li>
         <li><a href="#" onclick="switchPanel('resume',this)">📄 &nbsp;Resume Analysis</a></li>
-        <li><a href="#" onclick="switchPanel('roadmap',this)">🗺️ &nbsp;My Roadmap</a></li>
+        <li><a href="#" onclick="switchPanel('history',this);loadHistory()">🕓 &nbsp;History</a></li>
+        <li><a href="#" onclick="switchPanel('roadmap',this);openRoadmapPanel()">🗺️ &nbsp;My Roadmap</a></li>
         <li><a href="#" onclick="switchPanel('practice',this)">🧩 &nbsp;Practice Problems</a></li>
-        <li><a href="#" onclick="switchPanel('cohort',this)">👥 &nbsp;My Cohort</a></li>
+        <li><a href="#" onclick="switchPanel('cohort',this);loadCohort()">👥 &nbsp;My Cohort</a></li>
         <li><a href="#" onclick="switchPanel('resources',this)">📚 &nbsp;Resources</a></li>
       </ul>
       <div style="margin-top:2rem;padding-top:1.25rem;border-top:1px solid var(--border)">
@@ -2201,6 +2331,14 @@
         <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem" id="input-mode-tabs">
           <button id="tab-upload" onclick="setInputMode('upload')" style="flex:1;padding:1rem 1.25rem;border-radius:1rem;border:2.5px solid #2563eb;background:#2563eb;color:#fff;font-weight:800;font-size:1rem;cursor:pointer;transition:all .2s;letter-spacing:-.01em;box-shadow:0 4px 14px rgba(37,99,235,.35)">
             📄 Upload My Resume
+          </button>
+          <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:2px">
+            <div style="width:1px;height:18px;background:var(--border)"></div>
+            <span style="font-size:.7rem;font-weight:900;letter-spacing:.1em;color:var(--text2);text-transform:uppercase">or</span>
+            <div style="width:1px;height:18px;background:var(--border)"></div>
+          </div>
+          <button id="tab-paste" onclick="setInputMode('paste')" style="flex:1;padding:1rem 1.25rem;border-radius:1rem;border:2.5px solid #d1d5db;background:#fff;color:#111;font-weight:800;font-size:1rem;cursor:pointer;transition:all .2s;letter-spacing:-.01em">
+            📋 Paste Text
           </button>
           <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:2px">
             <div style="width:1px;height:18px;background:var(--border)"></div>
@@ -2286,6 +2424,65 @@
                 <option>3–5 failed interviews</option>
                 <option>5+ failed interviews</option>
               </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paste Text Zone -->
+        <div id="paste-zone-wrap" class="hidden">
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:1.25rem;padding:1.5rem">
+            <div style="font-weight:700;font-size:1rem;margin-bottom:.25rem">Paste your resume text</div>
+            <div style="font-size:.85rem;color:var(--text2);margin-bottom:1rem">Copy and paste the full text of your resume below — works great for any format.</div>
+            <textarea id="resume-text-input" rows="10" placeholder="Paste your resume text here..." style="width:100%;padding:.85rem 1rem;border-radius:.75rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.88rem;line-height:1.6;resize:vertical;outline:none;font-family:inherit"></textarea>
+            <div style="margin-top:1.25rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.25rem">
+              <div style="font-size:.82rem;font-weight:800;color:var(--text);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem">⚙️ Personalise your analysis <span style="font-size:.72rem;font-weight:500;color:var(--muted)">(optional — makes roadmap more specific)</span></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem">
+                <div>
+                  <label style="display:block;font-size:.78rem;font-weight:600;color:var(--text2);margin-bottom:.3rem">Target role level</label>
+                  <select id="pt-level" style="width:100%;padding:.55rem .8rem;border-radius:.65rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.85rem;outline:none">
+                    <option value="">Select…</option>
+                    <option>Associate / APM (entry-level)</option>
+                    <option>Mid-level PM (2–5 yrs PM exp)</option>
+                    <option>Senior PM</option>
+                    <option>Not sure yet</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="display:block;font-size:.78rem;font-weight:600;color:var(--text2);margin-bottom:.3rem">Target company type</label>
+                  <select id="pt-company" style="width:100%;padding:.55rem .8rem;border-radius:.65rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.85rem;outline:none">
+                    <option value="">Select…</option>
+                    <option>Big Tech (Google, Meta, Microsoft, Amazon)</option>
+                    <option>AI-first startup (OpenAI, Anthropic, Cohere…)</option>
+                    <option>Mid-size tech company</option>
+                    <option>Enterprise / B2B SaaS</option>
+                    <option>Open to anything</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="display:block;font-size:.78rem;font-weight:600;color:var(--text2);margin-bottom:.3rem">Hours per week available</label>
+                  <select id="pt-hours" style="width:100%;padding:.55rem .8rem;border-radius:.65rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.85rem;outline:none">
+                    <option value="">Select…</option>
+                    <option>Less than 5 hours</option>
+                    <option>5–10 hours</option>
+                    <option>10–20 hours</option>
+                    <option>20+ hours (full-time prep)</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="display:block;font-size:.78rem;font-weight:600;color:var(--text2);margin-bottom:.3rem">Your job market</label>
+                  <select id="pt-geo" style="width:100%;padding:.55rem .8rem;border-radius:.65rem;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.85rem;outline:none">
+                    <option value="">Select…</option>
+                    <option>United States</option>
+                    <option>India</option>
+                    <option>Europe</option>
+                    <option>Southeast Asia</option>
+                    <option>Other / Remote-first</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:1.25rem">
+              <button class="btn btn-primary" onclick="submitPastedResume()" style="width:100%;padding:1rem">Analyze My Resume</button>
             </div>
           </div>
         </div>
@@ -2459,6 +2656,14 @@
               <div>
                 <h3>Your AI PM Readiness Report</h3>
                 <div style="opacity:.85;font-size:.88rem;margin-top:.3rem">Benchmarked against 1,000+ AI PM career paths</div>
+                <div style="margin-top:.75rem;display:flex;gap:.6rem;flex-wrap:wrap">
+                  <button class="btn btn-ghost" style="font-size:.8rem;padding:.4rem .9rem" onclick="reAnalyze()">↩ Re-analyze</button>
+                  <button id="share-report-btn" class="btn btn-ghost" style="font-size:.8rem;padding:.4rem .9rem;display:none" onclick="shareReport()">🔗 Share Report</button>
+                </div>
+                <div id="share-link-box" style="display:none;margin-top:.75rem;background:var(--bg2);border:1px solid var(--border);border-radius:.65rem;padding:.7rem 1rem;font-size:.82rem;gap:.6rem;align-items:center">
+                  <input id="share-link-input" type="text" readonly style="flex:1;border:none;background:transparent;color:var(--text);font-size:.82rem;outline:none" />
+                  <button class="btn btn-primary" style="font-size:.78rem;padding:.35rem .8rem" onclick="copyShareLink()">Copy</button>
+                </div>
               </div>
               <div class="score-circle">
                 <div class="score-num" id="result-score">62</div>
@@ -2600,13 +2805,25 @@
 
       <!-- COHORT PANEL -->
       <div class="dash-panel" id="panel-cohort">
-        <h2 style="font-weight:800;font-size:1.3rem;margin-bottom:.5rem">My Cohort</h2>
-        <p style="color:var(--text2);font-size:.9rem;margin-bottom:1.5rem">You'll be matched with a cohort of 15–20 aspiring AI PMs and a dedicated mentor.</p>
-        <div class="dash-card" style="text-align:center;padding:3rem">
-          <div style="font-size:3rem;margin-bottom:1rem">👥</div>
-          <div style="font-weight:800;font-size:1.1rem;margin-bottom:.5rem">Cohort matching starts after profile setup</div>
-          <div style="color:var(--text2);font-size:.9rem;margin-bottom:1.5rem">Complete your resume analysis to be matched with the right cohort and mentor</div>
-          <button class="btn btn-primary" onclick="switchPanel('resume',null)">Complete Profile →</button>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.25rem">
+          <h2 style="font-weight:800;font-size:1.3rem">My Cohort</h2>
+          <span id="cohort-match-badge" style="font-size:.75rem;font-weight:700;padding:.3rem .8rem;background:var(--grad);color:#fff;border-radius:100px;display:none">✓ AI-Matched</span>
+        </div>
+        <p style="color:var(--text2);font-size:.9rem;margin-bottom:1.5rem">Matched with aspiring AI PMs at your exact stage — same background, similar readiness score.</p>
+
+        <!-- Mentor card -->
+        <div id="cohort-mentor-card" style="margin-bottom:1.5rem"></div>
+
+        <!-- Members grid -->
+        <div style="font-weight:800;font-size:.95rem;margin-bottom:.75rem" id="cohort-members-label">Your Cohort Members</div>
+        <div id="cohort-members-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem"></div>
+
+        <!-- No analysis CTA -->
+        <div id="cohort-no-analysis" style="display:none;text-align:center;padding:2.5rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius)">
+          <div style="font-size:2.5rem;margin-bottom:.75rem">👥</div>
+          <div style="font-weight:800;font-size:1rem;margin-bottom:.4rem">Complete your resume analysis first</div>
+          <div style="color:var(--text2);font-size:.88rem;margin-bottom:1.25rem">We'll match you with people at your exact stage</div>
+          <button class="btn btn-primary" onclick="switchPanel('resume',null)">Analyze My Resume →</button>
         </div>
       </div>
 
@@ -2615,12 +2832,28 @@
         <h2 style="font-weight:800;font-size:1.3rem;margin-bottom:.5rem">Resource Library</h2>
         <p style="color:var(--text2);font-size:.9rem;margin-bottom:1.5rem">Curated resources hand-picked by AI PMs from top companies.</p>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
-          <div class="dash-card"><div style="font-size:1.5rem;margin-bottom:.5rem">📖</div><div style="font-weight:700;margin-bottom:.3rem">AI for PMs Crash Course</div><div style="font-size:.82rem;color:var(--text2)">Understand LLMs, diffusion models, and AI product concepts in 4 hours</div><div class="tag" style="margin-top:.75rem">Free</div></div>
-          <div class="dash-card"><div style="font-size:1.5rem;margin-bottom:.5rem">🎯</div><div style="font-weight:700;margin-bottom:.3rem">PM Frameworks Bible</div><div style="font-size:.82rem;color:var(--text2)">50+ frameworks used by PMs at Google, Meta, and OpenAI with worked examples</div><div class="tag" style="margin-top:.75rem">Free</div></div>
-          <div class="dash-card"><div style="font-size:1.5rem;margin-bottom:.5rem">💼</div><div style="font-weight:700;margin-bottom:.3rem">AI PM Interview Bank</div><div style="font-size:.82rem;color:var(--text2)">400+ real interview questions with model answers for AI PM roles</div><div class="tag" style="margin-top:.75rem">Pro</div></div>
-          <div class="dash-card"><div style="font-size:1.5rem;margin-bottom:.5rem">🔬</div><div style="font-weight:700;margin-bottom:.3rem">Prompt Engineering 101</div><div style="font-size:.82rem;color:var(--text2)">Learn to evaluate and improve LLM outputs — a must-have PM skill</div><div class="tag" style="margin-top:.75rem">Free</div></div>
-          <div class="dash-card"><div style="font-size:1.5rem;margin-bottom:.5rem">📊</div><div style="font-weight:700;margin-bottom:.3rem">AI Metrics Masterclass</div><div style="font-size:.82rem;color:var(--text2)">How to define, track, and report on AI model metrics in a product context</div><div class="tag" style="margin-top:.75rem">Pro</div></div>
-          <div class="dash-card"><div style="font-size:1.5rem;margin-bottom:.5rem">🛡️</div><div style="font-weight:700;margin-bottom:.3rem">AI Safety for PMs</div><div style="font-size:.82rem;color:var(--text2)">Understand responsible AI, bias, fairness, and governance from a PM perspective</div><div class="tag" style="margin-top:.75rem">Free</div></div>
+          <div class="dash-card" onclick="openResourceModal('ai-crash-course')" style="cursor:pointer;transition:box-shadow .18s" onmouseenter="this.style.boxShadow='0 4px 24px rgba(124,58,237,.13)'" onmouseleave="this.style.boxShadow=''"><div style="font-size:1.5rem;margin-bottom:.5rem">📖</div><div style="font-weight:700;margin-bottom:.3rem">AI for PMs Crash Course</div><div style="font-size:.82rem;color:var(--text2)">Understand LLMs, diffusion models, and AI product concepts in 4 hours</div><div class="tag" style="margin-top:.75rem">Free</div></div>
+          <div class="dash-card" onclick="openResourceModal('pm-frameworks')" style="cursor:pointer;transition:box-shadow .18s" onmouseenter="this.style.boxShadow='0 4px 24px rgba(124,58,237,.13)'" onmouseleave="this.style.boxShadow=''"><div style="font-size:1.5rem;margin-bottom:.5rem">🎯</div><div style="font-weight:700;margin-bottom:.3rem">PM Frameworks Bible</div><div style="font-size:.82rem;color:var(--text2)">50+ frameworks used by PMs at Google, Meta, and OpenAI with worked examples</div><div class="tag" style="margin-top:.75rem">Free</div></div>
+          <div class="dash-card" onclick="openResourceModal('interview-bank')" style="cursor:pointer;transition:box-shadow .18s" onmouseenter="this.style.boxShadow='0 4px 24px rgba(239,68,68,.1)'" onmouseleave="this.style.boxShadow=''"><div style="font-size:1.5rem;margin-bottom:.5rem">💼</div><div style="font-weight:700;margin-bottom:.3rem">AI PM Interview Bank</div><div style="font-size:.82rem;color:var(--text2)">400+ real interview questions with model answers for AI PM roles</div><div class="tag" style="margin-top:.75rem;background:rgba(124,58,237,.1);color:var(--accent)">Pro</div></div>
+          <div class="dash-card" onclick="openResourceModal('prompt-engineering')" style="cursor:pointer;transition:box-shadow .18s" onmouseenter="this.style.boxShadow='0 4px 24px rgba(124,58,237,.13)'" onmouseleave="this.style.boxShadow=''"><div style="font-size:1.5rem;margin-bottom:.5rem">🔬</div><div style="font-weight:700;margin-bottom:.3rem">Prompt Engineering 101</div><div style="font-size:.82rem;color:var(--text2)">Learn to evaluate and improve LLM outputs — a must-have PM skill</div><div class="tag" style="margin-top:.75rem">Free</div></div>
+          <div class="dash-card" onclick="openResourceModal('ai-metrics')" style="cursor:pointer;transition:box-shadow .18s" onmouseenter="this.style.boxShadow='0 4px 24px rgba(239,68,68,.1)'" onmouseleave="this.style.boxShadow=''"><div style="font-size:1.5rem;margin-bottom:.5rem">📊</div><div style="font-weight:700;margin-bottom:.3rem">AI Metrics Masterclass</div><div style="font-size:.82rem;color:var(--text2)">How to define, track, and report on AI model metrics in a product context</div><div class="tag" style="margin-top:.75rem;background:rgba(124,58,237,.1);color:var(--accent)">Pro</div></div>
+          <div class="dash-card" onclick="openResourceModal('ai-safety')" style="cursor:pointer;transition:box-shadow .18s" onmouseenter="this.style.boxShadow='0 4px 24px rgba(124,58,237,.13)'" onmouseleave="this.style.boxShadow=''"><div style="font-size:1.5rem;margin-bottom:.5rem">🛡️</div><div style="font-weight:700;margin-bottom:.3rem">AI Safety for PMs</div><div style="font-size:.82rem;color:var(--text2)">Understand responsible AI, bias, fairness, and governance from a PM perspective</div><div class="tag" style="margin-top:.75rem">Free</div></div>
+        </div>
+      </div>
+
+      <!-- RESOURCE MODAL -->
+      <div id="resource-modal-overlay" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem" onclick="if(event.target===this)closeResourceModal()">
+        <div style="background:var(--card);border-radius:var(--radius);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.18)">
+          <div id="resource-modal-body"></div>
+        </div>
+      </div>
+
+      <!-- HISTORY PANEL -->
+      <div class="dash-panel" id="panel-history">
+        <h2 style="font-weight:800;font-size:1.3rem;margin-bottom:.5rem">Analysis History</h2>
+        <p style="color:var(--text2);font-size:.9rem;margin-bottom:1.5rem">All your past resume analyses — click any entry to view the full report.</p>
+        <div id="history-list">
+          <div style="text-align:center;padding:3rem;color:var(--text2);font-size:.9rem">Loading…</div>
         </div>
       </div>
 
@@ -2635,6 +2868,7 @@
 
     <div class="prob-cat-badge" id="prob-cat"></div>
     <div class="prob-title" id="prob-title"></div>
+    <div class="prob-context" id="prob-context" style="font-size:0.82rem;color:var(--text-muted);background:var(--bg);border-left:3px solid var(--primary);padding:8px 12px;margin-bottom:16px;border-radius:0 6px 6px 0;display:none"></div>
 
     <div class="prob-statement" id="prob-statement"></div>
 
@@ -2805,6 +3039,58 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
+/* ══════════════════════════════════════════
+   GOOGLE OAUTH — Supabase Auth
+══════════════════════════════════════════ */
+const _sb = supabase.createClient(
+  'https://isggcncggayuepcqtbiu.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzZ2djbmNnZ2F5dWVwY3F0Yml1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzNDczNjAsImV4cCI6MjA4OTkyMzM2MH0.bcqRlOg2RlYTrqJTPE5heql9Xh6NsuD5JKu57VR3eUA'
+);
+
+function signInWithGoogle() {
+  _sb.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.origin + '/auth/callback' }
+  });
+}
+
+function signInWithLinkedIn() {
+  _sb.auth.signInWithOAuth({
+    provider: 'linkedin_oidc',
+    options: { redirectTo: window.location.origin + '/auth/callback' }
+  });
+}
+
+async function handleOAuthCallback() {
+  // Supabase puts tokens in the URL hash after OAuth redirect
+  const hash = window.location.hash.substring(1);
+  const params = new URLSearchParams(hash);
+  const access_token = params.get('access_token');
+  if (!access_token) return false;
+
+  // Clean up URL so refresh doesn't re-trigger
+  history.replaceState(null, '', '/');
+
+  const overlay = document.getElementById('auth-loading');
+  if (overlay) overlay.style.display = 'flex';
+
+  try {
+    const resp = await fetch('/api/auth/oauth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ access_token })
+    });
+    const data = await resp.json();
+    if (data.success && data.user) {
+      enterDashboard(data.user, data.analysis);
+      return true;
+    }
+  } catch (e) { /* fall through */ }
+  if (overlay) overlay.remove();
+  showPage('signup');
+  return false;
+}
+
 // Auto-open first FAQ item + session restore on load
 document.addEventListener('DOMContentLoaded', async () => {
   const firstFaq = document.querySelector('.faq-item');
@@ -2814,21 +3100,43 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
   }
 
+  // Handle OAuth callback (Google redirect lands here with tokens in hash)
+  if (window.location.hash.includes('access_token')) {
+    const handled = await handleOAuthCallback();
+    if (handled) {
+      const overlay = document.getElementById('auth-loading');
+      if (overlay) overlay.remove();
+      return;
+    }
+  }
+
   // Restore session if user is already logged in
   try {
     const resp = await fetch('/api/auth/me');
     const data = await resp.json();
     if (data.user) {
       enterDashboard(data.user, data.analysis);
+    } else {
+      showPage('landing');
     }
   } catch (e) {
-    // Not logged in or network error — stay on landing
+    showPage('landing');
+  } finally {
+    const overlay = document.getElementById('auth-loading');
+    if (overlay) overlay.remove();
   }
 });
 
 /* ══════════════════════════════════════════
    AUTH TABS
 ══════════════════════════════════════════ */
+function togglePasswordVisibility(inputId, btn) {
+  const input = document.getElementById(inputId);
+  const isHidden = input.type === 'password';
+  input.type = isHidden ? 'text' : 'password';
+  btn.textContent = isHidden ? 'Hide' : 'Show';
+}
+
 function switchTab(tab) {
   document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
   document.getElementById('tab-login').classList.toggle('active', tab === 'login');
@@ -2837,6 +3145,7 @@ function switchTab(tab) {
 }
 
 function enterDashboard(user, analysis) {
+  window._currentUser = user;
   document.getElementById('dash-username').textContent = user.name.split(' ')[0];
   if (analysis) renderResults(analysis);
   // Reset sidebar to overview
@@ -2939,25 +3248,42 @@ function switchPanel(name, el) {
   if (el) el.classList.add('active');
 }
 
+function openRoadmapPanel() {
+  const roadmap = window._currentRoadmap;
+  if (!roadmap || roadmap.length === 0) return; // no analysis yet
+  const needsSteps = roadmap.some(r => !Array.isArray(r.steps) || r.steps.length === 0);
+  renderRoadmapPanel(roadmap, needsSteps);
+}
+
 function setInputMode(mode) {
   const uploadWrap = document.getElementById('upload-zone-wrap');
+  const pasteWrap = document.getElementById('paste-zone-wrap');
   const questionWrap = document.getElementById('quick-form-wrap');
   const tabUpload = document.getElementById('tab-upload');
+  const tabPaste = document.getElementById('tab-paste');
   const tabQ = document.getElementById('tab-questions');
 
   const activeStyle = 'flex:1;padding:1rem 1.25rem;border-radius:1rem;border:2.5px solid #2563eb;background:#2563eb;color:#fff;font-weight:800;font-size:1rem;cursor:pointer;transition:all .2s;letter-spacing:-.01em;box-shadow:0 4px 14px rgba(37,99,235,.35)';
   const inactiveStyle = 'flex:1;padding:1rem 1.25rem;border-radius:1rem;border:2.5px solid #d1d5db;background:#fff;color:#111;font-weight:800;font-size:1rem;cursor:pointer;transition:all .2s;letter-spacing:-.01em';
+
+  uploadWrap.classList.add('hidden');
+  pasteWrap.classList.add('hidden');
+  questionWrap.classList.add('hidden');
+  tabUpload.style.cssText = inactiveStyle;
+  if (tabPaste) tabPaste.style.cssText = inactiveStyle;
+  tabQ.style.cssText = inactiveStyle;
+
   if (mode === 'upload') {
     uploadWrap.classList.remove('hidden');
-    questionWrap.classList.add('hidden');
     tabUpload.style.cssText = activeStyle;
-    tabQ.style.cssText = inactiveStyle;
+  } else if (mode === 'paste') {
+    pasteWrap.classList.remove('hidden');
+    if (tabPaste) tabPaste.style.cssText = activeStyle;
   } else {
-    uploadWrap.classList.add('hidden');
     questionWrap.classList.remove('hidden');
     tabQ.style.cssText = activeStyle;
-    tabUpload.style.cssText = inactiveStyle;
   }
+  document.getElementById('quick-form-wrap').dataset.lastMode = mode;
 }
 
 /* ══════════════════════════════════════════
@@ -2978,6 +3304,7 @@ function handleDrop(e) {
 }
 function handleFileSelect(e) {
   const file = e.target.files[0];
+  e.target.value = '';  // reset so selecting the same file again re-triggers change
   if (file) processFile(file);
 }
 
@@ -3067,7 +3394,6 @@ async function uploadAndAnalyze(file) {
   try {
     const formData = new FormData();
     formData.append('resume', file);
-    // Attach additional context from upload-path selects (if present)
     const ctx = {
       level:    (document.getElementById('up-level')   || {}).value || '',
       company:  (document.getElementById('up-company') || {}).value || '',
@@ -3076,23 +3402,226 @@ async function uploadAndAnalyze(file) {
       attempts: (document.getElementById('up-attempts')|| {}).value || '',
     };
     formData.append('additionalContext', JSON.stringify(ctx));
-    const resp = await fetch('/analyze-resume', { method: 'POST', body: formData });
-    const data = await resp.json();
-    clearInterval(stepInterval);
-    steps.forEach(id => document.getElementById(id).className = 'loading-step done');
-    if (!resp.ok || !data.success) {
-      throw new Error(data.error || 'Analysis failed');
+
+    // Use SSE streaming — results render as soon as Claude finishes generating
+    const resp = await fetch('/analyze-resume-stream', { method: 'POST', body: formData });
+    if (!resp.ok) throw new Error('Upload failed');
+
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let buf = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += decoder.decode(value, { stream: true });
+      const lines = buf.split('\n');
+      buf = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const event = JSON.parse(line.slice(6));
+        if (event.type === 'error') throw new Error(event.error);
+        if (event.type === 'done') {
+          clearInterval(stepInterval);
+          steps.forEach(id => document.getElementById(id).className = 'loading-step done');
+          setTimeout(() => {
+            renderResults(event.analysis);
+            if (event.analysisId) {
+              window._currentAnalysisId = event.analysisId;
+              const shareBtn = document.getElementById('share-report-btn');
+              if (shareBtn) shareBtn.style.display = '';
+            }
+          }, 400);
+        }
+      }
     }
-    setTimeout(() => renderResults(data.analysis), 400);
   } catch (err) {
     clearInterval(stepInterval);
     document.getElementById('analysis-loading').classList.add('hidden');
-    // Restore whichever input mode was active
     const activeMode = document.getElementById('quick-form-wrap').dataset.lastMode || 'upload';
     setInputMode(activeMode);
     alert('Analysis failed: ' + err.message + '\n\nMake sure the server is running (npm start) and ANTHROPIC_API_KEY is set.');
   }
 }
+
+async function uploadAndAnalyzeText() {
+  const text = (document.getElementById('resume-text-input') || {}).value || '';
+  if (text.trim().length < 150) {
+    alert('Please paste more resume text before analyzing (at least a few paragraphs).');
+    return;
+  }
+  document.getElementById('paste-zone-wrap').classList.add('hidden');
+  document.getElementById('analysis-loading').classList.remove('hidden');
+  document.getElementById('analysis-output').classList.add('hidden');
+
+  const steps = ['ls1','ls2','ls3','ls4','ls5'];
+  steps.forEach(id => document.getElementById(id).className = 'loading-step');
+  document.getElementById(steps[0]).className = 'loading-step active';
+  let stepIdx = 0;
+  const stepInterval = setInterval(() => {
+    if (stepIdx < steps.length - 1) {
+      document.getElementById(steps[stepIdx]).className = 'loading-step done';
+      stepIdx++;
+      document.getElementById(steps[stepIdx]).className = 'loading-step active';
+    }
+  }, 1800);
+
+  try {
+    const ctx = {
+      level:   (document.getElementById('pt-level')   || {}).value || '',
+      company: (document.getElementById('pt-company') || {}).value || '',
+      hours:   (document.getElementById('pt-hours')   || {}).value || '',
+      geo:     (document.getElementById('pt-geo')     || {}).value || '',
+    };
+    const resp = await fetch('/analyze-text', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, additionalContext: JSON.stringify(ctx) }),
+    });
+    const data = await resp.json();
+    clearInterval(stepInterval);
+    steps.forEach(id => document.getElementById(id).className = 'loading-step done');
+    if (!resp.ok || !data.success) throw new Error(data.error || 'Analysis failed');
+    setTimeout(() => {
+      renderResults(data.analysis);
+      if (data.analysisId) {
+        window._currentAnalysisId = data.analysisId;
+        const shareBtn = document.getElementById('share-report-btn');
+        if (shareBtn) shareBtn.style.display = '';
+      }
+    }, 400);
+  } catch (err) {
+    clearInterval(stepInterval);
+    document.getElementById('analysis-loading').classList.add('hidden');
+    setInputMode('paste');
+    alert('Analysis failed: ' + err.message);
+  }
+}
+
+function submitPastedResume() {
+  uploadAndAnalyzeText();
+}
+
+function reAnalyze() {
+  window._currentAnalysisId = null;
+  const shareBtn = document.getElementById('share-report-btn');
+  if (shareBtn) shareBtn.style.display = 'none';
+  const shareLinkBox = document.getElementById('share-link-box');
+  if (shareLinkBox) shareLinkBox.style.display = 'none';
+  document.getElementById('analysis-output').classList.add('hidden');
+  const lastMode = document.getElementById('quick-form-wrap').dataset.lastMode || 'upload';
+  setInputMode(lastMode);
+}
+
+async function shareReport() {
+  const id = window._currentAnalysisId;
+  if (!id) return;
+  try {
+    const resp = await fetch(`/api/analyses/${id}/share`, { method: 'POST' });
+    const data = await resp.json();
+    if (!data.success) throw new Error(data.error || 'Could not generate link');
+    const box = document.getElementById('share-link-box');
+    const input = document.getElementById('share-link-input');
+    input.value = data.shareUrl;
+    box.style.display = 'flex';
+  } catch (err) {
+    alert('Could not generate share link: ' + err.message);
+  }
+}
+
+function copyShareLink() {
+  const input = document.getElementById('share-link-input');
+  if (!input) return;
+  navigator.clipboard.writeText(input.value).then(() => {
+    const btn = input.nextElementSibling;
+    if (btn) { btn.textContent = 'Copied!'; setTimeout(() => { btn.textContent = 'Copy'; }, 2000); }
+  });
+}
+
+async function loadHistory() {
+  const container = document.getElementById('history-list');
+  if (!container) return;
+  container.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text2);font-size:.9rem">Loading…</div>';
+  try {
+    const resp = await fetch('/api/analyses');
+    if (!resp.ok) throw new Error('Not authenticated');
+    const data = await resp.json();
+    const analyses = data.analyses || [];
+    if (analyses.length === 0) {
+      container.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--text2);font-size:.9rem">No analyses yet. Upload your resume to get started.</div>';
+      return;
+    }
+    const bgIcons = { engineer:'⚙️', data:'📊', business:'💼', designer:'🎨', other:'🌟' };
+    container.innerHTML = analyses.map(a => {
+      const date = new Date(a.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const score = typeof a.score === 'number' ? a.score : '—';
+      const icon = bgIcons[a.background] || '🌟';
+      const scoreColor = a.score >= 70 ? '#10b981' : a.score >= 45 ? '#f59e0b' : '#ef4444';
+      return `<div onclick="viewHistoryEntry(${a.id})" style="display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--card);border:1px solid var(--border);border-radius:.85rem;cursor:pointer;margin-bottom:.65rem;transition:box-shadow .15s" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.08)'" onmouseout="this.style.boxShadow='none'">
+        <div style="font-size:1.6rem">${icon}</div>
+        <div style="flex:1">
+          <div style="font-weight:700;font-size:.92rem;color:var(--text)">${(a.background || 'Unknown').charAt(0).toUpperCase() + (a.background || '').slice(1)} background</div>
+          <div style="font-size:.8rem;color:var(--muted);margin-top:.15rem">${date}</div>
+          ${a.summary ? `<div style="font-size:.8rem;color:var(--text2);margin-top:.25rem;overflow:hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical">${a.summary}</div>` : ''}
+        </div>
+        <div style="font-size:1.4rem;font-weight:900;color:${scoreColor}">${score}<span style="font-size:.7rem;font-weight:500;color:var(--muted)">/100</span></div>
+        <div style="font-size:.8rem;color:var(--accent)">View →</div>
+      </div>`;
+    }).join('');
+  } catch (err) {
+    container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--text2);font-size:.9rem">${err.message === 'Not authenticated' ? 'Please log in to view your analysis history.' : 'Failed to load history.'}</div>`;
+  }
+}
+
+async function viewHistoryEntry(id) {
+  try {
+    const resp = await fetch(`/api/analyses/${id}`);
+    const data = await resp.json();
+    if (!data.success) throw new Error(data.error || 'Not found');
+    switchPanel('resume', document.querySelector('.sidebar-nav a[onclick*="resume"]'));
+    window._currentAnalysisId = id;
+    renderResults(data.analysis);
+    const shareBtn = document.getElementById('share-report-btn');
+    if (shareBtn) shareBtn.style.display = '';
+  } catch (err) {
+    alert('Could not load analysis: ' + err.message);
+  }
+}
+
+// On page load: check for /report/:token route
+(async function checkSharedReport() {
+  const match = window.location.pathname.match(/^\/report\/([a-f0-9-]+)$/i);
+  if (!match) return;
+  const token = match[1];
+  try {
+    const resp = await fetch(`/api/share/${token}`);
+    const data = await resp.json();
+    if (!data.success) { document.body.innerHTML = '<div style="padding:4rem;text-align:center;font-family:sans-serif"><h2>Report not found</h2><p>This link may have expired or been removed.</p></div>'; return; }
+    // Wait for DOM to be ready then show dashboard-like view with results
+    function showSharedReport() {
+      const dashboard = document.getElementById('page-dashboard');
+      if (!dashboard) { setTimeout(showSharedReport, 100); return; }
+      // Show dashboard, hide nav login prompts
+      showPage('dashboard');
+      const usernameEl = document.getElementById('dash-username');
+      if (usernameEl) usernameEl.textContent = 'Shared Report';
+      document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
+      const resumePanel = document.getElementById('panel-resume');
+      if (resumePanel) resumePanel.classList.add('active');
+      document.getElementById('upload-zone-wrap').classList.add('hidden');
+      document.getElementById('analysis-loading') && document.getElementById('analysis-loading').classList.add('hidden');
+      renderResults(data.analysis);
+      // Hide re-analyze and share buttons for shared view
+      const reanalyzeBtn = document.querySelector('button[onclick="reAnalyze()"]');
+      if (reanalyzeBtn) reanalyzeBtn.style.display = 'none';
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', showSharedReport);
+    } else {
+      showSharedReport();
+    }
+  } catch (e) { /* non-report page, ignore */ }
+})();
 
 /* ══════════════════════════════════════════
    AI RESUME ANALYSIS ENGINE
@@ -3254,6 +3783,8 @@ const DEFAULT_PROFILE = {
 function renderResults(rawAnalysis) {
   // Defensive: ensure analysis is always a safe object
   const analysis = rawAnalysis && typeof rawAnalysis === 'object' ? rawAnalysis : {};
+  // Store for use in personalized problem feedback
+  window._lastAnalysis = analysis;
 
   // Map importance/severity to colors
   const impColor = { critical: '#ef4444', high: '#f59e0b', medium: '#10b981', low: '#6b7280' };
@@ -3313,13 +3844,24 @@ function renderResults(rawAnalysis) {
   const phaseColors = ['#2563eb','#7c3aed','#10b981','#f59e0b','#ef4444'];
   document.getElementById('roadmap-steps').innerHTML = roadmap.map((r, i) => {
     if (!r || typeof r !== 'object') return '';
+    const color = phaseColors[i % phaseColors.length];
+    const stepsHtml = Array.isArray(r.steps) && r.steps.length
+      ? `<ul class="step-actions">${r.steps.map(s => {
+          const colonIdx = s.indexOf(':');
+          const label = colonIdx > -1 ? `<strong>${s.slice(0, colonIdx + 1)}</strong>` : '';
+          const body  = colonIdx > -1 ? s.slice(colonIdx + 1).trim() : s;
+          return `<li class="step-action"><span class="step-action-dot" style="background:${color}"></span><span>${label} ${body}</span></li>`;
+        }).join('')}</ul>`
+      : '';
     return `
     <div class="roadmap-step">
-      <div class="step-badge" style="background:${phaseColors[i % phaseColors.length]}">${(r.phase||'').replace('Month ','M').replace('Week ','W')}</div>
+      <div class="step-badge" style="background:${color}">${(r.phase||'').replace('Month ','M').replace('Week ','W')}</div>
       <div class="step-content">
         <div class="step-week">${r.phase || ''}</div>
         <div class="step-heading">${r.focus || ''}</div>
-        <div class="step-tasks">🎯 <strong>Milestone:</strong> ${r.milestone || ''}</div>
+        <div class="step-milestone-label">🎯 Goal for this phase</div>
+        <div class="step-milestone-text">${r.milestone || ''}</div>
+        ${stepsHtml}
       </div>
     </div>`;
   }).join('') || '<div class="roadmap-step"><div class="step-content"><div class="step-heading">No roadmap data available.</div></div></div>';
@@ -3365,25 +3907,11 @@ function renderResults(rawAnalysis) {
   // Update roadmap panel with personalized content
   const roadmapPanel = document.getElementById('panel-roadmap');
   if (roadmapPanel && roadmap.length > 0) {
-    roadmapPanel.innerHTML = `
-      <h2 style="font-weight:800;font-size:1.3rem;margin-bottom:.25rem">My Personalized Roadmap</h2>
-      <p style="color:var(--text2);font-size:.9rem;margin-bottom:1.5rem">Your week-by-week plan to PM readiness — based on your unique background.</p>
-      <div class="timeline-card">
-        <div class="timeline-header">
-          <h3>Your Learning Path</h3>
-          <div class="timeline-estimate">${timeline.realistic || '—'} to ready</div>
-        </div>
-        <div class="timeline-milestones">
-          ${roadmap.map(r => {
-            if (!r || typeof r !== 'object') return '';
-            return `<div class="milestone">
-              <div class="milestone-week">${r.phase || ''}</div>
-              <div class="milestone-title">${r.focus || ''}</div>
-              <div class="milestone-desc">${r.milestone || ''}</div>
-            </div>`;
-          }).join('')}
-        </div>
-      </div>`;
+    // Check if any phase is missing steps — we'll generate them on first open
+    const needsSteps = roadmap.some(r => !Array.isArray(r.steps) || r.steps.length === 0);
+    window._currentRoadmap = roadmap;
+    window._currentAnalysisMeta = { background: analysis.background, summary: analysis.summary, gaps: analysis.gaps };
+    renderRoadmapPanel(roadmap, needsSteps);
   }
 
   // Show results
@@ -3396,6 +3924,195 @@ function renderResults(rawAnalysis) {
       el.style.width = el.dataset.w + '%';
     });
   }, 100);
+}
+
+/* ══════════════════════════════════════════
+   ROADMAP PANEL — CHECKLIST RENDERING
+══════════════════════════════════════════ */
+
+function rmStepKey(phaseIdx, stepIdx) {
+  const uid = (window._currentUser && window._currentUser.id) ? window._currentUser.id : 'anon';
+  return `rm_step_${uid}_${phaseIdx}_${stepIdx}`;
+}
+
+function rmPhaseCompletedKey(phaseIdx) {
+  const uid = (window._currentUser && window._currentUser.id) ? window._currentUser.id : 'anon';
+  return `rm_phase_${uid}_${phaseIdx}`;
+}
+
+function isStepDone(phaseIdx, stepIdx) {
+  return localStorage.getItem(rmStepKey(phaseIdx, stepIdx)) === '1';
+}
+
+function isPhaseCompleted(phaseIdx) {
+  return localStorage.getItem(rmPhaseCompletedKey(phaseIdx)) === '1';
+}
+
+function allStepsDone(phaseIdx, stepsCount) {
+  for (let i = 0; i < stepsCount; i++) {
+    if (!isStepDone(phaseIdx, i)) return false;
+  }
+  return true;
+}
+
+function toggleRoadmapStep(phaseIdx, stepIdx, stepsCount) {
+  const key = rmStepKey(phaseIdx, stepIdx);
+  const nowDone = localStorage.getItem(key) !== '1';
+  localStorage.setItem(key, nowDone ? '1' : '0');
+
+  const stepEl = document.getElementById(`rm-step-${phaseIdx}-${stepIdx}`);
+  if (stepEl) {
+    stepEl.classList.toggle('step-done', nowDone);
+    const check = stepEl.querySelector('.rm-check');
+    if (check) check.textContent = nowDone ? '✓' : '';
+  }
+
+  // Update complete button state
+  const btn = document.getElementById(`rm-complete-btn-${phaseIdx}`);
+  if (btn && !isPhaseCompleted(phaseIdx)) {
+    const ready = allStepsDone(phaseIdx, stepsCount);
+    btn.disabled = !ready;
+  }
+}
+
+async function markPhaseComplete(phaseIdx) {
+  const roadmap = window._currentRoadmap || [];
+  const phase = roadmap[phaseIdx];
+  if (!phase) return;
+
+  const btn = document.getElementById(`rm-complete-btn-${phaseIdx}`);
+  if (btn) { btn.textContent = 'Saving…'; btn.disabled = true; }
+
+  try {
+    await fetch('/api/user/roadmap/progress', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phaseIndex: phaseIdx, completed: true })
+    });
+  } catch (e) { /* non-fatal */ }
+
+  localStorage.setItem(rmPhaseCompletedKey(phaseIdx), '1');
+
+  // Re-render phase header + button
+  const phaseEl = document.getElementById(`rm-phase-${phaseIdx}`);
+  if (phaseEl) {
+    phaseEl.classList.add('rm-done');
+    const statusEl = phaseEl.querySelector('.rm-phase-status');
+    if (statusEl) { statusEl.textContent = '✅ Completed'; statusEl.className = 'rm-phase-status completed'; }
+    if (btn) { btn.textContent = '✅ Phase Complete'; btn.className = 'rm-complete-btn completed'; btn.disabled = false; }
+  }
+
+  // Auto-open next phase
+  const nextPhaseEl = document.getElementById(`rm-phase-${phaseIdx + 1}`);
+  if (nextPhaseEl && nextPhaseEl.classList.contains('collapsed')) {
+    nextPhaseEl.classList.remove('collapsed');
+  }
+}
+
+function toggleRoadmapPhase(phaseIdx) {
+  const phaseEl = document.getElementById(`rm-phase-${phaseIdx}`);
+  if (phaseEl) phaseEl.classList.toggle('collapsed');
+}
+
+function renderRoadmapPanel(roadmap, needsSteps) {
+  const phaseColors = ['#2563eb','#7c3aed','#10b981','#f59e0b','#ef4444'];
+  const panel = document.getElementById('panel-roadmap');
+  if (!panel) return;
+
+  const timeline = (window._lastAnalysis && window._lastAnalysis.timeline) || {};
+
+  const phasesHtml = roadmap.map((r, i) => {
+    if (!r || typeof r !== 'object') return '';
+    const color = phaseColors[i % phaseColors.length];
+    const done = isPhaseCompleted(i);
+    const steps = Array.isArray(r.steps) ? r.steps : [];
+    const hasSteps = steps.length > 0;
+    const allDone = hasSteps ? allStepsDone(i, steps.length) : false;
+
+    const statusText = done ? '✅ Completed' : (hasSteps ? (allDone ? 'Ready to complete' : 'In progress') : 'Not started');
+    const statusClass = done ? 'completed' : (allDone ? 'in-progress' : 'not-started');
+
+    const stepsHtml = hasSteps ? steps.map((s, j) => {
+      const stepDone = isStepDone(i, j);
+      const colonIdx = s.indexOf(':');
+      const label = colonIdx > -1 ? `<strong>${s.slice(0, colonIdx + 1)}</strong>` : '';
+      const body  = colonIdx > -1 ? s.slice(colonIdx + 1).trim() : s;
+      return `<li class="rm-step${stepDone ? ' step-done' : ''}" id="rm-step-${i}-${j}" onclick="toggleRoadmapStep(${i},${j},${steps.length})">
+        <div class="rm-check">${stepDone ? '✓' : ''}</div>
+        <div class="rm-step-label">${label} ${body}</div>
+      </li>`;
+    }).join('') : '';
+
+    const btnDisabled = (!hasSteps || (!done && !allDone)) ? 'disabled' : '';
+    const btnClass = done ? 'rm-complete-btn completed' : 'rm-complete-btn';
+    const btnText = done ? '✅ Phase Complete' : 'Mark Phase Complete';
+    const btnOnclick = done ? '' : `onclick="markPhaseComplete(${i})"`;
+
+    // Collapse completed phases (except the first incomplete one)
+    const collapsed = done ? 'collapsed' : '';
+
+    return `
+    <div class="rm-phase${done ? ' rm-done' : ''} ${collapsed}" id="rm-phase-${i}">
+      <div class="rm-phase-header" onclick="toggleRoadmapPhase(${i})">
+        <div class="rm-phase-dot" style="background:${color}">${(r.phase||'').replace('Month ','M').replace('Week ','W')}</div>
+        <div class="rm-phase-meta">
+          <div class="rm-phase-period">${r.phase || ''}</div>
+          <div class="rm-phase-title">${r.focus || ''}</div>
+        </div>
+        <div class="rm-phase-status ${statusClass}">${statusText}</div>
+        <div class="rm-chevron">▼</div>
+      </div>
+      <div class="rm-phase-body">
+        <div class="rm-goal"><strong>🎯 Goal for this phase</strong>${r.milestone || ''}</div>
+        ${hasSteps
+          ? `<ul class="rm-steps">${stepsHtml}</ul>
+             <button class="${btnClass}" id="rm-complete-btn-${i}" ${btnDisabled} ${btnOnclick}>${btnText}</button>`
+          : `<div style="color:var(--text-muted);font-size:.83rem;padding:.5rem 0">Loading your personalized steps…</div>
+             <button class="rm-complete-btn" id="rm-complete-btn-${i}" disabled>Mark Phase Complete</button>`
+        }
+      </div>
+    </div>`;
+  }).join('');
+
+  panel.innerHTML = `
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem">
+      <div>
+        <h2 style="font-weight:800;font-size:1.3rem;margin-bottom:.25rem">My Personalized Roadmap</h2>
+        <p style="color:var(--text2);font-size:.9rem;margin:0">Check off each step to track your progress. Complete all steps to unlock the next phase.</p>
+      </div>
+      ${timeline.realistic ? `<div style="background:var(--grad);color:#fff;padding:.4rem 1rem;border-radius:100px;font-size:.82rem;font-weight:800;white-space:nowrap">${timeline.realistic} to ready</div>` : ''}
+    </div>
+    <div id="rm-phases-wrap">
+      ${needsSteps
+        ? `<div class="rm-generating"><div style="width:22px;height:22px;border:2.5px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .7s linear infinite"></div> Generating your personalized action steps…</div>`
+        : phasesHtml
+      }
+    </div>`;
+
+  if (needsSteps) generateRoadmapSteps(roadmap);
+}
+
+async function generateRoadmapSteps(roadmap) {
+  const meta = window._currentAnalysisMeta || {};
+  try {
+    const resp = await fetch('/api/roadmap/enrich-steps', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ roadmap, background: meta.background, summary: meta.summary, gaps: meta.gaps })
+    });
+    const data = await resp.json();
+    if (data.success && Array.isArray(data.roadmap)) {
+      window._currentRoadmap = data.roadmap;
+      if (window._lastAnalysis) window._lastAnalysis.roadmap = data.roadmap;
+      renderRoadmapPanel(data.roadmap, false);
+    } else {
+      const wrap = document.getElementById('rm-phases-wrap');
+      if (wrap) wrap.innerHTML = `<div style="color:#ef4444;font-size:.85rem;padding:1rem">Could not generate steps — please try refreshing.</div>`;
+    }
+  } catch (e) {
+    const wrap = document.getElementById('rm-phases-wrap');
+    if (wrap) wrap.innerHTML = `<div style="color:#ef4444;font-size:.85rem;padding:1rem">Could not generate steps — please try refreshing.</div>`;
+  }
 }
 
 /* ══════════════════════════════════════════
@@ -3489,125 +4206,564 @@ const statsBar = document.querySelector('.stats-bar');
 if (statsBar) statsObserver.observe(statsBar);
 
 /* ══════════════════════════════════════════
+   COHORT
+══════════════════════════════════════════ */
+
+const COHORT_MENTORS = {
+  engineer: {
+    name: 'Priya Mehta', initials: 'PM', color: '#4f46e5',
+    role: 'AI PM at OpenAI', prev: 'ex-Senior SWE at Google',
+    expertise: ['LLM product strategy', 'Technical roadmapping', 'API-first products'],
+    bio: 'Priya spent 6 years as a backend engineer at Google before transitioning to PM. She now leads the developer experience for OpenAI\'s API products. She\'s mentored 40+ engineers-turned-PMs.',
+    officeHours: 'Thursdays 6–7 PM IST / 12:30–1:30 PM GMT',
+  },
+  data: {
+    name: 'Marcus Chen', initials: 'MC', color: '#0891b2',
+    role: 'Senior PM at Databricks', prev: 'ex-Data Scientist at Airbnb',
+    expertise: ['AI/ML product metrics', 'Data-driven roadmaps', 'MLOps tooling'],
+    bio: 'Marcus went from building ML models at Airbnb to owning the ML feature lifecycle at Databricks. He specialises in helping data people translate analytical instincts into PM superpowers.',
+    officeHours: 'Tuesdays 7–8 PM SGT / 11–12 AM GMT',
+  },
+  business: {
+    name: 'Aisha Okonkwo', initials: 'AO', color: '#059669',
+    role: 'Product Lead at Stripe', prev: 'ex-McKinsey Consultant',
+    expertise: ['Fintech product strategy', 'Stakeholder alignment', 'Go-to-market'],
+    bio: 'Aisha spent 5 years advising Fortune 500s at McKinsey before joining Stripe as one of their first PMs. She\'s particularly good at helping business backgrounds articulate strategic thinking in PM interviews.',
+    officeHours: 'Wednesdays 5–6 PM GMT',
+  },
+  designer: {
+    name: 'Carlos Rivera', initials: 'CR', color: '#7c3aed',
+    role: 'PM at Figma', prev: 'ex-UX Lead at Adobe',
+    expertise: ['Design-led product thinking', 'User research', 'AI creative tools'],
+    bio: 'Carlos led design for Adobe\'s Creative Cloud AI features before moving to PM at Figma. He helps designers understand that their biggest PM asset — user empathy — is already their strongest card.',
+    officeHours: 'Mondays 4–5 PM PST',
+  },
+  other: {
+    name: 'Tanvir Ahmed', initials: 'TA', color: '#dc2626',
+    role: 'PM at Cohere', prev: 'ex-High School Teacher → self-taught PM',
+    expertise: ['Career transition strategy', 'Storytelling & narrative', 'AI fundamentals'],
+    bio: 'Tanvir made one of the most unconventional PM transitions — from teaching high school physics to shipping LLM products at Cohere. He\'s proof that non-traditional backgrounds can be a competitive advantage.',
+    officeHours: 'Fridays 1–2 PM EST',
+  },
+};
+
+const COHORT_MEMBERS = {
+  engineer: [
+    { name: 'Arjun Sharma', initials: 'AS', color: '#6366f1', role: 'Backend Engineer → AI PM', company: 'Targeting: AI startups', score: 68, goal: 'Land AI PM role in 6 months', fact: 'Built a RAG chatbot as a side project' },
+    { name: 'Mei Lin', initials: 'ML', color: '#8b5cf6', role: 'SWE at Amazon → PM transition', company: 'Targeting: Big Tech', score: 72, goal: 'Move internally to PM track', fact: 'Completed 15 practice problems this week' },
+    { name: 'Rohan Verma', initials: 'RV', color: '#0891b2', role: 'Full-Stack Dev → PM', company: 'Targeting: Series B startups', score: 61, goal: 'First PM role in fintech', fact: 'Has 3 side projects deployed' },
+    { name: 'Sofia Petrov', initials: 'SP', color: '#059669', role: 'iOS Engineer → Product', company: 'Targeting: Consumer apps', score: 74, goal: 'PM at a consumer AI app', fact: 'Volunteer PM for a nonprofit' },
+    { name: 'Kwame Asante', initials: 'KA', color: '#f59e0b', role: 'DevOps → AI PM', company: 'Targeting: MLOps platforms', score: 59, goal: 'PM at infrastructure company', fact: 'Deep expertise in Kubernetes' },
+    { name: 'Yuki Tanaka', initials: 'YT', color: '#ec4899', role: 'QA Engineer → PM', company: 'Targeting: SaaS', score: 65, goal: 'PM in B2B SaaS', fact: 'Wrote 200+ user stories in past role' },
+  ],
+  data: [
+    { name: 'Zara Osei', initials: 'ZO', color: '#0891b2', role: 'Data Analyst → AI PM', company: 'Targeting: Fintech', score: 63, goal: 'PM at data-heavy product', fact: 'Built 4 dashboards that drove exec decisions' },
+    { name: 'Nico Bianchi', initials: 'NB', color: '#6366f1', role: 'ML Engineer → PM', company: 'Targeting: AI research labs', score: 71, goal: 'PM at an AI-first company', fact: 'Published 2 ML papers' },
+    { name: 'Preethi Nair', initials: 'PN', color: '#059669', role: 'Business Analyst → PM', company: 'Targeting: Healthcare AI', score: 58, goal: 'PM in health-tech', fact: 'Domain expert in clinical data' },
+    { name: 'Hassan Al-Rashid', initials: 'HR', color: '#f59e0b', role: 'Data Scientist → PM', company: 'Targeting: E-commerce', score: 66, goal: 'PM at retail tech', fact: 'Built churn prediction model used by 5M users' },
+    { name: 'Ingrid Larsson', initials: 'IL', color: '#7c3aed', role: 'Analytics Manager → PM', company: 'Targeting: B2B SaaS', score: 70, goal: 'Senior PM role', fact: 'Led 3 cross-functional data projects' },
+    { name: 'Chidi Eze', initials: 'CE', color: '#ec4899', role: 'BI Developer → PM', company: 'Targeting: Fintech startups', score: 55, goal: 'First PM role', fact: 'Deep SQL expert, learning product strategy' },
+  ],
+  business: [
+    { name: 'Fatima Al-Zahra', initials: 'FZ', color: '#059669', role: 'Strategy Consultant → PM', company: 'Targeting: Enterprise SaaS', score: 60, goal: 'PM at B2B company', fact: 'Led $10M digital transformation project' },
+    { name: 'James Oduya', initials: 'JO', color: '#6366f1', role: 'Product Marketing → PM', company: 'Targeting: Consumer AI', score: 57, goal: 'PM at growth-stage startup', fact: 'Launched 3 products from 0→1 on GTM side' },
+    { name: 'Lin Wei', initials: 'LW', color: '#0891b2', role: 'Finance Analyst → PM', company: 'Targeting: Fintech', score: 52, goal: 'PM at a bank or fintech', fact: 'CFA level 2, pivoting to product' },
+    { name: 'Sara Kowalski', initials: 'SK', color: '#f59e0b', role: 'Operations Manager → PM', company: 'Targeting: Ops-tech', score: 61, goal: 'PM at logistics or ops tech', fact: 'Redesigned a process saving $2M/year' },
+    { name: 'Olu Adeyemi', initials: 'OA', color: '#ec4899', role: 'Account Manager → PM', company: 'Targeting: CRM / Sales tech', score: 48, goal: 'Transition from CS to PM', fact: 'Deep customer insight from 200+ accounts' },
+    { name: 'Camille Dubois', initials: 'CD', color: '#7c3aed', role: 'Management Consultant → PM', company: 'Targeting: VC-backed startups', score: 65, goal: 'PM role at seed-stage startup', fact: 'Completed PM certification, building first prototype' },
+  ],
+  designer: [
+    { name: 'Amara Diallo', initials: 'AD', color: '#ec4899', role: 'UX Designer → PM', company: 'Targeting: Consumer apps', score: 66, goal: 'PM at a design-led company', fact: 'Portfolio has 5 end-to-end case studies' },
+    { name: 'Ben Nakamura', initials: 'BN', color: '#6366f1', role: 'Product Designer → PM', company: 'Targeting: AI creative tools', score: 70, goal: 'PM at Figma or Canva', fact: 'Redesigned an app used by 500K people' },
+    { name: 'Elif Yilmaz', initials: 'EY', color: '#059669', role: 'UX Researcher → PM', company: 'Targeting: Healthcare AI', score: 62, goal: 'PM in health-tech', fact: 'Ran 80+ user interviews in 2 years' },
+    { name: 'Pedro Santos', initials: 'PS', color: '#f59e0b', role: 'Interaction Designer → PM', company: 'Targeting: EdTech', score: 58, goal: 'PM at an education platform', fact: 'Taught himself no-code to build prototypes' },
+    { name: 'Nadia Hassan', initials: 'NH', color: '#0891b2', role: 'Creative Director → PM', company: 'Targeting: Media tech', score: 55, goal: 'PM in content or media', fact: 'Managed design team of 8 people' },
+    { name: 'Tom Eriksson', initials: 'TE', color: '#7c3aed', role: 'Brand Designer → PM', company: 'Targeting: B2C startup', score: 50, goal: 'First PM role anywhere', fact: 'Just finished first practice problem set' },
+  ],
+  other: [
+    { name: 'Ayesha Raza', initials: 'AR', color: '#f59e0b', role: 'Teacher → AI PM', company: 'Targeting: EdTech', score: 48, goal: 'PM at an education AI company', fact: 'Teaching gave her deep user empathy skills' },
+    { name: 'Max Fischer', initials: 'MF', color: '#6366f1', role: 'Journalist → PM', company: 'Targeting: Media AI', score: 52, goal: 'PM at a content platform', fact: 'Written 1000+ published articles — great at narrative' },
+    { name: 'Diana Popescu', initials: 'DP', color: '#059669', role: 'Nurse → Health AI PM', company: 'Targeting: Healthcare AI', score: 45, goal: 'PM at a digital health startup', fact: 'Domain expertise is a massive differentiator' },
+    { name: 'Ravi Krishnan', initials: 'RK', color: '#ec4899', role: 'Customer Support → PM', company: 'Targeting: SaaS tools', score: 50, goal: 'Internal PM transition', fact: 'Knows customer pain better than most PMs' },
+    { name: 'Julia Moreira', initials: 'JM', color: '#0891b2', role: 'HR Manager → PM', company: 'Targeting: HR tech', score: 47, goal: 'PM in people & HR tech', fact: 'Deep expertise in org design and workflows' },
+    { name: 'Sam Park', initials: 'SP', color: '#7c3aed', role: 'Recent Graduate → PM', company: 'Targeting: APM programs', score: 43, goal: 'Google APM or Meta RPM', fact: 'Building side projects to fill experience gap' },
+  ],
+};
+
+/* ══════════════════════════════════════════
+   RESOURCE MODALS
+══════════════════════════════════════════ */
+
+const RESOURCES = {
+  'ai-crash-course': {
+    type: 'free',
+    icon: '📖', title: 'AI for PMs Crash Course',
+    desc: 'The essential AI vocabulary and concepts every PM needs — no engineering degree required.',
+    sections: [
+      {
+        heading: '🧠 What is an LLM?',
+        body: 'Large Language Models (LLMs) like GPT-4, Claude, and Gemini are trained on massive text datasets to predict the next word in a sequence. As a PM, you need to understand: <b>tokens</b> (how text is split up and priced), <b>context windows</b> (how much the model "remembers" in one conversation), and <b>temperature</b> (controls randomness — low = consistent, high = creative).',
+        links: [
+          { label: 'Andrej Karpathy: Intro to LLMs (YouTube)', url: 'https://www.youtube.com/watch?v=zjkBMFhNj_g' },
+          { label: 'What are tokens? — OpenAI Tokenizer', url: 'https://platform.openai.com/tokenizer' },
+        ]
+      },
+      {
+        heading: '🖼️ Diffusion Models & Image AI',
+        body: 'Diffusion models (Stable Diffusion, DALL-E, Midjourney) work by adding noise to an image and learning to reverse it. As a PM, what matters: latency vs quality tradeoffs, content moderation challenges, and user trust when AI-generated content is indistinguishable from real.',
+        links: [
+          { label: 'How diffusion models work — Illustrated Guide', url: 'https://jalammar.github.io/illustrated-stable-diffusion/' },
+        ]
+      },
+      {
+        heading: '🔍 RAG — Retrieval-Augmented Generation',
+        body: 'RAG combines a knowledge base with an LLM. Instead of retraining the model, you retrieve relevant documents and inject them into the prompt. Most enterprise AI products use RAG. Key PM considerations: freshness of data, retrieval quality (precision vs recall), and hallucination rate.',
+        links: [
+          { label: 'RAG explained for PMs — Lenny\'s Newsletter', url: 'https://www.lennysnewsletter.com/p/ai-pm' },
+        ]
+      },
+      {
+        heading: '⚙️ Fine-tuning vs Prompting',
+        body: '<b>Prompting</b>: cheapest, fastest, no training needed — use system prompts, few-shot examples. <b>Fine-tuning</b>: trains the model on your data — better for consistent tone or domain-specific tasks, but expensive and requires data. As a PM, always start with prompting and only fine-tune when you have clear evidence it\'s needed.',
+        links: [
+          { label: 'Prompting Guide — promptingguide.ai', url: 'https://www.promptingguide.ai' },
+          { label: 'When to fine-tune — OpenAI docs', url: 'https://platform.openai.com/docs/guides/fine-tuning' },
+        ]
+      },
+      {
+        heading: '📏 How to evaluate AI quality',
+        body: 'Key PM metrics for AI features: <b>Accuracy</b> (is the output correct?), <b>Latency</b> (p50/p95 response time), <b>Hallucination rate</b> (how often does it confidently make things up?), <b>User acceptance rate</b> (do users keep or discard the AI suggestion?). Always pair automated evals with human review.',
+        links: [
+          { label: 'AI Evals for PMs — Eugene Yan', url: 'https://eugeneyan.com/writing/evals/' },
+        ]
+      },
+    ]
+  },
+
+  'pm-frameworks': {
+    type: 'free',
+    icon: '🎯', title: 'PM Frameworks Bible',
+    desc: 'The 8 frameworks that show up in 90% of AI PM interviews — with worked examples.',
+    sections: [
+      {
+        heading: '1. CIRCLES (Product Design)',
+        body: '<b>C</b>omprehend the situation → <b>I</b>dentify the customer → <b>R</b>eport their needs → <b>C</b>ut through prioritization → <b>L</b>ist solutions → <b>E</b>valuate tradeoffs → <b>S</b>ummarize. Use this for "design a product for X" questions.',
+        links: [{ label: 'CIRCLES Method — Lewis C. Lin', url: 'https://www.lewis-lin.com/blog/circles-method' }]
+      },
+      {
+        heading: '2. RICE (Prioritization)',
+        body: '<b>R</b>each × <b>I</b>mpact × <b>C</b>onfidence ÷ <b>E</b>ffort = RICE score. Use when you have multiple features to compare. Watch out: teams often inflate confidence scores. Always make assumptions explicit.',
+        links: [{ label: 'RICE scoring guide — Intercom', url: 'https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/' }]
+      },
+      {
+        heading: '3. Jobs-to-be-Done (JTBD)',
+        body: '"People don\'t buy a drill — they buy a hole in the wall." JTBD reframes user needs as <b>functional</b> (what they want to do), <b>social</b> (how they want to be seen), and <b>emotional</b> (how they want to feel). Use this for user research and positioning.',
+        links: [{ label: 'JTBD Intro — Intercom on Jobs-to-be-Done', url: 'https://www.intercom.com/resources/books/intercom-jobs-to-be-done' }]
+      },
+      {
+        heading: '4. HEART (Metrics)',
+        body: 'Google\'s framework: <b>H</b>appiness, <b>E</b>ngagement, <b>A</b>doption, <b>R</b>etention, <b>T</b>ask Success. Pick 2-3 for your product — don\'t track all 5. For AI features, "Task Success" (did the AI output actually get used?) is often the most revealing.',
+        links: [{ label: 'HEART framework — Google Research', url: 'https://research.google/pubs/measuring-the-user-experience-on-a-large-scale-user-experience-measuring-the-user-experience-on-a-large-scale/' }]
+      },
+      {
+        heading: '5. North Star Metric',
+        body: 'One metric that best captures the value your product delivers to users. Examples: Spotify → time spent listening, Airbnb → nights booked, Notion → weekly active editors. Everything on your roadmap should move this number. Avoid revenue as your north star — it\'s a lagging indicator.',
+        links: [{ label: 'North Star Metric guide — Amplitude', url: 'https://amplitude.com/blog/product-north-star-metric' }]
+      },
+      {
+        heading: '6. Opportunity Solution Tree (OST)',
+        body: 'Teresa Torres\' framework: start with a desired <b>outcome</b> → map <b>opportunities</b> (user needs/pain) → generate <b>solutions</b> → run <b>experiments</b>. Prevents jumping straight from problem to solution. Essential for continuous discovery.',
+        links: [{ label: 'OST explained — Teresa Torres', url: 'https://www.producttalk.org/2023/12/opportunity-solution-trees/' }]
+      },
+    ]
+  },
+
+  'prompt-engineering': {
+    type: 'free',
+    icon: '🔬', title: 'Prompt Engineering 101',
+    desc: 'How to write, evaluate, and improve prompts — the PM skill that separates good from great AI PMs.',
+    sections: [
+      {
+        heading: '✍️ Anatomy of a good prompt',
+        body: 'Every strong prompt has 4 elements: <b>Role</b> ("You are an expert PM coach..."), <b>Task</b> (what you want done), <b>Context</b> (relevant background), <b>Format</b> (JSON, bullet list, 2 paragraphs). Missing any of these is the most common reason prompts underperform.',
+        links: [{ label: 'Prompt engineering guide — OpenAI', url: 'https://platform.openai.com/docs/guides/prompt-engineering' }]
+      },
+      {
+        heading: '🎯 Few-shot prompting',
+        body: 'Give the model 2-3 examples of input → output before your actual request. This is the single most effective technique for getting consistent structured output. Works especially well for classification, scoring, and formatting tasks.',
+        links: [{ label: 'Few-shot prompting examples — promptingguide.ai', url: 'https://www.promptingguide.ai/techniques/fewshot' }]
+      },
+      {
+        heading: '🔗 Chain-of-thought (CoT)',
+        body: 'Add "Think step by step" or show reasoning steps in your few-shot examples. Forces the model to reason before answering, dramatically improving accuracy on logic, math, and multi-step tasks. Used internally at OpenAI and Anthropic for complex reasoning tasks.',
+        links: [{ label: 'Chain-of-thought paper — Google Brain', url: 'https://arxiv.org/abs/2201.11903' }]
+      },
+      {
+        heading: '📏 How to evaluate prompts at scale',
+        body: 'Build an eval set: 20-50 input/output pairs where you know the right answer. Run your prompt against them and score. Track: accuracy, consistency (same input → same output?), latency, and token cost. Treat prompts like code — version control them.',
+        links: [
+          { label: 'Evals cookbook — OpenAI', url: 'https://cookbook.openai.com/examples/evaluation/getting_started_with_openai_evals' },
+          { label: 'Braintrust — eval platform', url: 'https://www.braintrust.dev' },
+        ]
+      },
+      {
+        heading: '⚠️ Common PM mistakes with prompts',
+        body: '1. Over-trusting the output without an eval set. 2. Not version-controlling prompts. 3. Using temperature=1 for factual tasks. 4. Ignoring token costs at scale (1M users × 2000 tokens = $$$). 5. Not testing edge cases (empty input, adversarial users, non-English text).',
+        links: []
+      },
+    ]
+  },
+
+  'ai-safety': {
+    type: 'free',
+    icon: '🛡️', title: 'AI Safety for PMs',
+    desc: 'Responsible AI, bias, fairness, and governance — what every PM shipping AI features must know.',
+    sections: [
+      {
+        heading: '🎭 What is hallucination and why does it matter?',
+        body: 'LLMs can confidently state false information. This isn\'t a bug — it\'s a fundamental property of how they work. As a PM: never deploy LLMs for high-stakes factual queries (medical, legal, financial) without human review. Always show citations. Add disclaimers. Test adversarially.',
+        links: [{ label: 'Understanding hallucinations — Anthropic', url: 'https://www.anthropic.com/research' }]
+      },
+      {
+        heading: '⚖️ Bias and fairness',
+        body: 'Models inherit biases from training data. Examples: résumé screening models that disadvantage women, image generators that default to western representations, loan models with racial disparities. As a PM: audit outputs across demographic groups, define fairness metrics before launch, and document known limitations.',
+        links: [{ label: 'AI Fairness 360 — IBM', url: 'https://aif360.mybluemix.net' }]
+      },
+      {
+        heading: '🔒 Privacy and data governance',
+        body: 'Key questions to answer before shipping: Does user data get used to train the model? Who owns outputs? What\'s the data retention policy? For EU users: GDPR compliance, right to erasure, data minimization. Build a data card for every model your product uses.',
+        links: [
+          { label: 'Model Cards — Google', url: 'https://modelcards.withgoogle.com/about' },
+          { label: 'GDPR & AI — ICO guidance', url: 'https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/artificial-intelligence/' },
+        ]
+      },
+      {
+        heading: '🚨 Red-teaming your AI features',
+        body: 'Before launch: run structured adversarial testing. Try to make the model output harmful content, leak system prompts, give dangerous advice, or discriminate. Document what you find and set acceptance criteria. At minimum: test jailbreaks, prompt injection, and demographic bias.',
+        links: [{ label: 'Red-teaming LLMs — Anthropic guide', url: 'https://www.anthropic.com/research/red-teaming-language-models-to-reduce-harms' }]
+      },
+      {
+        heading: '📋 The AI PM governance checklist',
+        body: '✅ Data card documented · ✅ Bias audit completed · ✅ Human-in-the-loop for high-stakes decisions · ✅ Opt-out mechanism for training data · ✅ Incident response plan · ✅ Limitations disclosed to users · ✅ Legal review of outputs',
+        links: [{ label: 'Responsible AI practices — Google', url: 'https://ai.google/responsibility/responsible-ai-practices/' }]
+      },
+    ]
+  },
+
+  'interview-bank': {
+    type: 'pro',
+    icon: '💼', title: 'AI PM Interview Bank',
+    teaser: '400+ real interview questions from Google, Meta, OpenAI, Anthropic, Cohere, Mistral, and top AI startups — with model answers, common mistakes, and scoring rubrics.',
+    bullets: [
+      '150 product design questions with AI/ML context',
+      '80 metrics & analytical questions with worked answers',
+      '60 strategy & prioritization questions from actual interviews',
+      '50 technical AI questions PMs get asked (no coding required)',
+      '40 behavioural questions specific to AI PM roles',
+      'Full model answers for every question + what interviewers look for',
+      'Company-specific question banks: OpenAI, Google DeepMind, Meta AI, Cohere',
+    ]
+  },
+
+  'ai-metrics': {
+    type: 'pro',
+    icon: '📊', title: 'AI Metrics Masterclass',
+    teaser: 'A complete playbook for defining, tracking, and presenting AI product metrics — used by PMs at Databricks, Weights & Biases, and Hugging Face.',
+    bullets: [
+      'How to define north star metrics for AI-first products',
+      'The 12 AI-specific metrics every PM should know (beyond accuracy)',
+      'Building an eval framework from scratch in 5 steps',
+      'A/B testing AI features: what\'s different and what breaks',
+      'How to present model performance to non-technical executives',
+      'Real metric dashboards from 3 anonymised AI companies',
+      'Templates: metric trees, eval scorecards, launch readiness checklists',
+    ]
+  },
+};
+
+function openResourceModal(id) {
+  const r = RESOURCES[id];
+  if (!r) return;
+  const overlay = document.getElementById('resource-modal-overlay');
+  const body = document.getElementById('resource-modal-body');
+  overlay.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+
+  if (r.type === 'free') {
+    body.innerHTML = `
+      <div style="padding:1.75rem 1.75rem 0">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.25rem">
+          <div style="font-size:.72rem;font-weight:800;letter-spacing:.07em;color:var(--accent);text-transform:uppercase">Free Resource</div>
+          <button onclick="closeResourceModal()" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--muted);line-height:1">×</button>
+        </div>
+        <div style="font-size:1.75rem;margin-bottom:.4rem">${r.icon}</div>
+        <div style="font-weight:900;font-size:1.2rem;margin-bottom:.4rem">${r.title}</div>
+        <div style="font-size:.87rem;color:var(--text2);margin-bottom:1.5rem;line-height:1.6">${r.desc}</div>
+      </div>
+      <div style="padding:0 1.75rem 1.75rem">
+        ${r.sections.map(s => `
+          <div style="margin-bottom:1.5rem;padding:1.1rem 1.25rem;background:var(--bg2);border-radius:.75rem;border:1px solid var(--border)">
+            <div style="font-weight:800;font-size:.92rem;margin-bottom:.5rem">${s.heading}</div>
+            <div style="font-size:.83rem;color:var(--text2);line-height:1.7;margin-bottom:${s.links.length ? '.75rem' : '0'}">${s.body}</div>
+            ${s.links.length ? `<div style="display:flex;flex-direction:column;gap:.35rem">
+              ${s.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener" style="font-size:.78rem;font-weight:700;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:.3rem">↗ ${l.label}</a>`).join('')}
+            </div>` : ''}
+          </div>`).join('')}
+      </div>`;
+  } else {
+    body.innerHTML = `
+      <div style="padding:1.75rem">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.25rem">
+          <div style="font-size:.72rem;font-weight:800;letter-spacing:.07em;color:var(--accent);text-transform:uppercase;background:rgba(124,58,237,.1);padding:.25rem .65rem;border-radius:100px">Pro</div>
+          <button onclick="closeResourceModal()" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--muted);line-height:1">×</button>
+        </div>
+        <div style="font-size:1.75rem;margin:1rem 0 .4rem">${r.icon}</div>
+        <div style="font-weight:900;font-size:1.2rem;margin-bottom:.5rem">${r.title}</div>
+        <div style="font-size:.87rem;color:var(--text2);line-height:1.65;margin-bottom:1.5rem">${r.teaser}</div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:.85rem;padding:1.1rem 1.25rem;margin-bottom:1.5rem">
+          <div style="font-weight:800;font-size:.82rem;margin-bottom:.75rem;color:var(--text)">What's inside:</div>
+          ${r.bullets.map(b => `<div style="display:flex;gap:.6rem;align-items:flex-start;margin-bottom:.5rem;font-size:.82rem;color:var(--text2)"><span style="color:#10b981;font-weight:900;flex-shrink:0">✓</span>${b}</div>`).join('')}
+        </div>
+        <div style="background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(37,99,235,.08));border:1.5px solid rgba(124,58,237,.2);border-radius:.85rem;padding:1.25rem;text-align:center">
+          <div style="font-weight:800;font-size:1rem;margin-bottom:.3rem">Unlock with Pro</div>
+          <div style="font-size:.82rem;color:var(--text2);margin-bottom:1rem">Get full access to all Pro resources, the interview bank, and 1-on-1 mentor sessions.</div>
+          <button class="btn btn-primary" style="width:100%;font-size:.95rem" onclick="closeResourceModal();showPage('signup')">Upgrade to Pro →</button>
+          <div style="font-size:.72rem;color:var(--muted);margin-top:.6rem">Starting at $29/month · Cancel anytime</div>
+        </div>
+      </div>`;
+  }
+}
+
+function closeResourceModal() {
+  document.getElementById('resource-modal-overlay').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function loadCohort() {
+  const analysis = window._lastAnalysis;
+  const bg = analysis ? (analysis.background || 'other') : null;
+  const score = analysis ? (analysis.score || 50) : null;
+
+  const mentorCard = document.getElementById('cohort-mentor-card');
+  const membersGrid = document.getElementById('cohort-members-grid');
+  const noAnalysis = document.getElementById('cohort-no-analysis');
+  const badge = document.getElementById('cohort-match-badge');
+  const label = document.getElementById('cohort-members-label');
+
+  if (!bg) {
+    // No analysis yet — show locked state with a preview of the engineer cohort
+    noAnalysis.style.display = '';
+    mentorCard.innerHTML = '';
+    membersGrid.innerHTML = '';
+    badge.style.display = 'none';
+    return;
+  }
+
+  noAnalysis.style.display = 'none';
+  badge.style.display = '';
+
+  const mentor = COHORT_MENTORS[bg] || COHORT_MENTORS.other;
+  const members = COHORT_MEMBERS[bg] || COHORT_MEMBERS.other;
+  const bgLabel = { engineer: 'Engineering', data: 'Data & Analytics', business: 'Business & Strategy', designer: 'Design', other: 'Career Changer' }[bg] || 'Mixed';
+
+  label.textContent = `Your ${bgLabel} Cohort — ${members.length} Members`;
+
+  // Render mentor
+  mentorCard.innerHTML = `
+    <div style="background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(37,99,235,.08));border:1.5px solid rgba(124,58,237,.2);border-radius:var(--radius);padding:1.25rem 1.5rem">
+      <div style="font-size:.7rem;font-weight:800;letter-spacing:.08em;color:var(--accent);margin-bottom:.75rem;text-transform:uppercase">Your Dedicated Mentor</div>
+      <div style="display:flex;gap:1rem;align-items:flex-start">
+        <div style="width:56px;height:56px;border-radius:50%;background:${mentor.color};display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:#fff;flex-shrink:0">${mentor.initials}</div>
+        <div style="flex:1">
+          <div style="font-weight:800;font-size:1rem">${mentor.name}</div>
+          <div style="font-size:.82rem;color:var(--accent);font-weight:600">${mentor.role}</div>
+          <div style="font-size:.78rem;color:var(--text2);margin-bottom:.6rem">${mentor.prev}</div>
+          <div style="font-size:.82rem;color:var(--text2);line-height:1.55;margin-bottom:.75rem">${mentor.bio}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.75rem">
+            ${mentor.expertise.map(e => `<span style="font-size:.72rem;font-weight:700;padding:.2rem .6rem;background:rgba(124,58,237,.1);color:var(--accent);border-radius:100px">${e}</span>`).join('')}
+          </div>
+          <div style="font-size:.78rem;color:var(--text2)">🕐 Office hours: <strong>${mentor.officeHours}</strong></div>
+        </div>
+      </div>
+    </div>`;
+
+  // Render members
+  membersGrid.innerHTML = members.map(m => {
+    const scoreDiff = score !== null ? m.score - score : 0;
+    const matchLabel = Math.abs(scoreDiff) <= 8 ? '🟢 Close match' : Math.abs(scoreDiff) <= 15 ? '🟡 Similar stage' : '🔵 Same background';
+    return `
+    <div class="dash-card" style="padding:1rem">
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem">
+        <div style="width:40px;height:40px;border-radius:50%;background:${m.color};display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:#fff;flex-shrink:0">${m.initials}</div>
+        <div>
+          <div style="font-weight:700;font-size:.9rem">${m.name}</div>
+          <div style="font-size:.75rem;color:var(--text2)">${m.role}</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem">
+        <span style="font-size:.7rem;color:var(--text2)">${matchLabel}</span>
+        <span style="font-size:.72rem;font-weight:700;padding:.15rem .55rem;background:rgba(37,99,235,.08);color:#2563eb;border-radius:100px">Score: ${m.score}</span>
+      </div>
+      <div style="font-size:.78rem;color:var(--text2);margin-bottom:.4rem">🎯 ${m.goal}</div>
+      <div style="font-size:.75rem;color:var(--muted)">✨ ${m.fact}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ══════════════════════════════════════════
    PRACTICE PROBLEMS
 ══════════════════════════════════════════ */
 const PROBLEMS = [
   {
     id: 0,
     icon: '🔢',
-    title: 'Prioritization: Which Feature Do You Build First?',
-    category: 'Strategy',
+    title: 'Which Feature Should We Build First?',
+    category: 'Prioritization',
     difficulty: 'Beginner',
-    statement: `You are a new PM at an AI-powered customer service startup. After talking to users last month, your team has collected the following 5 feature requests:
+    context: 'Your ability to make decisions with limited information and explain your reasoning clearly. Interviewers don\'t expect the "right" answer — they want to see how you think.',
+    statement: `You're a new PM at a small startup that makes AI-powered customer support software (think: a tool that helps customer service agents reply to users faster).
 
-1. An "undo send" button for messages sent to customers by mistake
-2. An AI that auto-drafts replies based on past conversations
-3. A dashboard showing average response time per agent
-4. Integration with Slack so agents get notified there instead of by email
-5. A way for customers to rate the quality of each support interaction
+After talking to customers, your team has five feature requests on the table:
 
-Your CEO says you have engineering capacity for ONE feature this quarter. How do you decide which one to build? Walk me through your thinking.`,
+1. An "undo send" button — so agents can cancel a message they sent by mistake
+2. AI-drafted replies — the AI suggests a full reply based on past conversations, which the agent can edit and send
+3. A performance dashboard — shows managers how fast each agent is responding
+4. Slack notifications — agents get pinged in Slack instead of by email when there's a new ticket
+5. Customer ratings — after a support chat ends, customers can rate how helpful it was
+
+The CEO says: we only have capacity to build ONE of these this quarter.
+
+How do you decide which feature to build? Walk through your thinking step by step.
+
+(There is no single right answer — the goal is to explain your reasoning, not guess the "correct" feature.)`,
     hints: [
-      'Think about which feature solves the biggest pain for the most users',
-      'Consider business impact — which one helps the company grow or retain customers?',
-      'Are any of these "must haves" vs "nice to haves"?',
-      'You don\'t have to pick one of the 5 — you can also explain why you\'d gather more data first'
+      'Start by asking: who does each feature help — the agent, the manager, or the customer? Features that help the person doing the most work usually matter most.',
+      'Ask yourself: which problem is most painful right now? "Undo send" fixes a mistake that already happens. AI replies could save hours every day. Which one removes more friction?',
+      'Think about business impact: which feature is most likely to help the company keep its customers, grow, or stand out from competitors?',
+      'You don\'t have to pick one of the five. You can also say "I\'d want to talk to 5 agents and 5 managers before deciding" — explaining why you need more data is a valid PM answer.'
     ]
   },
   {
     id: 1,
     icon: '📊',
-    title: 'Defining Success: Did Your AI Feature Work?',
+    title: 'How Do We Know If Our Product Is Working?',
     category: 'Metrics',
     difficulty: 'Beginner',
-    statement: `You are the PM for a free AI writing assistant app that helps people write better emails. You just launched it 3 days ago and your CEO asks you: "How will we know in 3 months if this is actually working?"
+    context: 'How you define success for a product. PMs need to track numbers that actually tell you if users love the product — not just vanity numbers like total sign-ups.',
+    statement: `You're the PM for a free app that uses AI to help people write better emails. Think: you paste in a draft email, and the AI rewrites it to sound more professional or friendly.
 
-You need to define what success looks like. The app is free for now and you have about 500 sign-ups so far. There is no revenue yet — the goal is to prove that people love using it.
+The app just launched 3 days ago. You have 500 sign-ups so far. There's no paid plan yet — the only goal right now is to see if people actually love using it.
 
-What metrics would you track, and how would you know at the 3-month mark whether the product is succeeding or failing?`,
+Your CEO walks up to you and asks: "In 3 months, how will we know if this is working or not?"
+
+What would you measure? Pick a few key numbers to track and explain what each one tells you.
+
+(Hint: "500 sign-ups" is a start, but sign-ups alone don't tell you if people love the product.)`,
     hints: [
-      'Think about both "are people showing up?" AND "do they keep coming back?"',
-      'What does a user do when they love the product? What does it look like when they don\'t?',
-      'Consider what the CEO probably cares about most at this early stage',
-      'Pick 2–3 core metrics rather than listing every possible number'
+      'Sign-ups just mean someone was curious. The real question is: do they come back? Think about "retention" — what % of users return after their first session?',
+      'What does a user do when they really love the product? They probably use it again and again. That\'s called "engagement." How often are people opening the app and using it?',
+      'Think about the "aha moment" — the first time a user thinks "wow, this actually helped me." Can you measure how many users reach that moment? (e.g., users who improve at least one email)',
+      'Pick 2–3 numbers max. If you track 20 metrics, none of them really guide your decisions. What are the 2–3 numbers that, if they look good, make you confident the product is succeeding?'
     ]
   },
   {
     id: 2,
     icon: '🔍',
-    title: 'Finding User Pain: What Should Google Maps Fix Next?',
-    category: 'Discovery',
+    title: 'How Would You Figure Out What to Fix in Google Maps?',
+    category: 'User Research',
     difficulty: 'Beginner',
-    statement: `You just joined Google as a PM on the Maps team. Your manager asks you on Day 1: "We have millions of users. What's the most important user problem we should solve next?"
+    context: 'How you go about discovering real user problems. A big part of being a PM is figuring out what to work on — which means talking to users, looking at data, and making sense of it all.',
+    statement: `You just joined Google as a PM on the Maps team. It's your first day.
 
-You don't have any data yet. You don't know the team. But your manager wants to hear how you would go about finding the answer.
+Your manager comes to you and says: "We have over a billion users around the world. What's the most important user problem we should solve next?"
 
-Describe your process for identifying the biggest user pain point in Google Maps. How would you figure out what to work on?`,
+You don't have access to any internal data yet. You haven't met the engineering team. You've never worked at Google before.
+
+But your manager wants to hear how you would figure out the answer.
+
+Describe your process. What would you do in your first few weeks to find the biggest user pain point in Google Maps?
+
+(You're not expected to know the answer already. The question is: how would you find it?)`,
     hints: [
-      'You\'re not expected to know the answer — explain how you\'d find it',
-      'Who would you talk to? What would you ask them?',
-      'Are there signals beyond user interviews? (reviews, support tickets, usage data...)',
-      'How would you decide which pain point is most important once you\'ve found several?'
+      'Start with the most obvious signal: what are users already saying? Think about app store reviews, support tickets, Reddit or Twitter complaints. These are free data sources anyone can access on day one.',
+      'Talk to real users. Ask them: "When was the last time Google Maps frustrated you?" Don\'t ask what they want — ask about real moments of frustration. You\'ll learn more from 5 honest conversations than 100 surveys.',
+      'Once you\'re at Google, look at the data. What features do users drop off from? Where do they get stuck? Numbers show you the "what," and user interviews show you the "why."',
+      'After finding several pain points, how do you pick the most important one? Think about: how many users hit this problem? How often? How bad is the impact when it happens? A small bug that affects everyone every day beats a big bug that rarely occurs.'
     ]
   },
   {
     id: 3,
     icon: '⚖️',
-    title: 'Making a Tradeoff: Speed vs. Smart',
+    title: 'A Cool Feature vs. a Slower App — What Do You Do?',
     category: 'Tradeoffs',
     difficulty: 'Beginner',
-    statement: `Your product team wants to add AI-powered smart suggestions — as a user types in the search bar, the product shows 3 personalized suggestions using AI in real time.
+    context: 'How you handle situations where adding something good creates a problem somewhere else. Real PM decisions almost always involve tradeoffs — there\'s rarely a free lunch.',
+    statement: `Your team wants to add a new feature: when a user types in the search bar, the app shows 3 personalized AI suggestions in real time (like Google search autocomplete, but smarter).
 
-The engineering lead tells you: "We can build it, but it'll make the page load 2 seconds slower on average."
+Users have been asking for this. Marketing loves it. It sounds like a clear win.
 
-Research says users abandon pages that take more than 3 seconds to load. Your current page loads in 1.5 seconds.
+But your engineering lead pulls you aside: "We can build it, but it'll make the page load about 2 seconds slower."
 
-The feature has been highly requested, and the marketing team believes it will help with conversion. What do you do?`,
+Here's why that matters: research shows that users start leaving a page if it takes more than 3 seconds to load. Your app currently loads in 1.5 seconds. Adding this feature would push it to 3.5 seconds.
+
+So: a feature users want, but it might make the app slow enough that some users leave before it even loads.
+
+What do you do?`,
     hints: [
-      'You don\'t have to pick a binary yes/no — consider if there\'s a middle path',
-      'Think about what additional information you\'d want before deciding',
-      'Who are the right people to involve in this decision?',
-      'What would a bad outcome look like, and how would you know if you\'re heading there?'
+      'Don\'t jump straight to yes or no. First, ask: is there a middle option? Could you ship a simpler version of the AI suggestions that doesn\'t slow the page as much?',
+      'Before deciding, what data would you want? For example: how much does load time actually affect your specific users? The 3-second rule is general research — your users might behave differently.',
+      'Who should be involved in this decision? Engineering knows the technical options. Design might have a lighter-weight solution. Marketing wants the feature. Your job is to bring them together, not decide alone.',
+      'Think about what a bad outcome looks like — both ways. If you say yes and the page gets slower, what happens? If you say no, what do you lose? Picturing the worst case on both sides helps you weigh the risk.'
     ]
   },
   {
     id: 4,
     icon: '🤝',
-    title: 'Stakeholder Conflict: Engineering vs. the CEO',
+    title: 'The CEO Made a Promise Your Team Can\'t Keep',
     category: 'Communication',
     difficulty: 'Beginner',
-    statement: `It's Monday morning. You find out that your CEO had a call with your biggest customer (who pays $200K/year) over the weekend. The CEO promised them a new "bulk export" feature would be live in 4 weeks.
+    context: 'How you handle conflict between people with different perspectives and priorities. PMs sit between business, engineering, and customers — and sometimes those groups clash.',
+    statement: `It's Monday morning. You learn that over the weekend, your CEO hopped on a call with your biggest customer — a company that pays you $200,000 per year.
 
-You talk to your engineering lead right after. She says: "That feature will take at least 3 months. We have 2 engineers, and one is on vacation for 2 of those weeks."
+On that call, the CEO promised the customer that a new feature called "bulk export" would be live in 4 weeks.
 
-Both the CEO and the engineering lead are right. The CEO made the commitment. The timeline is not realistic.
+You go to your engineering lead. She says: "That's impossible. This feature is at least 3 months of work. We have 2 engineers, and one is on vacation for 2 of those weeks."
+
+Here's the situation:
+- The CEO made a real commitment to a real customer
+- The timeline is genuinely not possible
+- Both people are right — the CEO made the promise, and the engineer is correct about the timeline
+- You're the PM in the middle
 
 What do you do?`,
     hints: [
-      'Start by making sure you fully understand both sides before taking any action',
-      'Think about who you talk to first, and what you say',
-      'Is there any way to partially fulfill the commitment in 4 weeks?',
-      'What\'s the worst outcome you\'re trying to avoid here?'
+      'Before doing anything, make sure you have the full picture. Talk to both people. Does the CEO know the actual timeline? Does engineering have any flexibility at all? Don\'t escalate before you understand the situation.',
+      'Think carefully about who you talk to first and what you say. Going to the CEO saying "engineering says you\'re wrong" will create conflict. Going to engineering saying "just make it happen" won\'t work either. Your tone matters.',
+      'Is there a partial solution? Could you deliver a simpler version of "bulk export" in 4 weeks — not everything, but enough to show meaningful progress? Customers often care more about being kept informed than about exact deadlines.',
+      'What\'s the worst outcome here? Probably: the customer doesn\'t get what was promised and feels misled, AND the engineering team is burned out trying to hit an impossible deadline. Your job is to prevent both.'
     ]
   },
   {
     id: 5,
     icon: '🤖',
-    title: 'AI Going Wrong: Your Model is Wrong 20% of the Time',
+    title: 'Your AI Feature Is Getting Things Wrong — Now What?',
     category: 'AI Quality',
     difficulty: 'Beginner',
-    statement: `You are the PM for an AI feature that helps users automatically categorize their expenses (e.g., "groceries," "travel," "dining"). You launched it 2 weeks ago.
+    context: 'How you respond when an AI feature misbehaves after launch. AI products can fail in ways that are hard to predict, and PMs need a plan for when that happens.',
+    statement: `You're the PM for a feature inside a personal finance app. The feature uses AI to automatically sort expenses into categories — for example, it labels a charge from Starbucks as "dining" and a flight booking as "travel."
 
-Now users are posting on Twitter and leaving app store reviews saying the AI gets the category wrong about 1 in 5 times. Some are annoyed. A few have already switched to a competitor.
+You launched it 2 weeks ago and people seemed excited.
 
-You pull the data and confirm it's true — roughly 20% error rate on certain types of transactions.
+But now users are posting angry reviews on the app store. They're saying things like: "The AI put my rent payment under 'entertainment' — this is useless." And: "I can't trust any of the categories, so what's the point?"
 
-What is your plan? Walk through what you do in the next 24 hours, the next week, and the next month.`,
+You check the data. It's true: the AI is getting the category wrong about 1 in 5 times (20% error rate). Some users have already switched to a competitor.
+
+What's your plan? Walk through what you'd do in the next 24 hours, next week, and next month.`,
     hints: [
-      'Think about your immediate priority — what\'s on fire that you need to put out first?',
-      'Who needs to know about this, and how do you tell them?',
-      'Is the right move to pull the feature, fix it quietly, or something else?',
-      'How do you prevent this from happening at launch next time?'
+      'First 24 hours: what\'s on fire? Users are publicly complaining. Someone in leadership is probably already seeing those reviews. Do you need to respond to users? Should you add a warning label on the feature? Should you turn it off temporarily? Start with what prevents the most damage right now.',
+      'Who needs to know about this? Your engineering lead (to understand why it\'s failing), your CEO (because customer trust is at risk), maybe customer support (to respond to complaints). Think about who to loop in and what to tell them — you want to share facts, not panic.',
+      'This week: should you turn the feature off while you fix it, or leave it on with a disclaimer? Both options have pros and cons. Turning it off = users lose the feature but stop getting wrong info. Leaving it on = users keep the feature but might lose trust.',
+      'Long term: how do you prevent this next time? Think about what you\'d add to your launch checklist — for example, testing AI accuracy before release, setting an acceptable error rate threshold, or doing a small beta test before full launch.'
     ]
   }
 ];
@@ -3622,6 +4778,9 @@ function openProblem(id) {
   document.getElementById('prob-cat').textContent = p.category + ' · ' + p.difficulty;
   document.getElementById('prob-title').textContent = p.title;
   document.getElementById('prob-statement').textContent = p.statement;
+  const ctxEl = document.getElementById('prob-context');
+  if (p.context) { ctxEl.textContent = '🎯 What this tests: ' + p.context; ctxEl.style.display = ''; }
+  else { ctxEl.style.display = 'none'; }
 
   const hintsList = document.getElementById('prob-hints-list');
   hintsList.innerHTML = p.hints.map(h => `<li>${h}</li>`).join('');

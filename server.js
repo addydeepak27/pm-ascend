@@ -5,8 +5,13 @@ const path = require('path');
 const session = require('express-session');
 const SQLiteStore = require('connect-sqlite3')(session);
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const Anthropic = require('@anthropic-ai/sdk');
+const { createClient } = require('@supabase/supabase-js');
 const db = require('./db');
+
+// Supabase client for verifying OAuth tokens (uses service key)
+const supabaseAuth = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -34,16 +39,18 @@ const anthropic = new Anthropic({
 app.use(express.static(path.join(__dirname)));
 app.use(express.json());
 
-// Session middleware
+// Session middleware (kept in SQLite — sessions are ephemeral, no migration needed)
 app.use(session({
   store: new SQLiteStore({ db: 'sessions.db', dir: __dirname }),
   secret: process.env.SESSION_SECRET || 'dev-secret-change-in-production',
   resave: false,
   saveUninitialized: false,
+  rolling: true, // reset maxAge on every response so active users stay logged in
   cookie: {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+    sameSite: 'lax',
+    secure: false, // localhost is HTTP; set to true only behind HTTPS in production
+    maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
   }
 }));
 
@@ -66,14 +73,17 @@ app.post('/api/auth/signup', async (req, res) => {
     }
 
     const passwordHash = await bcrypt.hash(password, 12);
-    const user = db.createUser({ name, email: email.toLowerCase(), role, passwordHash });
+    const user = await db.createUser({ name, email: email.toLowerCase(), role, passwordHash });
 
     req.session.userId = user.id;
     req.session.userName = user.name;
+    req.session.userEmail = user.email;
+    req.session.userRole = user.role || null;
 
+    await new Promise((resolve, reject) => req.session.save(err => err ? reject(err) : resolve()));
     res.json({ success: true, user: { id: user.id, name: user.name, email: user.email, role: user.role } });
   } catch (err) {
-    if (err.message && err.message.includes('UNIQUE constraint failed')) {
+    if (err.message && (err.message.includes('unique') || err.message.includes('duplicate') || err.message.includes('already exists'))) {
       return res.status(409).json({ error: 'An account with this email already exists. Try logging in.' });
     }
     console.error('Signup error:', err);
@@ -88,7 +98,7 @@ app.post('/api/auth/login', async (req, res) => {
       return res.status(400).json({ error: 'Email and password are required.' });
     }
 
-    const user = db.findUserByEmail(email.toLowerCase());
+    const user = await db.findUserByEmail(email.toLowerCase());
     // Always compare (even with dummy hash) to prevent timing-based email enumeration
     const hash = user ? user.password_hash : DUMMY_HASH;
     const match = await bcrypt.compare(password, hash);
@@ -99,10 +109,16 @@ app.post('/api/auth/login', async (req, res) => {
 
     req.session.userId = user.id;
     req.session.userName = user.name;
+    req.session.userEmail = user.email;
+    req.session.userRole = user.role || null;
 
-    const analysis = db.getLatestAnalysis(user.id);
-    const attempts = db.getProblemAttempts(user.id);
-    const roadmapProgress = db.getRoadmapProgress(user.id);
+    await new Promise((resolve, reject) => req.session.save(err => err ? reject(err) : resolve()));
+
+    const [analysis, attempts, roadmapProgress] = await Promise.all([
+      db.getLatestAnalysis(user.id),
+      db.getProblemAttempts(user.id),
+      db.getRoadmapProgress(user.id),
+    ]);
 
     res.json({
       success: true,
@@ -124,33 +140,94 @@ app.post('/api/auth/logout', (req, res) => {
   });
 });
 
-app.get('/api/auth/me', (req, res) => {
+// POST /api/auth/oauth — verify Supabase OAuth token, create/find user, set session
+app.post('/api/auth/oauth', async (req, res) => {
+  try {
+    const { access_token } = req.body;
+    if (!access_token) return res.status(400).json({ error: 'access_token required' });
+
+    // Verify the token with Supabase and get user info
+    const { data: { user: sbUser }, error } = await supabaseAuth.auth.getUser(access_token);
+    if (error || !sbUser) return res.status(401).json({ error: 'Invalid or expired token' });
+
+    const email = sbUser.email;
+    const name  = sbUser.user_metadata?.full_name || sbUser.user_metadata?.name || email.split('@')[0];
+
+    // Find existing user or create new one (no password for OAuth users)
+    let user = await db.findUserByEmail(email.toLowerCase());
+    if (!user) {
+      user = await db.createUser({ name, email: email.toLowerCase(), role: null, passwordHash: null });
+    }
+
+    req.session.userId    = user.id;
+    req.session.userName  = user.name;
+    req.session.userEmail = user.email;
+    req.session.userRole  = user.role || null;
+
+    await new Promise((resolve, reject) => req.session.save(err => err ? reject(err) : resolve()));
+
+    const [analysis, attempts, roadmapProgress] = await Promise.all([
+      db.getLatestAnalysis(user.id),
+      db.getProblemAttempts(user.id),
+      db.getRoadmapProgress(user.id),
+    ]);
+
+    res.json({
+      success: true,
+      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+      analysis, attempts, roadmapProgress,
+    });
+  } catch (err) {
+    console.error('OAuth error:', err);
+    res.status(500).json({ error: 'OAuth sign-in failed. Please try again.' });
+  }
+});
+
+// GET /auth/callback — OAuth redirect target; serve index.html, frontend handles the hash tokens
+app.get('/auth/callback', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/api/auth/me', async (req, res) => {
   if (!req.session.userId) {
     return res.json({ user: null });
   }
-  const user = db.findUserByEmail('_placeholder_'); // We'll look up by id instead
-  const userRow = require('better-sqlite3')(path.join(__dirname, 'pm-ascend.db'))
-    .prepare('SELECT id, name, email, role FROM users WHERE id = ?')
-    .get(req.session.userId);
 
-  if (!userRow) {
-    req.session.destroy(() => {});
-    return res.json({ user: null });
+  // Build user from session first (available instantly, no DB needed)
+  const sessionUser = {
+    id:    req.session.userId,
+    name:  req.session.userName  || 'User',
+    email: req.session.userEmail || '',
+    role:  req.session.userRole  || null,
+  };
+
+  try {
+    const userRow = await db.findUserById(req.session.userId);
+    if (!userRow) {
+      req.session.destroy(() => {});
+      return res.json({ user: null });
+    }
+
+    const [analysis, attempts, roadmapProgress] = await Promise.all([
+      db.getLatestAnalysis(req.session.userId),
+      db.getProblemAttempts(req.session.userId),
+      db.getRoadmapProgress(req.session.userId),
+    ]);
+
+    return res.json({
+      user: { id: userRow.id, name: userRow.name, email: userRow.email, role: userRow.role },
+      analysis,
+      attempts,
+      roadmapProgress,
+    });
+  } catch (err) {
+    // DB unavailable (e.g. Supabase cold start) — return session user so UI doesn't log them out
+    console.error('/api/auth/me db error (using session fallback):', err.message);
+    return res.json({ user: sessionUser, analysis: null, attempts: [], roadmapProgress: [] });
   }
-
-  const analysis = db.getLatestAnalysis(req.session.userId);
-  const attempts = db.getProblemAttempts(req.session.userId);
-  const roadmapProgress = db.getRoadmapProgress(req.session.userId);
-
-  res.json({
-    user: { id: userRow.id, name: userRow.name, email: userRow.email, role: userRow.role },
-    analysis,
-    attempts,
-    roadmapProgress,
-  });
 });
 
-app.post('/api/user/roadmap/progress', (req, res) => {
+app.post('/api/user/roadmap/progress', async (req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ error: 'Not authenticated.' });
   }
@@ -158,7 +235,7 @@ app.post('/api/user/roadmap/progress', (req, res) => {
   if (phaseIndex === undefined || completed === undefined) {
     return res.status(400).json({ error: 'phaseIndex and completed are required.' });
   }
-  db.upsertRoadmapProgress(req.session.userId, phaseIndex, completed);
+  await db.upsertRoadmapProgress(req.session.userId, phaseIndex, completed);
   res.json({ success: true });
 });
 
@@ -225,12 +302,25 @@ function assessResumeQuality(text) {
   return 'medium';
 }
 
+// --- In-memory analysis cache (keyed by hash of resume text + context) ---
+const analysisCache = new Map();
+const CACHE_MAX = 200; // evict oldest when full
+
+function cacheKey(text, context) {
+  const raw = text + JSON.stringify(context || {});
+  let hash = 0;
+  for (let i = 0; i < raw.length; i++) {
+    hash = (Math.imul(31, hash) + raw.charCodeAt(i)) | 0;
+  }
+  return String(hash >>> 0);
+}
+
 // --- Claude JSON helper — with auto-retry on parse failure ---
 
-async function callClaudeJson(prompt, maxTokens = 4500) {
+async function callClaudeJson(prompt, maxTokens = 4500, model = 'claude-opus-4-6') {
   for (let attempt = 0; attempt < 2; attempt++) {
     const response = await anthropic.messages.create({
-      model: 'claude-opus-4-6',
+      model,
       max_tokens: maxTokens,
       temperature: 0.3,
       messages: [{ role: 'user', content: prompt }],
@@ -246,29 +336,6 @@ async function callClaudeJson(prompt, maxTokens = 4500) {
   }
 }
 
-// --- Pass 1: Structured fact extraction ---
-
-async function extractFacts(resumeText, filename) {
-  const prompt = `Extract structured facts from this resume. Return ONLY valid JSON — no markdown fences, no explanation.
-
-Resume filename: ${filename}
-Resume:
-${resumeText}
-
-Return exactly this JSON:
-{
-  "currentRole": "<most recent job title>",
-  "yearsExperience": "<total work experience, e.g. '4 years'>",
-  "industry": "<primary industry, e.g. fintech, healthcare, edtech, SaaS>",
-  "companies": ["<employer 1>", "<employer 2>"],
-  "tools": ["<specific tool, language, or framework explicitly mentioned>"],
-  "quantifiedAchievements": ["<any bullet that includes a number, %, or $ figure>"],
-  "pmAdjacentWork": ["<product decisions, user research, specs, roadmaps, strategy, or cross-functional work found>"],
-  "education": "<highest degree and field>",
-  "background": "engineer|data|business|designer|other"
-}`;
-  return callClaudeJson(prompt, 1000);
-}
 
 // --- Output validation & safe defaults ---
 
@@ -301,7 +368,13 @@ function validateOutput(result) {
     fix:      g.fix || '',
   }));
 
-  if (!Array.isArray(result.roadmap))   result.roadmap = [];
+  if (!Array.isArray(result.roadmap)) result.roadmap = [];
+  result.roadmap = result.roadmap.map(r => ({
+    phase:     r.phase || '',
+    focus:     r.focus || '',
+    milestone: r.milestone || '',
+    steps:     Array.isArray(r.steps) ? r.steps.filter(s => typeof s === 'string') : [],
+  }));
   if (!result.timeline || typeof result.timeline !== 'object') result.timeline = {};
   if (!Array.isArray(result.quickWins)) result.quickWins = [];
   if (typeof result.topAdvice !== 'string') result.topAdvice = '';
@@ -320,15 +393,9 @@ function clampTimeline(timeline) {
   return { ...timeline, optimistic: clamp(timeline.optimistic), realistic: clamp(timeline.realistic), conservative: clamp(timeline.conservative) };
 }
 
-// --- Resume analysis (two-pass) ---
+// --- Build analysis prompt (shared by streaming + non-streaming paths) ---
 
-async function analyzeResume(resumeText, filename, additionalContext = {}, resumeQuality = 'medium') {
-  // Pass 1: extract structured facts from the resume
-  let facts = {};
-  if (resumeText && resumeText.length > 50) {
-    try { facts = await extractFacts(resumeText, filename); } catch (e) { console.warn('Fact extraction failed:', e.message); }
-  }
-
+function buildAnalysisPrompt(resumeText, additionalContext = {}, resumeQuality = 'medium') {
   const { level, company, hours, geo, attempts } = additionalContext;
 
   const contextBlock = [
@@ -345,22 +412,13 @@ async function analyzeResume(resumeText, filename, additionalContext = {}, resum
     hours.includes('10–20')       ? 'PACING: 10–20h/week — use realistic timelines.' :
                                     'PACING: 5–10h/week — use mid-to-conservative timelines.';
 
-  const factsBlock = Object.keys(facts).length > 0
-    ? `Structured facts extracted from their resume (use these as ground truth):
-- Current role: ${facts.currentRole || 'Unknown'}
-- Years experience: ${facts.yearsExperience || 'Unknown'}
-- Industry: ${facts.industry || 'Unknown'}
-- Companies: ${(facts.companies || []).join(', ') || 'Unknown'}
-- Tools / skills: ${(facts.tools || []).join(', ') || 'Unknown'}
-- Quantified achievements: ${(facts.quantifiedAchievements || []).join(' | ') || 'None found — flag as a gap'}
-- PM-adjacent work: ${(facts.pmAdjacentWork || []).join(' | ') || 'None found'}
-- Education: ${facts.education || 'Unknown'}`
-    : '(Resume could not be fully parsed — provide best-effort analysis and lower confidence score accordingly)';
+  const resumeBlock = resumeText && resumeText.length > 50
+    ? `Candidate's resume:\n${resumeText}`
+    : '(No resume provided — provide best-effort analysis based on context only and set confidence to low)';
 
-  // Pass 2: full analysis prompt using structured facts
-  const prompt = `You are an expert AI Product Manager career coach conducting a deep, personalised readiness analysis.
+  const prompt = `You are an expert AI Product Manager career coach conducting a deep, personalised readiness analysis. Read the resume carefully and extract all relevant facts yourself before analysing.
 
-${factsBlock}
+${resumeBlock}
 
 Resume quality: ${resumeQuality} (${
     resumeQuality === 'low'  ? 'sparse or unformatted PDF — lower your confidence score' :
@@ -411,10 +469,17 @@ STRICTLY FORBIDDEN:
 
 REQUIRED milestone verbs: Interview, Write, Build, Publish, Pitch, Redesign, Analyse, Map, Prototype, Critique, Present, Submit
 
-ROADMAP QUALITY BAR — every milestone must pass all 3:
+ROADMAP QUALITY BAR — every milestone AND every step must pass all 3:
 1. Person knows exactly what to do Monday morning?
 2. Produces something showable to a hiring manager?
 3. Specific to their background — not generic advice any PM candidate could follow?
+
+STEPS RULES — each step in the "steps" array must:
+- Start with a time label (e.g. "Week 1:", "Week 2:", "Week 3–4:")
+- Use a concrete verb (Write, Build, Interview, Publish, Analyse, Pitch, Prototype, Map, Submit)
+- Name the specific output produced (not "research X" — name what you'll have at end of the week)
+- Reference their actual background, industry, or prior experience where possible
+- Never duplicate the milestone — steps are the path to it, not a restatement
 
 Respond ONLY with valid JSON (no markdown, no extra text):
 {
@@ -449,10 +514,50 @@ Respond ONLY with valid JSON (no markdown, no extra text):
     {"gap": "<fifth gap>",                                                    "severity": "medium|low",   "fix": "<one concrete action>"}
   ],
   "roadmap": [
-    {"phase": "Month 1–2", "focus": "<capability being built>",                         "milestone": "<EXACT: action + object + standard, tied to their industry>"},
-    {"phase": "Month 3–4", "focus": "<capability>",                                     "milestone": "<EXACT: different artifact type from Month 1–2>"},
-    {"phase": "Month 5–6", "focus": "<capability>",                                     "milestone": "<EXACT: portfolio piece showable in interviews>"},
-    {"phase": "Month 7–9", "focus": "Active job search and interview preparation",       "milestone": "<EXACT: roles count, company types, specific interview types to prep for>"}
+    {
+      "phase": "Month 1–2",
+      "focus": "<capability being built>",
+      "milestone": "<EXACT: end-state artifact produced by end of this phase>",
+      "steps": [
+        "Week 1: <concrete action — verb + object + output. e.g. 'List 5 real friction points from your time at [company], pick the sharpest one, write a 300-word problem statement'>",
+        "Week 2: <concrete action — different type of output from Week 1>",
+        "Week 3: <concrete action — builds on prior weeks, moves toward milestone>",
+        "Week 4–8: <concrete action — final push to milestone, plus one stretch action that signals momentum to hiring managers>"
+      ]
+    },
+    {
+      "phase": "Month 3–4",
+      "focus": "<capability>",
+      "milestone": "<EXACT: different artifact type from Month 1–2>",
+      "steps": [
+        "Week 1: <concrete action>",
+        "Week 2: <concrete action>",
+        "Week 3: <concrete action>",
+        "Week 4–8: <concrete action — produces the milestone>"
+      ]
+    },
+    {
+      "phase": "Month 5–6",
+      "focus": "<capability>",
+      "milestone": "<EXACT: portfolio piece showable in interviews>",
+      "steps": [
+        "Week 1: <concrete action>",
+        "Week 2: <concrete action>",
+        "Week 3: <concrete action>",
+        "Week 4–8: <concrete action — produces the milestone>"
+      ]
+    },
+    {
+      "phase": "Month 7–9",
+      "focus": "Active job search and interview preparation",
+      "milestone": "<EXACT: roles count, company types, specific interview types to prep for>",
+      "steps": [
+        "Week 1: <concrete action — first applications or outreach>",
+        "Week 2: <concrete action — interview prep or referral ask>",
+        "Week 3: <concrete action — live practice or portfolio polish>",
+        "Week 4–12: <concrete action — sustain cadence, handle rejections, iterate>"
+      ]
+    }
   ],
   "quickWins": [
     "<action completable in 48 hours that produces something tangible>",
@@ -462,11 +567,97 @@ Respond ONLY with valid JSON (no markdown, no extra text):
   "topAdvice": "<single highest-leverage action for this person in the next 7 days — what, with whom, producing what output>"
 }`;
 
-  const result = await callClaudeJson(prompt, 4500);
+  return prompt;
+}
+
+// --- Finalize and cache a parsed analysis result ---
+
+function finalizeAnalysis(result, resumeQuality, resumeText, additionalContext) {
   if (!result.resumeQuality) result.resumeQuality = resumeQuality;
   if (result.timeline) result.timeline = clampTimeline(result.timeline);
-  return validateOutput(result);
+  const validated = validateOutput(result);
+  const key = cacheKey(resumeText, additionalContext);
+  if (analysisCache.size >= CACHE_MAX) analysisCache.delete(analysisCache.keys().next().value);
+  analysisCache.set(key, validated);
+  return validated;
 }
+
+// --- Non-streaming analysis (used by /analyze-text) ---
+
+async function analyzeResume(resumeText, filename, additionalContext = {}, resumeQuality = 'medium') {
+  const key = cacheKey(resumeText, additionalContext);
+  if (analysisCache.has(key)) { console.log('Cache hit'); return analysisCache.get(key); }
+  const prompt = buildAnalysisPrompt(resumeText, additionalContext, resumeQuality);
+  const result = await callClaudeJson(prompt, 4500, 'claude-sonnet-4-6');
+  return finalizeAnalysis(result, resumeQuality, resumeText, additionalContext);
+}
+
+// POST /analyze-resume-stream — SSE streaming endpoint (fast perceived performance)
+app.post('/analyze-resume-stream', upload.single('resume'), async (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.flushHeaders();
+
+  const send = (obj) => res.write(`data: ${JSON.stringify(obj)}\n\n`);
+
+  try {
+    if (!req.file) return send({ type: 'error', error: 'No file uploaded' }) || res.end();
+    if (!process.env.ANTHROPIC_API_KEY) return send({ type: 'error', error: 'API key not set' }) || res.end();
+
+    const rawText = await extractText(req.file);
+    const resumeText = preprocessText(rawText);
+    if (resumeText.length < 150) return send({ type: 'error', error: 'Could not extract enough text. Please try PDF, DOCX, or TXT.' }) || res.end();
+
+    const quality = assessResumeQuality(resumeText);
+    let additionalContext = {};
+    try { additionalContext = JSON.parse(req.body.additionalContext || '{}'); } catch (_) {}
+
+    // Cache hit — instant response
+    const key = cacheKey(resumeText, additionalContext);
+    if (analysisCache.has(key)) {
+      const cached = analysisCache.get(key);
+      let analysisId = null;
+      if (req.session.userId) analysisId = await db.saveAnalysis(req.session.userId, JSON.stringify(cached));
+      send({ type: 'done', analysis: cached, analysisId });
+      return res.end();
+    }
+
+    send({ type: 'start' });
+
+    const prompt = buildAnalysisPrompt(resumeText, additionalContext, quality);
+    let fullText = '';
+
+    const stream = anthropic.messages.stream({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 4500,
+      temperature: 0.3,
+      messages: [{ role: 'user', content: prompt }],
+    });
+
+    stream.on('text', (chunk) => { fullText += chunk; });
+
+    await stream.finalMessage();
+
+    const cleaned = fullText.replace(/^```json?\s*/i, '').replace(/\s*```$/i, '').trim();
+    let result;
+    try { result = JSON.parse(cleaned); } catch {
+      // Retry once without streaming
+      result = await callClaudeJson(prompt, 4500, 'claude-sonnet-4-6');
+    }
+
+    const validated = finalizeAnalysis(result, quality, resumeText, additionalContext);
+    let analysisId = null;
+    if (req.session.userId) analysisId = await db.saveAnalysis(req.session.userId, JSON.stringify(validated));
+
+    send({ type: 'done', analysis: validated, analysisId });
+    res.end();
+  } catch (err) {
+    console.error('Stream error:', err);
+    send({ type: 'error', error: err.message || 'Analysis failed. Please try again.' });
+    res.end();
+  }
+});
 
 // POST /analyze-resume
 app.post('/analyze-resume', upload.single('resume'), async (req, res) => {
@@ -494,12 +685,12 @@ app.post('/analyze-resume', upload.single('resume'), async (req, res) => {
     }
     const analysis = await analyzeResume(resumeText, req.file.originalname, additionalContext, quality);
 
-    // Persist analysis if user is logged in
+    let analysisId = null;
     if (req.session.userId) {
-      db.saveAnalysis(req.session.userId, JSON.stringify(analysis));
+      analysisId = await db.saveAnalysis(req.session.userId, JSON.stringify(analysis));
     }
 
-    res.json({ success: true, analysis });
+    res.json({ success: true, analysis, analysisId });
   } catch (err) {
     console.error('Analysis error:', err);
     if (err.message && err.message.includes('JSON')) {
@@ -514,8 +705,20 @@ app.post('/analyze-resume', upload.single('resume'), async (req, res) => {
 
 // --- Answer evaluation ---
 
-async function evaluateAnswer({ problemTitle, problemStatement, category, difficulty, answer }) {
+async function evaluateAnswer({ problemTitle, problemStatement, category, difficulty, answer, resumeContext }) {
+  const resumeBlock = resumeContext ? `
+Candidate background (from their resume analysis — use this to personalise your feedback):
+- Background type: ${resumeContext.background || 'unknown'}
+- Readiness score: ${resumeContext.score || 'unknown'}/100
+- Summary: ${resumeContext.summary || 'not available'}
+- Key strengths: ${(resumeContext.strengths || []).join(' | ') || 'not available'}
+- Key gaps identified: ${(resumeContext.gaps || []).join(', ') || 'not available'}
+- Skills assessed: ${(resumeContext.skills || []).map(s => `${s.name} (${s.score}/100)`).join(', ') || 'not available'}
+
+Tailor your feedback to their specific background. Reference their actual profile when noting strengths or gaps. For example, if they are an engineer, acknowledge how their technical background helps or hurts their answer. If they have a specific gap from their resume analysis, note whether this answer addresses it or makes it worse.` : '';
+
   const prompt = `You are an experienced AI PM hiring manager and coach evaluating a practice answer from someone aspiring to become a Product Manager.
+${resumeBlock}
 
 Problem: ${problemTitle}
 Category: ${category}
@@ -527,25 +730,25 @@ ${problemStatement}
 Candidate's Answer:
 ${answer}
 
-Evaluate this answer honestly and constructively. Respond ONLY with valid JSON (no markdown):
+Evaluate this answer honestly and constructively. Personalise feedback based on the candidate's background above if available. Respond ONLY with valid JSON (no markdown):
 {
   "score": <integer 0-100>,
   "verdict": "<Excellent|Good|Developing|Needs Work>",
-  "headline": "<one sentence summary of overall quality>",
+  "headline": "<one sentence summary — reference their specific background if known>",
   "strengths": [
-    "<specific thing they did well>",
+    "<specific thing they did well — tie to their background if relevant>",
     "<specific thing they did well>"
   ],
   "improvements": [
-    {"issue": "<specific gap or weakness>", "tip": "<concrete actionable fix>"},
+    {"issue": "<specific gap — tie to their resume gaps if relevant>", "tip": "<concrete actionable fix specific to their background>"},
     {"issue": "<specific gap or weakness>", "tip": "<concrete actionable fix>"}
   ],
   "keyFrameworks": ["<framework name>", "<framework name>"],
   "modelAnswerHint": "<2-3 sentences on what a strong answer covers — don't write it for them, just guide>",
-  "nextStep": "<single most important thing to practice — MUST be a specific hands-on action or artifact to produce, never a course, book, or passive study task>"
+  "nextStep": "<single most important thing to practice — MUST be specific to their background and produce a real artifact, never a course or book>"
 }
 
-IMPORTANT — nextStep rule: The next step must always be a concrete action that produces something real. Examples of good next steps: "Pick a real AI product and write a 1-page critique of one specific decision the PM team made", "Find one person with this problem and interview them for 15 minutes — write up what you learned", "Rewrite your answer using the CIRCLES framework and post it for peer feedback". Never recommend courses, certifications, or books as the next step.`;
+IMPORTANT — nextStep rule: The next step must always be a concrete action that produces something real, tailored to who this person is. Never recommend courses, certifications, or books as the next step.`;
 
   const response = await anthropic.messages.create({
     model: 'claude-opus-4-6',
@@ -561,7 +764,7 @@ IMPORTANT — nextStep rule: The next step must always be a concrete action that
 // POST /evaluate-answer
 app.post('/evaluate-answer', async (req, res) => {
   try {
-    const { problemTitle, problemStatement, category, difficulty, answer, problemId } = req.body;
+    const { problemTitle, problemStatement, category, difficulty, answer, problemId, resumeContext } = req.body;
 
     if (!answer || answer.trim().length < 30) {
       return res.status(400).json({ error: 'Please write a more complete answer before submitting.' });
@@ -571,11 +774,10 @@ app.post('/evaluate-answer', async (req, res) => {
       return res.status(500).json({ error: 'Server not configured with API key.' });
     }
 
-    const feedback = await evaluateAnswer({ problemTitle, problemStatement, category, difficulty, answer });
+    const feedback = await evaluateAnswer({ problemTitle, problemStatement, category, difficulty, answer, resumeContext });
 
-    // Persist attempt if user is logged in and problemId provided
     if (req.session.userId && problemId !== undefined) {
-      db.saveProblemAttempt(req.session.userId, String(problemId), answer, JSON.stringify(feedback), feedback.score);
+      await db.saveProblemAttempt(req.session.userId, String(problemId), answer, JSON.stringify(feedback), feedback.score);
     }
 
     res.json({ success: true, feedback });
@@ -589,21 +791,162 @@ app.post('/evaluate-answer', async (req, res) => {
   }
 });
 
-// Newsletter subscription — save email to subscribers.json
-const fs = require('fs');
-app.post('/subscribe', express.json(), (req, res) => {
+// POST /analyze-text — analyze pasted resume text (same pipeline as file upload)
+app.post('/analyze-text', async (req, res) => {
+  try {
+    const { text, additionalContext: ctxRaw } = req.body;
+    if (!text || typeof text !== 'string') {
+      return res.status(400).json({ error: 'No text provided.' });
+    }
+    if (!process.env.ANTHROPIC_API_KEY) {
+      return res.status(500).json({ error: 'Server not configured with API key. Please set ANTHROPIC_API_KEY.' });
+    }
+    const resumeText = preprocessText(text);
+    if (resumeText.length < 150) {
+      return res.status(400).json({ error: 'Not enough text to analyze. Please paste more of your resume.' });
+    }
+    const quality = assessResumeQuality(resumeText);
+    let additionalContext = {};
+    if (ctxRaw) {
+      try { additionalContext = JSON.parse(ctxRaw); } catch (_) {}
+    }
+    const analysis = await analyzeResume(resumeText, 'pasted-resume.txt', additionalContext, quality);
+    let analysisId = null;
+    if (req.session.userId) {
+      analysisId = await db.saveAnalysis(req.session.userId, JSON.stringify(analysis));
+    }
+    res.json({ success: true, analysis, analysisId });
+  } catch (err) {
+    console.error('Text analysis error:', err);
+    if (err.message && err.message.includes('JSON')) {
+      res.status(500).json({ error: 'Failed to parse AI response. Please try again.' });
+    } else if (err.status === 401) {
+      res.status(500).json({ error: 'Invalid API key. Please check your ANTHROPIC_API_KEY.' });
+    } else {
+      res.status(500).json({ error: err.message || 'Analysis failed. Please try again.' });
+    }
+  }
+});
+
+// POST /api/roadmap/enrich-steps — generate week-by-week steps for phases that lack them
+app.post('/api/roadmap/enrich-steps', async (req, res) => {
+  try {
+    const { roadmap, background, summary, gaps } = req.body;
+    if (!Array.isArray(roadmap) || roadmap.length === 0) {
+      return res.status(400).json({ error: 'roadmap array required' });
+    }
+
+    const gapList = Array.isArray(gaps) ? gaps.map(g => g.gap || g).join('; ') : '';
+    const prompt = `You are generating specific, week-by-week action steps for an AI PM career roadmap.
+
+Candidate profile:
+- Background: ${background || 'general'}
+- Summary: ${summary || ''}
+- Key gaps to address: ${gapList || 'Not specified'}
+
+Below are the roadmap phases. For EVERY phase, generate exactly 4 concrete action steps. Each step must:
+1. Start with a time label: "Week 1:", "Week 2:", "Week 3:", "Week 4+:"
+2. Use an action verb: Write, Build, Analyse, Interview, Publish, Prototype, Submit, Map, Pitch, Redesign, Present
+3. Name a SPECIFIC output the candidate will have at the end of that week (not "research X" — say what they produce)
+4. Be directly tied to THIS candidate's background, industry experience, and the gap being addressed in this phase
+5. Never duplicate the milestone — steps are the weekly path to it
+
+Roadmap phases:
+${roadmap.map((r, i) => `Phase ${i} — ${r.phase}: ${r.focus}\nMilestone: ${r.milestone}`).join('\n\n')}
+
+Return ONLY valid JSON, no markdown:
+{
+  "phases": [
+    { "phaseIndex": 0, "steps": ["Week 1: ...", "Week 2: ...", "Week 3: ...", "Week 4+: ..."] },
+    { "phaseIndex": 1, "steps": ["Week 1: ...", "Week 2: ...", "Week 3: ...", "Week 4+: ..."] },
+    { "phaseIndex": 2, "steps": ["Week 1: ...", "Week 2: ...", "Week 3: ...", "Week 4+: ..."] },
+    { "phaseIndex": 3, "steps": ["Week 1: ...", "Week 2: ...", "Week 3: ...", "Week 4+: ..."] }
+  ]
+}`;
+
+    const result = await callClaudeJson(prompt, 1800, 'claude-sonnet-4-6');
+    if (!Array.isArray(result.phases)) return res.status(500).json({ error: 'Invalid AI response' });
+
+    // Merge steps back into roadmap phases
+    const enriched = roadmap.map((r, i) => {
+      const match = result.phases.find(p => p.phaseIndex === i);
+      return { ...r, steps: match ? match.steps : (r.steps || []) };
+    });
+
+    // If user is logged in, update the stored analysis
+    if (req.session.userId) {
+      try {
+        const latest = await db.getLatestAnalysis(req.session.userId);
+        if (latest) {
+          latest.roadmap = enriched;
+          await db.saveAnalysis(req.session.userId, JSON.stringify(latest));
+        }
+      } catch (e) { /* non-fatal */ }
+    }
+
+    res.json({ success: true, roadmap: enriched });
+  } catch (err) {
+    console.error('Enrich steps error:', err);
+    res.status(500).json({ error: 'Failed to generate steps. Please try again.' });
+  }
+});
+
+// GET /api/analyses — history list for logged-in user
+app.get('/api/analyses', async (req, res) => {
+  if (!req.session.userId) return res.status(401).json({ error: 'Not authenticated.' });
+  const history = await db.getAnalysisHistory(req.session.userId);
+  res.json({ success: true, analyses: history });
+});
+
+// GET /api/analyses/:id — full analysis for logged-in user
+app.get('/api/analyses/:id', async (req, res) => {
+  if (!req.session.userId) return res.status(401).json({ error: 'Not authenticated.' });
+  const analysis = await db.getAnalysisById(req.session.userId, parseInt(req.params.id));
+  if (!analysis) return res.status(404).json({ error: 'Analysis not found.' });
+  res.json({ success: true, analysis });
+});
+
+// POST /api/analyses/:id/share — generate shareable token
+app.post('/api/analyses/:id/share', async (req, res) => {
+  if (!req.session.userId) return res.status(401).json({ error: 'Not authenticated.' });
+  const id = parseInt(req.params.id);
+  try {
+    // Check if token already exists
+    const existing = await db.getShareToken(id, req.session.userId);
+    if (existing) {
+      const shareUrl = `${req.protocol}://${req.get('host')}/report/${existing}`;
+      return res.json({ success: true, shareUrl });
+    }
+    const token = crypto.randomUUID();
+    await db.setShareToken(id, req.session.userId, token);
+    const shareUrl = `${req.protocol}://${req.get('host')}/report/${token}`;
+    res.json({ success: true, shareUrl });
+  } catch (err) {
+    console.error('Share error:', err);
+    res.status(500).json({ error: 'Could not generate share link.' });
+  }
+});
+
+// GET /api/share/:token — public endpoint to fetch a shared analysis
+app.get('/api/share/:token', async (req, res) => {
+  const result = await db.getAnalysisByShareToken(req.params.token);
+  if (!result) return res.status(404).json({ error: 'Report not found.' });
+  res.json({ success: true, analysis: result.analysis, createdAt: result.created_at });
+});
+
+// Newsletter subscription — save to Supabase
+app.post('/subscribe', express.json(), async (req, res) => {
   const { email } = req.body || {};
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return res.status(400).json({ error: 'Invalid email' });
   }
-  const file = path.join(__dirname, 'subscribers.json');
-  let list = [];
-  try { list = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (_) {}
-  if (!list.includes(email)) {
-    list.push(email);
-    fs.writeFileSync(file, JSON.stringify(list, null, 2));
+  try {
+    await db.saveSubscriber(email);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Subscribe error:', err);
+    res.status(500).json({ error: 'Subscription failed.' });
   }
-  res.json({ success: true });
 });
 
 // Serve index.html for all other routes (must be last)
@@ -615,5 +958,8 @@ app.listen(PORT, () => {
   console.log(`✅ PM Ascend server running at http://localhost:${PORT}`);
   if (!process.env.ANTHROPIC_API_KEY) {
     console.warn('⚠️  ANTHROPIC_API_KEY not set — resume analysis will fail.');
+  }
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_KEY) {
+    console.warn('⚠️  SUPABASE_URL or SUPABASE_SERVICE_KEY not set — database will fail.');
   }
 });
