@@ -1315,6 +1315,30 @@
       font-size: .78rem; color: var(--text2); font-weight: 500;
     }
     .plan-trust span { display: flex; align-items: center; gap: .3rem; }
+
+    /* ── ONBOARDING MODAL ───────────────────────────────── */
+    #onboarding-overlay { display: flex; }
+    #onboarding-overlay.hidden { display: none !important; }
+    @keyframes onboardIn {
+      from { opacity: 0; transform: translateY(18px) scale(.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    #ob-step-indicators > div {
+      transition: width .3s cubic-bezier(.4,0,.2,1), background .3s cubic-bezier(.4,0,.2,1);
+    }
+    #onboarding-modal select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.10);
+    }
+    @media (max-width: 600px) {
+      #onboarding-modal {
+        border-radius: var(--radius-sm);
+        padding: 1.75rem 1.25rem 1.25rem;
+        max-height: 95vh;
+        overflow-y: auto;
+      }
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
@@ -2689,7 +2713,7 @@
 
               <!-- ROADMAP -->
               <div class="analysis-section">
-                <h4>🗺️ Your Personalized 90-Day Roadmap</h4>
+                <h4 id="roadmap-section-title">🗺️ Your Personalized Roadmap</h4>
                 <div class="roadmap-steps" id="roadmap-steps"></div>
               </div>
 
@@ -2962,6 +2986,35 @@
     </div><!-- /dash-main -->
   </div><!-- /dash-wrap -->
 </div><!-- /page-dashboard -->
+
+<!-- ONBOARDING MODAL -->
+<div id="onboarding-overlay" class="hidden"
+     style="position:fixed;inset:0;z-index:9500;
+            background:rgba(7,7,28,.72);
+            backdrop-filter:blur(6px);
+            -webkit-backdrop-filter:blur(6px);
+            align-items:center;justify-content:center;
+            padding:1.5rem;">
+  <div id="onboarding-modal"
+       style="background:var(--card);
+              border:1.5px solid var(--border);
+              border-radius:var(--radius);
+              box-shadow:var(--shadow-glow),var(--shadow);
+              width:100%;max-width:560px;
+              padding:2.5rem 2.25rem 2rem;
+              position:relative;
+              animation:onboardIn .35s cubic-bezier(.4,0,.2,1);">
+    <div id="ob-step-indicators" style="display:flex;gap:.5rem;justify-content:center;margin-bottom:2rem;"></div>
+    <div id="ob-step-content"></div>
+    <div style="display:flex;gap:.75rem;margin-top:1.75rem">
+      <button id="ob-back-btn" class="btn btn-outline" style="display:none" onclick="obBack()">← Back</button>
+      <button id="ob-next-btn" class="btn btn-primary" style="flex:1" onclick="obNext()">Continue →</button>
+    </div>
+    <div style="text-align:center;margin-top:.9rem">
+      <button onclick="obSkip()" style="background:none;border:none;cursor:pointer;font-size:.78rem;color:var(--muted);font-weight:500;">Skip for now</button>
+    </div>
+  </div>
+</div>
 
 <!-- PRACTICE PROBLEM MODAL -->
 <div class="prob-overlay hidden" id="prob-overlay">
@@ -3246,7 +3299,7 @@ function switchTab(tab) {
   document.getElementById('form-login').classList.toggle('hidden', tab !== 'login');
 }
 
-function enterDashboard(user, analysis) {
+function enterDashboard(user, analysis, isNewUser = false) {
   window._currentUser = user;
   document.getElementById('dash-username').textContent = user.name.split(' ')[0];
   if (analysis) renderResults(analysis);
@@ -3257,6 +3310,209 @@ function enterDashboard(user, analysis) {
   document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-overview').classList.add('active');
   showPage('dashboard');
+  if (isNewUser && !analysis) {
+    requestAnimationFrame(showOnboarding);
+  }
+}
+
+/* ══════════════════════════════════════════
+   ONBOARDING FLOW
+══════════════════════════════════════════ */
+window._onboardingData = {};
+let _obStep = 0;
+const OB_STEPS = 3;
+
+const OB_CONTENT = [
+  // Step 0 — Welcome
+  () => {
+    const firstName = (window._currentUser?.name || 'there').split(' ')[0];
+    return `
+      <div style="text-align:center;margin-bottom:1.5rem">
+        <div style="font-size:3rem;margin-bottom:.75rem">🚀</div>
+        <h2 style="font-size:1.55rem;font-weight:900;letter-spacing:-.02em;margin-bottom:.6rem">
+          Hi ${firstName}, welcome to PM Ascend!
+        </h2>
+        <p style="color:var(--text2);font-size:.96rem;line-height:1.7;max-width:400px;margin:0 auto">
+          You're about to get a personalised AI PM readiness score — built specifically for where you are right now.
+        </p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.65rem">
+        <div style="display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;background:var(--grad-soft);border:1px solid rgba(37,99,235,.13);border-radius:var(--radius-sm)">
+          <span style="font-size:1.25rem">📊</span>
+          <span style="font-size:.88rem;font-weight:600">AI-scored resume analysis in ~60 seconds</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;background:var(--grad-soft);border:1px solid rgba(37,99,235,.13);border-radius:var(--radius-sm)">
+          <span style="font-size:1.25rem">🗺️</span>
+          <span style="font-size:.88rem;font-weight:600">Week-by-week roadmap tailored to your background</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;background:var(--grad-soft);border:1px solid rgba(37,99,235,.13);border-radius:var(--radius-sm)">
+          <span style="font-size:1.25rem">🎯</span>
+          <span style="font-size:.88rem;font-weight:600">Timeline prediction to land your first PM role</span>
+        </div>
+      </div>`;
+  },
+
+  // Step 1 — Goal setting
+  () => `
+    <h2 style="font-size:1.35rem;font-weight:900;letter-spacing:-.02em;margin-bottom:.35rem">What's your goal?</h2>
+    <p style="color:var(--text2);font-size:.88rem;margin-bottom:1.5rem">This makes your roadmap and timeline 10x more specific.</p>
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <div>
+        <label style="display:block;font-size:.8rem;font-weight:700;color:var(--text2);margin-bottom:.4rem">Target company type</label>
+        <select id="ob-company" style="width:100%;padding:.7rem 1rem;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem">
+          <option value="">Select…</option>
+          <option>Big Tech (Google, Meta, Microsoft, Amazon)</option>
+          <option>AI-first startup (OpenAI, Anthropic, Cohere…)</option>
+          <option>Mid-size tech company</option>
+          <option>Enterprise / B2B SaaS</option>
+          <option>Open to anything</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block;font-size:.8rem;font-weight:700;color:var(--text2);margin-bottom:.4rem">Target role level</label>
+        <select id="ob-level" style="width:100%;padding:.7rem 1rem;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem">
+          <option value="">Select…</option>
+          <option>Associate / APM (entry-level)</option>
+          <option>Mid-level PM (2–5 yrs PM exp)</option>
+          <option>Senior PM</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block;font-size:.8rem;font-weight:700;color:var(--text2);margin-bottom:.4rem">Timeline urgency</label>
+        <select id="ob-timeline" style="width:100%;padding:.7rem 1rem;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem">
+          <option value="">Select…</option>
+          <option>ASAP — actively job hunting now</option>
+          <option>3–6 months</option>
+          <option>6–12 months</option>
+          <option>Just exploring for now</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block;font-size:.8rem;font-weight:700;color:var(--text2);margin-bottom:.4rem">Hours per week for prep</label>
+        <select id="ob-hours" style="width:100%;padding:.7rem 1rem;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem">
+          <option value="">Select…</option>
+          <option>Less than 5 hours</option>
+          <option>5–10 hours</option>
+          <option>10–20 hours</option>
+          <option>20+ hours (full-time prep)</option>
+        </select>
+      </div>
+    </div>`,
+
+  // Step 2 — Background confirmation
+  () => {
+    const currentRole = window._currentUser?.role || '';
+    const options = [
+      'Software Engineer / Developer',
+      'Data Scientist / Analyst',
+      'UX Designer / Researcher',
+      'Marketing / Growth',
+      'Finance / Business',
+      'Student / Recent Graduate',
+      'Other',
+    ];
+    const optHtml = options.map(o =>
+      `<option value="${o}"${o === currentRole ? ' selected' : ''}>${o}</option>`
+    ).join('');
+    return `
+      <div style="text-align:center;margin-bottom:1.5rem">
+        <div style="font-size:2.5rem;margin-bottom:.6rem">🎯</div>
+        <h2 style="font-size:1.35rem;font-weight:900;letter-spacing:-.02em;margin-bottom:.4rem">One last thing — your background</h2>
+        <p style="color:var(--text2);font-size:.88rem;line-height:1.6">
+          ${currentRole ? 'We pre-filled this from signup — correct it if needed.' : 'This shapes every recommendation in your roadmap.'}
+        </p>
+      </div>
+      <div>
+        <label style="display:block;font-size:.8rem;font-weight:700;color:var(--text2);margin-bottom:.4rem">Your professional background</label>
+        <select id="ob-background" style="width:100%;padding:.85rem 1rem;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:.95rem;font-weight:600">
+          <option value="">Select your background</option>
+          ${optHtml}
+        </select>
+      </div>
+      <div style="margin-top:1.25rem;padding:1rem 1.1rem;background:var(--grad-soft);border:1px solid rgba(37,99,235,.13);border-radius:var(--radius-sm)">
+        <p style="font-size:.82rem;color:var(--text2);line-height:1.65;margin:0">
+          Your first resume analysis is ready the moment you click
+          <strong style="color:var(--text)">"Start My Analysis"</strong> — upload your resume or answer 10 quick questions.
+        </p>
+      </div>`;
+  },
+];
+
+function obRenderStep() {
+  const indicators = document.getElementById('ob-step-indicators');
+  indicators.innerHTML = Array.from({ length: OB_STEPS }, (_, i) => `
+    <div style="
+      width:${i === _obStep ? '28px' : '8px'};height:8px;border-radius:100px;
+      background:${i === _obStep ? 'var(--accent)' : i < _obStep ? 'var(--green)' : 'var(--border)'};">
+    </div>`).join('');
+  document.getElementById('ob-step-content').innerHTML = OB_CONTENT[_obStep]();
+  const backBtn = document.getElementById('ob-back-btn');
+  backBtn.style.display = _obStep > 0 ? '' : 'none';
+  const nextBtn = document.getElementById('ob-next-btn');
+  if (_obStep === OB_STEPS - 1) {
+    nextBtn.textContent = 'Start My Analysis →';
+  } else {
+    nextBtn.textContent = 'Continue →';
+  }
+}
+
+function obCollectStep() {
+  if (_obStep === 1) {
+    window._onboardingData.company  = (document.getElementById('ob-company')  || {}).value || '';
+    window._onboardingData.level    = (document.getElementById('ob-level')    || {}).value || '';
+    window._onboardingData.timeline = (document.getElementById('ob-timeline') || {}).value || '';
+    window._onboardingData.hours    = (document.getElementById('ob-hours')    || {}).value || '';
+  }
+  if (_obStep === 2) {
+    window._onboardingData.background = (document.getElementById('ob-background') || {}).value || '';
+  }
+}
+
+function obNext() {
+  obCollectStep();
+  if (_obStep < OB_STEPS - 1) {
+    _obStep++;
+    obRenderStep();
+  } else {
+    obComplete();
+  }
+}
+
+function obBack() {
+  obCollectStep();
+  if (_obStep > 0) { _obStep--; obRenderStep(); }
+}
+
+function obSkip() {
+  window._onboardingData = {};
+  closeOnboarding();
+}
+
+function obComplete() {
+  closeOnboarding();
+  switchPanel('resume', document.querySelector('.sidebar-nav a[onclick*="resume"]'));
+  setInputMode('upload');
+  const d = window._onboardingData;
+  if (d.level   && document.getElementById('up-level'))   document.getElementById('up-level').value   = d.level;
+  if (d.company && document.getElementById('up-company')) document.getElementById('up-company').value = d.company;
+  if (d.hours   && document.getElementById('up-hours'))   document.getElementById('up-hours').value   = d.hours;
+  if (d.level   && document.getElementById('pt-level'))   document.getElementById('pt-level').value   = d.level;
+  if (d.company && document.getElementById('pt-company')) document.getElementById('pt-company').value = d.company;
+  if (d.hours   && document.getElementById('pt-hours'))   document.getElementById('pt-hours').value   = d.hours;
+}
+
+function showOnboarding() {
+  _obStep = 0;
+  window._onboardingData = {};
+  document.getElementById('onboarding-overlay').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  obRenderStep();
+}
+
+function closeOnboarding() {
+  document.getElementById('onboarding-overlay').classList.add('hidden');
+  document.body.style.overflow = '';
 }
 
 async function handleSignup() {
@@ -3288,7 +3544,7 @@ async function handleSignup() {
       errEl.style.display = 'block';
       return;
     }
-    enterDashboard(data.user, null);
+    enterDashboard(data.user, null, true);
   } catch (e) {
     errEl.textContent = 'Network error. Please try again.';
     errEl.style.display = 'block';
@@ -3941,6 +4197,27 @@ function renderResults(rawAnalysis) {
       <div class="gap-text"><strong>${g.gap || 'Gap'}</strong><span>${g.fix || ''}</span></div>
     </li>`;
   }).join('') || '<li class="gap-item"><div class="gap-text"><span>No gaps data available.</span></div></li>';
+
+  // Roadmap title — derive total duration from phase labels (e.g. "Month 1-2", "Month 7-8" → "8-Month")
+  const roadmapTitleEl = document.getElementById('roadmap-section-title');
+  if (roadmapTitleEl && roadmap.length > 0) {
+    let maxVal = 0, unit = 'month';
+    roadmap.forEach(r => {
+      const phase = (r.phase || '').toLowerCase();
+      const nums = phase.match(/\d+/g);
+      if (!nums) return;
+      const end = Math.max(...nums.map(Number));
+      if (phase.includes('week')) { unit = 'week'; maxVal = Math.max(maxVal, end); }
+      else if (phase.includes('month')) { maxVal = Math.max(maxVal, end); unit = 'month'; }
+      else { maxVal = Math.max(maxVal, end); }
+    });
+    const durationLabel = maxVal > 0
+      ? (unit === 'week'
+          ? (maxVal <= 12 ? `${maxVal * 7}-Day` : `${maxVal}-Week`)
+          : `${maxVal}-Month`)
+      : (timeline.realistic ? timeline.realistic.replace(/\s+/g, '-') : '');
+    roadmapTitleEl.textContent = `🗺️ Your Personalized ${durationLabel} Roadmap`;
+  }
 
   // Roadmap
   const phaseColors = ['#2563eb','#7c3aed','#10b981','#f59e0b','#ef4444'];
