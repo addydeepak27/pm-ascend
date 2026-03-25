@@ -1,9 +1,17 @@
 const { createClient } = require('@supabase/supabase-js');
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
-);
+let _supabase = null;
+function getSupabase() {
+  if (!_supabase) {
+    const url = process.env.SUPABASE_URL;
+    const key = process.env.SUPABASE_SERVICE_KEY;
+    if (!url || !key) throw new Error(`Supabase env vars missing — URL:${url ? 'ok' : 'MISSING'} KEY:${key ? 'ok' : 'MISSING'}`);
+    _supabase = createClient(url, key);
+  }
+  return _supabase;
+}
+// Backwards-compatible alias used throughout this file
+const supabase = new Proxy({}, { get(_, prop) { return getSupabase()[prop]; } });
 
 // --- User helpers ---
 
