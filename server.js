@@ -10,8 +10,13 @@ const Anthropic = require('@anthropic-ai/sdk');
 const { createClient } = require('@supabase/supabase-js');
 const db = require('./db');
 
-// Supabase client for verifying OAuth tokens (uses service key)
-const supabaseAuth = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+// Supabase client for verifying OAuth tokens (lazy — reads env vars at call time)
+let _supabaseAuth = null;
+function getSupabaseAuth() {
+  if (!_supabaseAuth) _supabaseAuth = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+  return _supabaseAuth;
+}
+const supabaseAuth = new Proxy({}, { get(_, prop) { return getSupabaseAuth()[prop]; } });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
